@@ -8,6 +8,10 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<<<<<<< HEAD
+=======
+    <!-- Estilos Propios (Usando asset() de Laravel) -->
+>>>>>>> c5fc4af (Modifique los archivos de las interfaces)
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 
@@ -16,8 +20,12 @@
 
     <header class="bg-white shadow-sm sticky-top py-3">
         <div class="container d-flex justify-content-between align-items-center">
+<<<<<<< HEAD
             <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-3 text-decoration-none"
                 href="{{ url('/') }}" style="color: #111344;">
+=======
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-3 text-decoration-none" href="{{ url('/') }}" style="color: #111344;">
+>>>>>>> c5fc4af (Modifique los archivos de las interfaces)
                 <img src="{{ asset('img/logotipo interfaz.svg') }}" alt="Logo Shiftly" width="40" height="40">
                 <span>Shiftly</span>
             </a>
@@ -64,12 +72,20 @@
                 <form id="formRecuperar" action="{{ route('password.email') }}" method="POST">
                     @csrf
 
+<<<<<<< HEAD
+=======
+                <!-- Formulario de Recuperación -->
+                <form id="formRecuperar" method="POST" action="{{ url('/recuperar-password') }}">
+                    @csrf
+
+>>>>>>> c5fc4af (Modifique los archivos de las interfaces)
                     <div class="mb-4 text-start">
                         <label for="email" class="form-label small fw-bold" style="color: #111344;">
                             Correo Electrónico
                         </label>
 
                         <div class="input-group">
+<<<<<<< HEAD
                             <span class="input-group-text bg-light border-end-0" style="border-color: #CBD5E1;">
                                 <i class="bi bi-envelope text-muted"></i>
                             </span>
@@ -77,6 +93,10 @@
                             <input type="email" id="email" name="email" class="form-control border-start-0"
                                 style="border-color: #CBD5E1;" placeholder="ejemplo@correo.com"
                                 value="{{ old('email') }}" autocomplete="email" required>
+=======
+                            <span class="input-group-text bg-light border-end-0" style="border-color: #CBD5E1;"><i class="bi bi-envelope text-muted"></i></span>
+                            <input type="email" id="correoRecuperacion" name="email" class="form-control border-start-0" style="border-color: #CBD5E1;" placeholder="ejemplo@correo.com" required>
+>>>>>>> c5fc4af (Modifique los archivos de las interfaces)
                         </div>
                     </div>
 
@@ -86,9 +106,16 @@
                     </button>
                 </form>
 
+<<<<<<< HEAD
                 <div class="mt-4 pt-3 border-top">
                     <p class="small text-muted mb-0">
                         ¿Recordaste tu contraseña?
+=======
+                <!-- Volver al Login (Redirección configurada a la URL de Laravel) -->
+                <div class="mt-4 pt-3 border-top">
+                    <p class="small text-muted mb-0">
+                        ¿Recordaste tu contraseña? 
+>>>>>>> c5fc4af (Modifique los archivos de las interfaces)
                         <a href="{{ url('/login') }}" class="fw-bold text-decoration-none" style="color: #52154E;">
                             Iniciar Sesión
                         </a>
@@ -107,6 +134,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+<<<<<<< HEAD
+=======
+    <!-- Script Lógico de Autenticación (Cargado con asset) -->
+    <script src="{{ asset('js/recuperacion-password.js') }}"></script>
+>>>>>>> c5fc4af (Modifique los archivos de las interfaces)
 </body>
 
 </html>

@@ -9,7 +9,7 @@ use App\Http\Controllers\RecuperarPasswordController;
 
 /*
 |--------------------------------------------------------------------------
-| Rutas Principales / Sitio Público (html/index)
+| Sitio Público (html/index)
 |--------------------------------------------------------------------------
 */
 
@@ -27,7 +27,7 @@ Route::get('/servicios', function () {
 
 /*
 |--------------------------------------------------------------------------
-| Rutas de Autenticación / Cuenta (html/login)
+| Autenticación (html/login)
 |--------------------------------------------------------------------------
 */
 
@@ -39,9 +39,15 @@ Route::get('/login', function () {
     return view('html.login.login');
 });
 
+<<<<<<< HEAD
 Route::post('/perfil', [PerfilController::class, 'actualizar'])
     ->middleware('auth')
     ->name('perfil.actualizar');
+=======
+Route::post('/login', function () {
+    return redirect('/dashboard');
+});
+>>>>>>> c5fc4af (Modifique los archivos de las interfaces)
 
 Route::get('/registro', function () {
     return view('html.login.registro');
@@ -55,6 +61,7 @@ Route::get('/recuperar-password', function () {
     return view('html.login.recuperar-password');
 });
 
+<<<<<<< HEAD
 // Procesar solicitud de recuperación
 Route::post('/recuperar-password', [RecuperarPasswordController::class, 'enviarEnlace'])
     ->name('password.email');
@@ -72,6 +79,12 @@ Route::post('/new-password', [
 ])->name('password.update');
 
 // Si se intenta entrar sin token, regresar a recuperación
+=======
+Route::post('/recuperar-password', function () {
+    return redirect('/login');
+});
+
+>>>>>>> c5fc4af (Modifique los archivos de las interfaces)
 Route::get('/new-password', function () {
     return redirect('/recuperar-password');
 });
@@ -82,7 +95,7 @@ Route::get('/verificacion-correo', function () {
 
 /*
 |--------------------------------------------------------------------------
-| Rutas del Dashboard / Panel de Usuario (html/dashboard)
+| Panel / Dashboard (html/dashboard)
 |--------------------------------------------------------------------------
 */
 

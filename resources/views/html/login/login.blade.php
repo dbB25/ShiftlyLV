@@ -15,8 +15,8 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <!-- Estilos propios -->
-    <link rel="stylesheet" href="../../css/style.css">
+    <!-- Estilos propios (Usando asset() de Laravel) -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 
 <body>
@@ -24,20 +24,15 @@
     <!-- Navbar -->
     <header class="navbar">
         <div class="container">
-            <!-- CORREGIDO: Redirección del logo a ../index/index.html -->
-            <a class="navbar-brand" href="../index/index.html">
-                <img src="../../img/logotipo interfaz.svg"
-
-                     alt="Logo Shiftly"
-                     class="logo-shiftly">
+            <!-- Redirección con ruta de Laravel -->
+            <a class="navbar-brand" href="{{ url('/') }}">
+                <img src="{{ asset('img/logotipo interfaz.svg') }}" alt="Logo Shiftly" class="logo-shiftly">
                 <span>Shiftly</span>
             </a>
 
             <div class="navbar-links">
-
-                <!-- CORREGIDO: Redirección correcta a la carpeta index -->
-                <a href="../index/index.html">Inicio</a>
-                <a href="registro.html">Registrarse</a>
+                <a href="{{ url('/') }}">Inicio</a>
+                <a href="{{ url('/registro') }}">Registrarse</a>
             </div>
         </div>
     </header>
@@ -55,8 +50,14 @@
                     </p>
                 </div>
 
+<<<<<<< HEAD
                <form class="formulario-auth" id="formularioLogin" method="POST" action="{{ route('login.autenticar') }}">
                 @csrf
+=======
+                <!-- FORMULARIO CONFIGURADO PARA LARAVEL (Se cambió route('login.submit') por url('/login')) -->
+                <form class="formulario-auth" id="formularioLogin" method="POST" action="{{ url('/login') }}">
+                    @csrf
+>>>>>>> c5fc4af (Modifique los archivos de las interfaces)
 
                     <div class="campo-auth">
                         <label for="email" class="label-auth">
@@ -69,7 +70,8 @@
                                 type="email"
                                 id="email"
                                 name="email"
-                                class="input-auth"
+                                value="{{ old('email') }}"
+                                class="input-auth @error('email') is-invalid @enderror"
                                 placeholder="ejemplo@correo.com"
                                 autocomplete="email"
                                 required>
@@ -82,8 +84,7 @@
                                 Contraseña
                             </label>
 
-                            <a href="recuperar-password.html"
-                               class="enlace-secundario">
+                            <a href="{{ url('/recuperar-password') }}" class="enlace-secundario">
                                 ¿Olvidaste tu contraseña?
                             </a>
                         </div>
@@ -111,6 +112,7 @@
                         </div>
                     </div>
 
+<<<<<<< HEAD
                     <!-- Mensajes del formulario -->
                     {{-- Mensajes de Laravel --}}
 @if ($errors->any())
@@ -120,6 +122,18 @@
         @endforeach
     </div>
 @endif
+=======
+                    <!-- Mensajes de Error de Laravel -->
+                    @if ($errors->any())
+                        <div class="alert alert-danger mt-3" role="alert">
+                            <ul class="mb-0 small">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+>>>>>>> c5fc4af (Modifique los archivos de las interfaces)
 
 @if (session('success'))
     <div class="alert alert-success mt-3">
@@ -145,7 +159,7 @@
                 <div class="pie-auth">
                     <p class="text-muted">
                         ¿Aún no tienes una cuenta?
-                        <a href="registro.html" class="enlace-primario">
+                        <a href="{{ url('/registro') }}" class="enlace-primario">
                             Regístrate aquí
                         </a>
                     </p>
@@ -164,13 +178,10 @@
         </div>
     </footer>
 
-
-    <script src="../../js/login.js"></script>
-    <!-- 1. PRIMERO: Cargar la librería de Bootstrap JS -->
+    <!-- Scripts con el helper asset() -->
+    <script src="{{ asset('js/login.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- 2. SEGUNDO: Cargar tu script de lógica JS -->
-    <script src="../../js/loginmain.js"></script>
+    <script src="{{ asset('js/loginmain.js') }}"></script>
 
 </body>
 </html>
