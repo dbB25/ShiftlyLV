@@ -201,6 +201,39 @@
     </script>
 
 
+    <script>
+        (() => {
+            const userId = @json(auth()->id());
+            const originalSetItem = Storage.prototype.setItem;
+
+            Storage.prototype.setItem = function (key, value) {
+                originalSetItem.call(this, key, value);
+
+                if (key === 'shiftlyDiagnosticoResultado') {
+                    try {
+                        const resultado = JSON.parse(value);
+                        const progreso = {
+                            usuario: userId ?? 'visitante',
+                            tipo: 'diagnostico',
+                            puntuacion: resultado.aciertos,
+                            total: resultado.total,
+                            nivel: resultado.nivel,
+                            revision: resultado.revision,
+                            completado: true,
+                            actualizadoEn: new Date().toISOString()
+                        };
+                        originalSetItem.call(
+                            this,
+                            `shiftly:progreso:${progreso.usuario}:diagnostico`,
+                            JSON.stringify(progreso)
+                        );
+                    } catch (error) {
+                        console.error('No se pudo guardar el progreso del diagnóstico.', error);
+                    }
+                }
+            };
+        })();
+    </script>
     <script src="{{ asset('js/diagnostico.js') }}"></script>
 
 </body>
