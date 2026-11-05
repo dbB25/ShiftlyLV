@@ -1,6 +1,10 @@
+
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RegistroController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\RecuperarPasswordController;
 
 /*
@@ -27,17 +31,24 @@ Route::get('/servicios', function () {
 |--------------------------------------------------------------------------
 */
 
+Route::get('/perfil', function () {
+    return view('html.login.perfil');
+})->middleware('auth');
+
 Route::get('/login', function () {
     return view('html.login.login');
 });
+
+Route::post('/perfil', [PerfilController::class, 'actualizar'])
+    ->middleware('auth')
+    ->name('perfil.actualizar');
 
 Route::get('/registro', function () {
     return view('html.login.registro');
 });
 
-Route::get('/perfil', function () {
-    return view('html.login.perfil');
-});
+Route::post('/registro', [RegistroController::class, 'registrar'])
+    ->name('registro.registrar');
 
 // Mostrar formulario de recuperación
 Route::get('/recuperar-password', function () {
