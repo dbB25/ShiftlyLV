@@ -22,6 +22,48 @@
 </head>
 
  <script src="{{ asset('js/ejercicios.js') }}"></script>
+ <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const userId = @json(auth()->id());
+        const textoProgreso = document.querySelector('.progress-copy');
+        const barra = document.querySelector('.progress');
+        if (!textoProgreso || !barra) return;
+
+        const guardarProgreso = () => {
+            const coincidencia = textoProgreso.textContent.match(/(\d+) de (\d+) ejercicios completados/);
+            if (!coincidencia) return;
+
+            const completados = Number(coincidencia[1]);
+            const total = Number(coincidencia[2]);
+            const progreso = {
+                usuario: userId ?? 'visitante',
+                tipo: 'ejercicios',
+                unidad: 'unidad-03-leccion-02',
+                completados,
+                total,
+                puntuacion: completados,
+                porcentaje: total ? Math.round(completados / total * 100) : 0,
+                completado: total > 0 && completados === total,
+                actualizadoEn: new Date().toISOString()
+            };
+
+            try {
+                localStorage.setItem(
+                    `shiftly:progreso:${progreso.usuario}:unidad-03-leccion-02`,
+                    JSON.stringify(progreso)
+                );
+            } catch (error) {
+                console.error('No se pudo guardar el progreso de los ejercicios.', error);
+            }
+        };
+
+        new MutationObserver(guardarProgreso).observe(textoProgreso, {
+            childList: true,
+            characterData: true,
+            subtree: true
+        });
+    });
+ </script>
 
 <body>
 
