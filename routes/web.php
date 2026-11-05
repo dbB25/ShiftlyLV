@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\RegistroController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PerfilController;
 /*
 |--------------------------------------------------------------------------
 | Rutas Principales / Sitio Público (html/index)
@@ -26,17 +28,24 @@ Route::get('/servicios', function () {
 |--------------------------------------------------------------------------
 */
 
+Route::get('/perfil', function () {
+    return view('html.login.perfil');
+})->middleware('auth');
 Route::get('/login', function () {
     return view('html.login.login');
 });
 
+Route::post('/perfil', [PerfilController::class, 'actualizar'])
+    ->middleware('auth')
+    ->name('perfil.actualizar');
+
 Route::get('/registro', function () {
     return view('html.login.registro');
 });
+ Route::post('/registro', [RegistroController::class, 'registrar'])
+ ->name('registro.registrar');
 
-Route::get('/perfil', function () {
-    return view('html.login.perfil');
-});
+
 
 Route::get('/recuperar-password', function () {
     return view('html.login.recuperar-password');

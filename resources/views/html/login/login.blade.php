@@ -55,7 +55,8 @@
                     </p>
                 </div>
 
-                <form class="formulario-auth" id="formularioLogin">
+               <form class="formulario-auth" id="formularioLogin" method="POST" action="{{ route('login.autenticar') }}">
+                @csrf
 
                     <div class="campo-auth">
                         <label for="email" class="label-auth">
@@ -111,13 +112,27 @@
                     </div>
 
                     <!-- Mensajes del formulario -->
-                    <div
-                        id="mensajeLogin"
-                        class="alert d-none mt-3"
-                        role="status"
-                        aria-live="polite">
-                    </div>
+                    {{-- Mensajes de Laravel --}}
+@if ($errors->any())
+    <div class="alert alert-danger mt-3">
+        @foreach ($errors->all() as $error)
+            <p class="mb-0">{{ $error }}</p>
+        @endforeach
+    </div>
+@endif
 
+@if (session('success'))
+    <div class="alert alert-success mt-3">
+        {{ session('success') }}
+    </div>
+@endif
+
+<div
+    id="mensajeLogin"
+    class="alert d-none mt-3"
+    role="status"
+    aria-live="polite">
+</div>
                     <button
                         type="submit"
                         id="btnSubmitLogin"

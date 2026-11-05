@@ -63,7 +63,9 @@
                         <span class="badge etiqueta-resultado text-uppercase px-3 py-1 rounded-pill mb-1">
                             USUARIO ACTIVO
                         </span>
-                        <h1 class="h3 fw-bold mb-1" id="encabezadoNombre" style="color: #111344;">Luis David</h1>
+                        <h1 class="h3 fw-bold mb-1" id="encabezadoNombre" style="color: #111344;">
+                            {{ Auth::user()->name }}
+                           </h1>
                         <p class="text-muted mb-2 small" id="encabezadoSubtitulo">Desarrollador de Software & Estudiante</p>
                         <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-1">
                             <i class="bi bi-patch-check-fill me-1"></i>Cuenta Verificada
@@ -84,13 +86,14 @@
                 <!-- Alerta Dinámica de Estado -->
                 <div id="alertaPerfil" class="alert d-none" role="alert"></div>
 
-                <form id="formularioPerfil" novalidate>
+                 <form id="formularioPerfil" method="POST" action="{{ route('perfil.actualizar') }}" novalidate>
+                 @csrf
                     <div class="row g-3">
                         <div class="col-md-6 text-start">
                             <label for="nombre-perfil" class="form-label small fw-bold" style="color: #111344;">Nombre</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-person text-muted"></i></span>
-                                <input type="text" id="nombre-perfil" class="form-control" value="Luis David" required>
+                              <input type="text" id="nombre-perfil" name="nombre" class="form-control" value="{{ Auth::user()->name }}" required>
                             </div>
                         </div>
 
@@ -98,7 +101,7 @@
                             <label for="apellido-perfil" class="form-label small fw-bold" style="color: #111344;">Apellidos</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-person-v text-muted"></i></span>
-                                <input type="text" id="apellido-perfil" class="form-control" value="Balandrano Delgado" required>
+                                <input type="text" id="apellido-perfil" name="apellido" class="form-control" value="{{ Auth::user()->apellido }}" required>
                             </div>
                         </div>
 
@@ -106,7 +109,7 @@
                             <label for="email-perfil" class="form-label small fw-bold" style="color: #111344;">Correo Electrónico</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-envelope text-muted"></i></span>
-                                <input type="email" id="email-perfil" class="form-control bg-light" value="ejemplo@correo.com" readonly title="El correo no se puede modificar">
+                              <input type="email" id="email-perfil" class="form-control bg-light" value="{{ Auth::user()->email }}" readonly title="El correo no se puede modificar">
                             </div>
                         </div>
 

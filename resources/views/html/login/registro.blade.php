@@ -35,20 +35,29 @@
                     <p class="subtitulo-resultado">Únete a Shiftly y potencia tu inglés técnico.</p>
                 </div>
 
-                <form class="formulario-auth">
+                <form class="formulario-auth" method="POST" action="{{ route('registro.registrar') }}">
+                    @csrf
+                    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
                     <div class="campo-auth">
                         <label for="nombre" class="label-auth">Nombre Completo</label>
                         <div class="caja-input">
                             <i class="bi bi-person icon-input"></i>
-                            <input type="text" id="nombre" class="input-auth" placeholder="Tu nombre" required>
+                            <input type="text" id="nombre" name="nombre" class="input-auth" placeholder="Tu nombre" required>
                         </div>
                     </div>
 
                     <div class="campo-auth">
-                        <label for="email" class="label-auth">Correo Electrónico</label>
                         <div class="caja-input">
                             <i class="bi bi-envelope icon-input"></i>
-                            <input type="email" id="email" class="input-auth" placeholder="ejemplo@correo.com" required>
+                            <input type="email" id="email" name="email" class="input-auth" placeholder="ejemplo@correo.com" required>
                         </div>
                     </div>
 
@@ -56,11 +65,10 @@
                         <label for="password" class="label-auth">Contraseña</label>
                         <div class="caja-input">
                             <i class="bi bi-lock icon-input"></i>
-                            <input type="password" id="password" class="input-auth" placeholder="Mínimo 8 caracteres" required>
-                        </div>
+                           <input type="password" id="password" name="password" class="input-auth" placeholder="Mínimo 8 caracteres" required>
                     </div>
 
-                    <button type="button" class="btn-resultado btn-siguiente w-100 mt-2">Crear Mi Cuenta</button>
+                    <button type="submit" class="btn-resultado btn-siguiente w-100 mt-2">Crear Mi Cuenta</button>
                 </form>
 
                 <div class="pie-auth">
