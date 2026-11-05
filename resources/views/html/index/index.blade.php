@@ -13,7 +13,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/menu.css">
+    <!-- Estilos propios con asset() -->
+    <link rel="stylesheet" href="{{ asset('css/menu.css') }}">
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -27,21 +28,21 @@
     <!-- HEADER / NAVEGACIÓN -->
     <header class="navbar-custom sticky-top">
         <div class="container-xxl d-flex align-items-center justify-content-between">
-            <a href="index.html" class="brand-container">
-                <img src="../../img/logotipo interfaz.svg" onerror="this.onerror=null; this.src='https://placehold.co/100x100/4a154b/ffffff?text=SHIFT';" alt="Shiftly Logo" class="navbar-logo">
+            <a href="{{ url('/') }}" class="brand-container">
+                <img src="{{ asset('img/logotipo interfaz.svg') }}" onerror="this.onerror=null; this.src='https://placehold.co/100x100/4a154b/ffffff?text=SHIFT';" alt="Shiftly Logo" class="navbar-logo">
                 <span class="navbar-brand-custom">SHIFT</span>
             </a>
 
-            <!-- Navegación -->
+            <!-- Navegación escritorio con rutas de Laravel -->
             <nav class="d-none d-lg-flex align-items-center">
                 <a href="#areas" class="nav-link-custom">Áreas</a>
                 <a href="#about" class="nav-link-custom">Quiénes Somos</a>
-                <a href="servicios.html" class="nav-link-custom">Servicios</a>
+                <a href="{{ url('/servicios') }}" class="nav-link-custom">Servicios</a>
                 <a href="#purpose" class="nav-link-custom">Propósito</a>
                 <a href="#team" class="nav-link-custom">Nuestro Equipo</a>
-                <a href="contacto.html" class="nav-link-custom">Contacto</a>
-                <a href="../dashboard/dashboard.html" class="btn btn-purple-filled ms-3"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a>
-                <a href="../login/login.html" class="btn btn-purple-outline ms-2">Login</a>
+                <a href="{{ url('/contacto') }}" class="nav-link-custom">Contacto</a>
+                <a href="{{ url('/dashboard') }}" class="btn btn-purple-filled ms-3"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a>
+                <a href="{{ url('/login') }}" class="btn btn-purple-outline ms-2">Login</a>
             </nav>
 
             <!-- Menú hamburguesa para móvil -->
@@ -50,18 +51,18 @@
             </button>
         </div>
 
+        <!-- Navegación móvil -->
         <div class="collapse d-lg-none bg-white p-3 mt-2 rounded-3 shadow-sm" id="mobileNav">
             <div class="d-flex flex-column gap-2">
                 <a href="#areas" class="nav-link-custom mx-0">Áreas de Aprendizaje</a>
                 <a href="#about" class="nav-link-custom mx-0">Quiénes Somos</a>
-                <a href="presentacion.html" class="nav-link-custom mx-0">Presentación</a>
-                <a href="servicios.html" class="nav-link-custom mx-0">Servicios</a>
+                <a href="{{ url('/servicios') }}" class="nav-link-custom mx-0">Servicios</a>
                 <a href="#purpose" class="nav-link-custom mx-0">Propósito</a>
                 <a href="#team" class="nav-link-custom mx-0">Nuestro Equipo</a>
-                <a href="contacto.html" class="nav-link-custom mx-0">Contacto</a>
+                <a href="{{ url('/contacto') }}" class="nav-link-custom mx-0">Contacto</a>
                 <hr class="my-1">
-                <a href="../dashboard/dashboard.html" class="btn btn-purple-filled w-100 text-center mb-2"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a>
-                <a href="../login/login.html" class="btn btn-purple-outline w-100 text-center">Login</a>
+                <a href="{{ url('/dashboard') }}" class="btn btn-purple-filled w-100 text-center mb-2"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a>
+                <a href="{{ url('/login') }}" class="btn btn-purple-outline w-100 text-center">Login</a>
             </div>
         </div>
     </header>
@@ -165,7 +166,7 @@
                     <div class="col-lg-4 d-flex justify-content-center">
                         <div class="p-4 bg-light rounded-4 border text-center w-100 shadow-sm" style="max-width: 320px;">
                             <div class="rounded-circle p-1 border border-2 border-purple shadow-sm mx-auto mb-3" style="width: 100px; height: 100px; background-color: var(--light-pill);">
-                                <img src="../../img/logotipo interfaz.svg" onerror="this.onerror=null; this.src='https://placehold.co/100x100/4a154b/ffffff?text=Mascota';" alt="Mascota Shiftly" class="w-100 h-100 rounded-circle object-fit-cover">
+                                <img src="{{ asset('img/logotipo interfaz.svg') }}" onerror="this.onerror=null; this.src='https://placehold.co/100x100/4a154b/ffffff?text=Mascota';" alt="Mascota Shiftly" class="w-100 h-100 rounded-circle object-fit-cover">
                             </div>
                             <h3 class="fw-bold fs-5 mb-1 text-dark">Aprende con Shiftly</h3>
                             <p class="small text-muted mb-0">Inglés profesional y técnico al ritmo de tu crecimiento laboral.</p>
@@ -238,7 +239,7 @@
                     <p class="small text-muted mb-0">Las personas detrás del diseño, arquitectura y desarrollo de la plataforma.</p>
                 </div>
 
-                <!-- Filtros -->
+                <!-- Filtros del Equipo -->
                 <div class="p-1 bg-white rounded-4 border d-inline-flex gap-1 overflow-auto shadow-sm">
                     <button onclick="filterTeam('all')" id="filter-all" class="btn-filter active">Todos</button>
                     <button onclick="filterTeam('lider')" id="filter-lider" class="btn-filter">Líder Técnico</button>
@@ -410,21 +411,20 @@
     <footer class="footer-custom">
         <div class="container-xxl text-center">
             <div class="mb-3 footer-links">
-                <a href="index.html">Inicio</a>
+                <a href="{{ url('/') }}">Inicio</a>
                 <a href="#areas">Áreas</a>
                 <a href="#about">Quiénes Somos</a>
-                <a href="presentacion.html">Presentación</a>
-                <a href="servicios.html">Servicios</a>
-                <a href="contacto.html">Contacto</a>
-                <a href="../dashboard/dashboard.html">Dashboard</a>
-                <a href="../login/login.html">Login</a>
+                <a href="{{ url('/servicios') }}">Servicios</a>
+                <a href="{{ url('/contacto') }}">Contacto</a>
+                <a href="{{ url('/dashboard') }}">Dashboard</a>
+                <a href="{{ url('/login') }}">Login</a>
             </div>
-            <p class="small text-white-50 mb-0">© 2026 Shiftly. Todos los derechos reservados. Plataforma de aprendizaje de inglés técnico.</p>
+            <p class="small text-white-50 mb-0">&copy; 2026 Shiftly. Todos los derechos reservados. Plataforma de aprendizaje de inglés técnico.</p>
         </div>
     </footer>
 
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../../JS/index.js"></script>
+    <script src="{{ asset('js/index.js') }}"></script>
 </body>
 </html>

@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -31,60 +30,51 @@ Route::get('/servicios', function () {
 |--------------------------------------------------------------------------
 */
 
-Route::get('/perfil', function () {
-    return view('html.login.perfil');
-})->middleware('auth');
-
 Route::get('/login', function () {
     return view('html.login.login');
-});
+})->name('login');
 
-<<<<<<< HEAD
-Route::post('/perfil', [PerfilController::class, 'actualizar'])
-    ->middleware('auth')
-    ->name('perfil.actualizar');
-=======
+// Redirige al inicio (index.blade.php) al iniciar sesión
 Route::post('/login', function () {
-    return redirect('/dashboard');
-});
->>>>>>> c5fc4af (Modifique los archivos de las interfaces)
+    return redirect('/');
+})->name('login.autenticar');
 
 Route::get('/registro', function () {
     return view('html.login.registro');
 });
 
-Route::post('/registro', [RegistroController::class, 'registrar'])
-    ->name('registro.registrar');
+// Redirige al login al presionar 'Crear Cuenta' (evita error de BD temporalmente)
+Route::post('/registro', function () {
+    return redirect('/login');
+})->name('registro.registrar');
 
-// Mostrar formulario de recuperación
+Route::get('/perfil', function () {
+    return view('html.login.perfil');
+})->middleware('auth');
+
+Route::post('/perfil', [PerfilController::class, 'actualizar'])
+    ->middleware('auth')
+    ->name('perfil.actualizar');
+
+// Recuperación de contraseña
 Route::get('/recuperar-password', function () {
     return view('html.login.recuperar-password');
 });
 
-<<<<<<< HEAD
-// Procesar solicitud de recuperación
 Route::post('/recuperar-password', [RecuperarPasswordController::class, 'enviarEnlace'])
     ->name('password.email');
 
-// Mostrar formulario para establecer una nueva contraseña mediante token
+// Restablecimiento de contraseña
 Route::get('/new-password/{token}', [
     RecuperarPasswordController::class,
     'mostrarFormularioRestablecimiento'
 ])->name('password.reset');
 
-// Procesar y guardar la nueva contraseña
 Route::post('/new-password', [
     RecuperarPasswordController::class,
     'restablecerPassword'
 ])->name('password.update');
 
-// Si se intenta entrar sin token, regresar a recuperación
-=======
-Route::post('/recuperar-password', function () {
-    return redirect('/login');
-});
-
->>>>>>> c5fc4af (Modifique los archivos de las interfaces)
 Route::get('/new-password', function () {
     return redirect('/recuperar-password');
 });

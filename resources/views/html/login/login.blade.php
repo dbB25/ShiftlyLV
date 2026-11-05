@@ -15,7 +15,7 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <!-- Estilos propios (Usando asset() de Laravel) -->
+    <!-- Estilos propios -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 
@@ -24,7 +24,6 @@
     <!-- Navbar -->
     <header class="navbar">
         <div class="container">
-            <!-- Redirección con ruta de Laravel -->
             <a class="navbar-brand" href="{{ url('/') }}">
                 <img src="{{ asset('img/logotipo interfaz.svg') }}" alt="Logo Shiftly" class="logo-shiftly">
                 <span>Shiftly</span>
@@ -50,14 +49,8 @@
                     </p>
                 </div>
 
-<<<<<<< HEAD
-               <form class="formulario-auth" id="formularioLogin" method="POST" action="{{ route('login.autenticar') }}">
-                @csrf
-=======
-                <!-- FORMULARIO CONFIGURADO PARA LARAVEL (Se cambió route('login.submit') por url('/login')) -->
-                <form class="formulario-auth" id="formularioLogin" method="POST" action="{{ url('/login') }}">
+                <form class="formulario-auth" id="formularioLogin" method="POST" action="{{ route('login.autenticar') }}">
                     @csrf
->>>>>>> c5fc4af (Modifique los archivos de las interfaces)
 
                     <div class="campo-auth">
                         <label for="email" class="label-auth">
@@ -96,7 +89,7 @@
                                 type="password"
                                 id="password"
                                 name="password"
-                                class="input-auth"
+                                class="input-auth @error('password') is-invalid @enderror"
                                 placeholder="Ingresa tu contraseña"
                                 autocomplete="current-password"
                                 required>
@@ -112,17 +105,6 @@
                         </div>
                     </div>
 
-<<<<<<< HEAD
-                    <!-- Mensajes del formulario -->
-                    {{-- Mensajes de Laravel --}}
-@if ($errors->any())
-    <div class="alert alert-danger mt-3">
-        @foreach ($errors->all() as $error)
-            <p class="mb-0">{{ $error }}</p>
-        @endforeach
-    </div>
-@endif
-=======
                     <!-- Mensajes de Error de Laravel -->
                     @if ($errors->any())
                         <div class="alert alert-danger mt-3" role="alert">
@@ -133,20 +115,7 @@
                             </ul>
                         </div>
                     @endif
->>>>>>> c5fc4af (Modifique los archivos de las interfaces)
 
-@if (session('success'))
-    <div class="alert alert-success mt-3">
-        {{ session('success') }}
-    </div>
-@endif
-
-<div
-    id="mensajeLogin"
-    class="alert d-none mt-3"
-    role="status"
-    aria-live="polite">
-</div>
                     <button
                         type="submit"
                         id="btnSubmitLogin"
