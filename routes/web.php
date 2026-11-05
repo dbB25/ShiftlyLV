@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RecuperarPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,12 +39,30 @@ Route::get('/perfil', function () {
     return view('html.login.perfil');
 });
 
+// Mostrar formulario de recuperación
 Route::get('/recuperar-password', function () {
     return view('html.login.recuperar-password');
 });
 
+// Procesar solicitud de recuperación
+Route::post('/recuperar-password', [RecuperarPasswordController::class, 'enviarEnlace'])
+    ->name('password.email');
+
+// Mostrar formulario para establecer una nueva contraseña mediante token
+Route::get('/new-password/{token}', [
+    RecuperarPasswordController::class,
+    'mostrarFormularioRestablecimiento'
+])->name('password.reset');
+
+// Procesar y guardar la nueva contraseña
+Route::post('/new-password', [
+    RecuperarPasswordController::class,
+    'restablecerPassword'
+])->name('password.update');
+
+// Si se intenta entrar sin token, regresar a recuperación
 Route::get('/new-password', function () {
-    return view('html.login.new-password');
+    return redirect('/recuperar-password');
 });
 
 Route::get('/verificacion-correo', function () {
