@@ -7,7 +7,7 @@ Shiftly es una app web gamificada de inglés profesional que prepara a trabajado
 ## 👥 Integrantes del Equipo
 
 - **Luis David Balandrano Delgado** — *Líder Técnico*
-- **Keydhy Marelo Villa Aldana** — *Analista*
+- **Keydhy Mareli Villa Aldana** — *Analista*
 - **Isis Dayane Arellano Carrillo** — *Frontend*
 - **Brian Jael Juárez Rodrigues** — *Frontend*
 - **Julio Cesar Licona Hernandez** — *Backend*
