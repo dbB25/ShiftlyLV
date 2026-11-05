@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shiftly - Biblioteca de Repaso</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/glosario-style.css') }}"></link>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- HEADER / NAVEGACIÓN -->
+    <header class="navbar-custom sticky-top">
+        <div class="container-xxl d-flex align-items-center justify-content-between">
+            <a href="../index/index.html" class="brand-container">
+                <img src="../../img/logotipo interfaz.svg" onerror="this.onerror=null; this.src='https://placehold.co/100x100/4a154b/ffffff?text=SHIFT';" alt="Shiftly Logo" class="navbar-logo">
+                <span class="navbar-brand-custom">SHIFT</span>
+            </a>
+
+            <!-- Navegación -->
+            <nav class="d-none d-lg-flex align-items-center">
+                <a href="../index/index.html" class="nav-link-custom">Inicio</a>
+                <a href="../index/index.html#about" class="nav-link-custom">Nosotros</a>
+                <a href="rutaDeAprendizaje.html" class="nav-link-custom">Aprender</a>
+                <a href="glosario.html" class="nav-link-custom active">Glosario</a>
+                <a href="../index/contacto.html" class="nav-link-custom">Contacto</a>
+                <a href="dashboard.html" class="btn btn-purple-filled ms-3"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a>
+                <a href="../login/login.html" class="btn btn-purple-outline ms-2">Login</a>
+            </nav>
+
+            <!-- Menú hamburguesa para móvil -->
+            <button class="btn btn-sm d-lg-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mobileNav">
+                <i class="bi bi-list fs-2 text-dark"></i>
+            </button>
+        </div>
+
+        <div class="collapse d-lg-none bg-white p-3 mt-2 rounded-3 shadow-sm" id="mobileNav">
+            <div class="d-flex flex-column gap-2">
+                <a href="../index/index.html" class="nav-link-custom mx-0">Inicio</a>
+                <a href="../index/index.html#about" class="nav-link-custom mx-0">Nosotros</a>
+                <a href="rutaDeAprendizaje.html" class="nav-link-custom mx-0">Aprender</a>
+                <a href="glosario.html" class="nav-link-custom mx-0 active">Glosario</a>
+                <a href="../index/contacto.html" class="nav-link-custom mx-0">Contacto</a>
+                <hr class="my-1">
+                <a href="dashboard.html" class="btn btn-purple-filled w-100 text-center mb-2"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a>
+                <a href="../login/login.html" class="btn btn-purple-outline w-100 text-center">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container-xxl py-5 flex-grow-1">
+        
+        <!-- ENCABEZADO DE SECCIÓN -->
+        <div class="text-center text-md-start mb-4">
+            <div class="subtitle-tag mb-1">REPASO Y VOCABULARIO</div>
+            <h1 class="serif-title display-6 mb-2">Biblioteca Y Repaso Técnico</h1>
+            <p class="text-muted lead fs-6 mb-0">Selecciona tu área profesional para explorar, escuchar y repasar el vocabulario de tus lecciones.</p>
+        </div>
+
+        <!-- CONTROLES: BUSCADOR Y FILTROS POR ÁREA -->
+        <div class="row gy-3 align-items-center mb-5">
+            <div class="col-lg-5">
+                <div class="input-group search-box">
+                    <span class="input-group-text bg-white border-end-0 text-purple pe-2">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="text" id="searchInput" class="form-control border-start-0 ps-1" placeholder="Buscar concepto o palabra técnica..." onkeyup="filterGlossary()">
+                </div>
+            </div>
+            <div class="col-lg-7 d-flex flex-wrap gap-2 justify-content-lg-end">
+                <button class="btn btn-filter active" data-filter="all" onclick="filterBySector('all', this)">Todos</button>
+                <button class="btn btn-filter" data-filter="Medicina" onclick="filterBySector('Medicina', this)">Medicina</button>
+                <button class="btn btn-filter" data-filter="Gastronomía" onclick="filterBySector('Gastronomía', this)">Gastronomía</button>
+                <button class="btn btn-filter" data-filter="Derecho" onclick="filterBySector('Derecho', this)">Derecho</button>
+                <button class="btn btn-filter" data-filter="Arquitectura" onclick="filterBySector('Arquitectura', this)">Arquitectura</button>
+            </div>
+        </div>
+
+        <!-- TARJETAS DE SECTORES TÉCNICOS -->
+        <div class="row g-4" id="glossaryGrid">
+
+            <!-- MEDICINA -->
+            <div class="col-md-6 col-lg-3 sector-card-wrapper" data-sector="Medicina">
+                <div class="card glossary-card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=600&auto=format&fit=crop" class="card-img-top object-fit-cover" alt="Medicina">
+                        <span class="badge sector-badge">Sector Técnico</span>
+                    </div>
+                    <div class="card-body d-flex flex-column justify-content-between p-4">
+                        <div>
+                            <h2 class="card-title serif-title fs-4 mb-1">Medicina</h2>
+                            <p class="text-muted small mb-3"><span class="term-count">2</span> términos guardados</p>
+                        </div>
+                        
+                        <div class="vocab-accordion border-top pt-3">
+                            <button class="btn btn-purple-accordion w-100 d-flex align-items-center justify-content-between" type="button" onclick="toggleVocab(this)">
+                                <span>Ver vocabulario</span>
+                                <i class="bi bi-chevron-down toggle-icon"></i>
+                            </button>
+                            
+                            <div class="vocab-list mt-3 d-none">
+                                <ul class="list-group list-group-flush small">
+                                    <li class="list-group-item bg-transparent px-0 py-2 border-bottom-dashed vocab-item" data-term="Triage Triaje Clasificación urgencias">
+                                        <div class="d-flex justify-content-between align-items-center fw-bold text-dark">
+                                            <span class="term-text">Triage</span>
+                                            <button class="btn btn-sm btn-audio p-0" onclick="speakText('Triage')">
+                                                <i class="bi bi-volume-up-fill"></i>
+                                            </button>
+                                        </div>
+                                        <div class="translation-wrapper mt-1">
+                                            <button class="btn-reveal text-muted" onclick="toggleTranslation(this)">Revelar traducción</button>
+                                            <span class="translation-text d-none pt-1">Triaje / Clasificación de urgencias</span>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item bg-transparent px-0 py-2 vocab-item" data-term="Vital signs Signos vitales">
+                                        <div class="d-flex justify-content-between align-items-center fw-bold text-dark">
+                                            <span class="term-text">Vital signs</span>
+                                            <button class="btn btn-sm btn-audio p-0" onclick="speakText('Vital signs')">
+                                                <i class="bi bi-volume-up-fill"></i>
+                                            </button>
+                                        </div>
+                                        <div class="translation-wrapper mt-1">
+                                            <button class="btn-reveal text-muted" onclick="toggleTranslation(this)">Revelar traducción</button>
+                                            <span class="translation-text d-none pt-1">Signos vitales</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GASTRONOMÍA -->
+            <div class="col-md-6 col-lg-3 sector-card-wrapper" data-sector="Gastronomía">
+                <div class="card glossary-card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&auto=format&fit=crop" class="card-img-top object-fit-cover" alt="Gastronomía">
+                        <span class="badge sector-badge">Sector Técnico</span>
+                    </div>
+                    <div class="card-body d-flex flex-column justify-content-between p-4">
+                        <div>
+                            <h2 class="card-title serif-title fs-4 mb-1">Gastronomía</h2>
+                            <p class="text-muted small mb-3"><span class="term-count">2</span> términos guardados</p>
+                        </div>
+
+                        <div class="vocab-accordion border-top pt-3">
+                            <button class="btn btn-purple-accordion w-100 d-flex align-items-center justify-content-between" type="button" onclick="toggleVocab(this)">
+                                <span>Ver vocabulario</span>
+                                <i class="bi bi-chevron-down toggle-icon"></i>
+                            </button>
+
+                            <div class="vocab-list mt-3 d-none">
+                                <ul class="list-group list-group-flush small">
+                                    <li class="list-group-item bg-transparent px-0 py-2 border-bottom-dashed vocab-item" data-term="Mise en place Preparación previa ingredientes">
+                                        <div class="d-flex justify-content-between align-items-center fw-bold text-dark">
+                                            <span class="term-text">Mise en place</span>
+                                            <button class="btn btn-sm btn-audio p-0" onclick="speakText('Mise en place', 'fr-FR')">
+                                                <i class="bi bi-volume-up-fill"></i>
+                                            </button>
+                                        </div>
+                                        <div class="translation-wrapper mt-1">
+                                            <button class="btn-reveal text-muted" onclick="toggleTranslation(this)">Revelar traducción</button>
+                                            <span class="translation-text d-none pt-1">Preparación previa de ingredientes</span>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item bg-transparent px-0 py-2 vocab-item" data-term="Sauté Saltear Salteado">
+                                        <div class="d-flex justify-content-between align-items-center fw-bold text-dark">
+                                            <span class="term-text">Sauté</span>
+                                            <button class="btn btn-sm btn-audio p-0" onclick="speakText('Sauté')">
+                                                <i class="bi bi-volume-up-fill"></i>
+                                            </button>
+                                        </div>
+                                        <div class="translation-wrapper mt-1">
+                                            <button class="btn-reveal text-muted" onclick="toggleTranslation(this)">Revelar traducción</button>
+                                            <span class="translation-text d-none pt-1">Saltear / Salteado</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DERECHO -->
+            <div class="col-md-6 col-lg-3 sector-card-wrapper" data-sector="Derecho">
+                <div class="card glossary-card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=600&auto=format&fit=crop" class="card-img-top object-fit-cover" alt="Derecho">
+                        <span class="badge sector-badge">Sector Técnico</span>
+                    </div>
+                    <div class="card-body d-flex flex-column justify-content-between p-4">
+                        <div>
+                            <h2 class="card-title serif-title fs-4 mb-1">Derecho</h2>
+                            <p class="text-muted small mb-3"><span class="term-count">2</span> términos guardados</p>
+                        </div>
+
+                        <div class="vocab-accordion border-top pt-3">
+                            <button class="btn btn-purple-accordion w-100 d-flex align-items-center justify-content-between" type="button" onclick="toggleVocab(this)">
+                                <span>Ver vocabulario</span>
+                                <i class="bi bi-chevron-down toggle-icon"></i>
+                            </button>
+
+                            <div class="vocab-list mt-3 d-none">
+                                <ul class="list-group list-group-flush small">
+                                    <li class="list-group-item bg-transparent px-0 py-2 border-bottom-dashed vocab-item" data-term="Affidavit Declaración jurada por escrito">
+                                        <div class="d-flex justify-content-between align-items-center fw-bold text-dark">
+                                            <span class="term-text">Affidavit</span>
+                                            <button class="btn btn-sm btn-audio p-0" onclick="speakText('Affidavit')">
+                                                <i class="bi bi-volume-up-fill"></i>
+                                            </button>
+                                        </div>
+                                        <div class="translation-wrapper mt-1">
+                                            <button class="btn-reveal text-muted" onclick="toggleTranslation(this)">Revelar traducción</button>
+                                            <span class="translation-text d-none pt-1">Declaración jurada por escrito</span>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item bg-transparent px-0 py-2 vocab-item" data-term="Subpoena Citación judicial Cita legal">
+                                        <div class="d-flex justify-content-between align-items-center fw-bold text-dark">
+                                            <span class="term-text">Subpoena</span>
+                                            <button class="btn btn-sm btn-audio p-0" onclick="speakText('Subpoena')">
+                                                <i class="bi bi-volume-up-fill"></i>
+                                            </button>
+                                        </div>
+                                        <div class="translation-wrapper mt-1">
+                                            <button class="btn-reveal text-muted" onclick="toggleTranslation(this)">Revelar traducción</button>
+                                            <span class="translation-text d-none pt-1">Citación judicial / Cita legal</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ARQUITECTURA -->
+            <div class="col-md-6 col-lg-3 sector-card-wrapper" data-sector="Arquitectura">
+                <div class="card glossary-card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=600&auto=format&fit=crop" class="card-img-top object-fit-cover" alt="Arquitectura">
+                        <span class="badge sector-badge">Sector Técnico</span>
+                    </div>
+                    <div class="card-body d-flex flex-column justify-content-between p-4">
+                        <div>
+                            <h2 class="card-title serif-title fs-4 mb-1">Arquitectura</h2>
+                            <p class="text-muted small mb-3"><span class="term-count">2</span> términos guardados</p>
+                        </div>
+
+                        <div class="vocab-accordion border-top pt-3">
+                            <button class="btn btn-purple-accordion w-100 d-flex align-items-center justify-content-between" type="button" onclick="toggleVocab(this)">
+                                <span>Ver vocabulario</span>
+                                <i class="bi bi-chevron-down toggle-icon"></i>
+                            </button>
+
+                            <div class="vocab-list mt-3 d-none">
+                                <ul class="list-group list-group-flush small">
+                                    <li class="list-group-item bg-transparent px-0 py-2 border-bottom-dashed vocab-item" data-term="Blueprint Plano de construcción Diseño">
+                                        <div class="d-flex justify-content-between align-items-center fw-bold text-dark">
+                                            <span class="term-text">Blueprint</span>
+                                            <button class="btn btn-sm btn-audio p-0" onclick="speakText('Blueprint')">
+                                                <i class="bi bi-volume-up-fill"></i>
+                                            </button>
+                                        </div>
+                                        <div class="translation-wrapper mt-1">
+                                            <button class="btn-reveal text-muted" onclick="toggleTranslation(this)">Revelar traducción</button>
+                                            <span class="translation-text d-none pt-1">Plano de construcción / Diseño</span>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item bg-transparent px-0 py-2 vocab-item" data-term="Load-bearing Muro de carga Estructural">
+                                        <div class="d-flex justify-content-between align-items-center fw-bold text-dark">
+                                            <span class="term-text">Load-bearing</span>
+                                            <button class="btn btn-sm btn-audio p-0" onclick="speakText('Load bearing')">
+                                                <i class="bi bi-volume-up-fill"></i>
+                                            </button>
+                                        </div>
+                                        <div class="translation-wrapper mt-1">
+                                            <button class="btn-reveal text-muted" onclick="toggleTranslation(this)">Revelar traducción</button>
+                                            <span class="translation-text d-none pt-1">Muro de carga / Estructural</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- MENSAJE NO RESULTADOS -->
+        <div id="noResults" class="text-center py-5 d-none">
+            <i class="bi bi-search-heart display-1 text-purple opacity-50 mb-3 d-block"></i>
+            <h3 class="serif-title fs-3 mb-2">No encontramos coincidencias</h3>
+            <p class="text-muted">Prueba buscando otro término o seleccionando un filtro diferente.</p>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer-custom">
+        <div class="container-xxl text-center">
+            <div class="mb-3 footer-links">
+                <a href="../index/index.html">Inicio</a>
+                <a href="../index/index.html#areas">Áreas</a>
+                <a href="../index/index.html#about">Quiénes Somos</a>
+                <a href="../index/presentacion.html">Presentación</a>
+                <a href="../index/servicios.html">Servicios</a>
+                <a href="../index/contacto.html">Contacto</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="../login/login.html">Login</a>
+            </div>
+            <p class="small text-white-50 mb-0">© 2026 Shiftly. Todos los derechos reservados. Plataforma de aprendizaje de inglés técnico.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+     <script src="{{ asset('js/glosario-scrip.js') }}"></script>
+</body>
+</html>

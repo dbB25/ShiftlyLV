@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Shiftly - Test de diagnóstico</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Estilos propios -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header>
+        <nav class="navbar">
+            <div class="container">
+
+                <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+
+                    <img src="../../img/logotipo interfaz.svg"
+                        alt="Logo de Shiftly"
+                        class="logo-shiftly"
+                    >
+
+                    <span>Shiftly</span>
+
+                </a>
+
+                <div class="navbar-links">
+                    <a href="../index/index.html">Inicio</a>
+                    <a href="../login/perfil.html">Mi perfil</a>
+                    <a href="../index/contacto.html">Ayuda</a>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main>
+
+        <section class="diagnostico">
+
+            <div class="container">
+
+                <!-- ENCABEZADO -->
+                <div class="diagnostico-encabezado text-center">
+
+                    <p class="diagnostico-etiqueta">
+                        TEST DE DIAGNÓSTICO
+                    </p>
+
+                    <h1>
+                        Descubre tu nivel de inglés
+                    </h1>
+
+                    <p class="diagnostico-descripcion">
+                        Responde las siguientes preguntas para conocer tu
+                        nivel actual y recibir recomendaciones de aprendizaje.
+                    </p>
+
+                </div>
+
+
+                <!-- PROGRESO -->
+                <div class="diagnostico-progreso shadow-sm rounded-4 p-4">
+
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+
+                        <strong>
+                            Progreso
+                        </strong>
+
+                        <strong id="progreso-texto" aria-live="polite">1 de 5</strong>
+
+                    </div>
+
+                    <div class="progress">
+
+                        <div
+                            class="progress-bar"
+                            role="progressbar"
+                            id="barra-progreso"
+                            style="width: 20%;"
+                            aria-valuenow="20"
+                            aria-valuemin="0"
+                            aria-valuemax="100">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <form id="diagnostico-form" novalidate>
+                <!-- PREGUNTA -->
+                <div class="diagnostico-pregunta pregunta-card shadow-sm rounded-4 p-4">
+
+                    <p class="pregunta-numero" id="pregunta-numero">Pregunta 1</p>
+
+                    <h2 id="pregunta-texto">
+                        Choose the correct option:
+                    </h2>
+
+
+                    <!-- OPCIONES -->
+                    <div class="row g-3" id="opciones-respuesta" role="group" aria-labelledby="pregunta-texto">
+
+                        <div class="col-md-6">
+
+                            <button
+                                type="button"
+                                class="opcion opcion-respuesta btn w-100 text-start" data-option="0" aria-pressed="false">
+
+                                She are a student.
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <button
+                                type="button"
+                                class="opcion opcion-respuesta btn w-100 text-start" data-option="1" aria-pressed="false">
+
+                                She is a student.
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <button
+                                type="button"
+                                class="opcion opcion-respuesta btn w-100 text-start" data-option="2" aria-pressed="false">
+
+                                She am a student.
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <button
+                                type="button"
+                                class="opcion opcion-respuesta btn w-100 text-start" data-option="3" aria-pressed="false">
+
+                                She be a student.
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="diagnostico-navegacion">
+                    <button type="button" class="btn btn-outline-secondary" id="anterior" disabled>← Anterior</button>
+                    <button type="submit" form="diagnostico-form" class="btn btn-primary" id="siguiente">Siguiente →</button>
+                </div>
+                <div class="invalid-feedback" id="mensaje-error" role="alert"></div>
+                <div class="mt-3" id="retroalimentacion" aria-live="polite"></div>
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <p>
+            En Shiftly creemos que el inglés puede llevarte más lejos
+        </p>
+
+    </footer>
+
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+
+    <script src="{{ asset('js/diagnostico.js') }}"></script>
+
+</body>
+
+</html>

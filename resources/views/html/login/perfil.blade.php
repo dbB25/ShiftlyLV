@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shiftly - Mi Perfil</title>
+
+    <!-- Previene error favicon -->
+    <link rel="icon" href="data:,">
+
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Estilos Propios -->
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/perfil.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR BLANCO CON SOMBRA -->
+    <header class="bg-white shadow-sm sticky-top py-3">
+        <div class="container-xl d-flex justify-content-between align-items-center">
+            <!-- Logo que direcciona al inicio -->
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-3 text-decoration-none" href="../index/index.html" style="color: #111344;">
+                <img src="../../img_log/logotipo interfaz.svg" alt="Logo Shiftly" width="40" height="40" onerror="this.src='../../img/logotipo interfaz.svg'">
+                <span>Shiftly</span>
+            </a>
+
+            <!-- Enlaces de Navegación (Incluye opción Inicio) -->
+            <div class="d-flex gap-4 fw-semibold align-items-center">
+                <a href="../index/index.html" class="nav-link-custom">Inicio</a>
+                <a href="../dashboard/dashboard.html" class="nav-link-custom">Dashboard</a>
+                <a href="../dashboard/Ejercicios.html" class="nav-link-custom">Aprender</a>
+                <a href="../dashboard/glosario.html" class="nav-link-custom">Glosario</a>
+                <a href="perfil.html" class="nav-link-custom active fw-bold" style="color: #52154E;">Mi Perfil</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="py-5 flex-grow-1 d-flex align-items-center">
+        <div class="container-xl" style="max-width: 850px;">
+
+            <!-- Fila Superior: Datos de Usuario Header -->
+            <div class="card border-0 shadow-sm p-4 rounded-4 bg-white mb-4">
+                <div class="d-flex flex-column flex-md-row align-items-center gap-4">
+                    
+                    <!-- Avatar del Perfil -->
+                    <div class="position-relative">
+                        <div class="avatar-perfil-contenedor" id="avatarContenedor">
+                            <i class="bi bi-person-fill" id="avatarIcono"></i>
+                        </div>
+                        <span class="position-absolute bottom-0 end-0 p-1 bg-success border border-light rounded-circle" title="En línea">
+                            <span class="visually-hidden">En línea</span>
+                        </span>
+                    </div>
+
+                    <div class="text-center text-md-start flex-grow-1">
+                        <span class="badge etiqueta-resultado text-uppercase px-3 py-1 rounded-pill mb-1">
+                            USUARIO ACTIVO
+                        </span>
+                        <h1 class="h3 fw-bold mb-1" id="encabezadoNombre" style="color: #111344;">Luis David</h1>
+                        <p class="text-muted mb-2 small" id="encabezadoSubtitulo">Desarrollador de Software & Estudiante</p>
+                        <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-1">
+                            <i class="bi bi-patch-check-fill me-1"></i>Cuenta Verificada
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fila Inferior: Formulario de Configuración -->
+            <div class="card border-0 shadow-sm p-4 p-md-5 rounded-4 bg-white">
+                <div class="d-flex align-items-center justify-content-between mb-4 pb-2 border-bottom">
+                    <h2 class="h5 fw-bold mb-0 d-flex align-items-center gap-2" style="color: #111344;">
+                        <i class="bi bi-sliders" style="color: #52154E;"></i> Información Personal
+                    </h2>
+                    <span class="text-muted extra-small" style="font-size: 0.8rem;">Edita los datos de tu cuenta</span>
+                </div>
+
+                <!-- Alerta Dinámica de Estado -->
+                <div id="alertaPerfil" class="alert d-none" role="alert"></div>
+
+                <form id="formularioPerfil" novalidate>
+                    <div class="row g-3">
+                        <div class="col-md-6 text-start">
+                            <label for="nombre-perfil" class="form-label small fw-bold" style="color: #111344;">Nombre</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-person text-muted"></i></span>
+                                <input type="text" id="nombre-perfil" class="form-control" value="Luis David" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 text-start">
+                            <label for="apellido-perfil" class="form-label small fw-bold" style="color: #111344;">Apellidos</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-person-v text-muted"></i></span>
+                                <input type="text" id="apellido-perfil" class="form-control" value="Balandrano Delgado" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 text-start">
+                            <label for="email-perfil" class="form-label small fw-bold" style="color: #111344;">Correo Electrónico</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-envelope text-muted"></i></span>
+                                <input type="email" id="email-perfil" class="form-control bg-light" value="ejemplo@correo.com" readonly title="El correo no se puede modificar">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 text-start">
+                            <label for="area-perfil" class="form-label small fw-bold" style="color: #111344;">Área Profesional Principal</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-briefcase text-muted"></i></span>
+                                <select id="area-perfil" class="form-select">
+                                    <option value="Sistemas y Desarrollo" selected>Sistemas y Desarrollo</option>
+                                    <option value="Medicina">Medicina</option>
+                                    <option value="Gastronomía">Gastronomía</option>
+                                    <option value="Derecho">Derecho</option>
+                                    <option value="Arquitectura">Arquitectura</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 text-start">
+                            <label for="nivel-perfil" class="form-label small fw-bold" style="color: #111344;">Nivel de Inglés Estimado</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-translate text-muted"></i></span>
+                                <input type="text" id="nivel-perfil" class="form-control bg-light" value="B1 Intermedio" readonly title="Nivel asignado por diagnóstico">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botones de Acción -->
+                    <div class="d-flex justify-content-end gap-3 mt-4 pt-3 border-top">
+                        <button type="button" id="btnCancelarPerfil" class="btn btn-descartar-perfil rounded-pill px-4 fw-semibold">
+                            Descartar
+                        </button>
+                        <button type="submit" id="btnGuardarPerfil" class="btn btn-guardar-perfil rounded-pill px-4 fw-semibold">
+                            <i class="bi bi-check-lg me-1"></i> Guardar Cambios
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-top py-3 mt-auto text-center">
+        <div class="container-xl">
+            <p class="mb-0 text-muted small">&copy; 2026 Shiftly. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Script Interactivo Propio -->
+    <script src="../../js/perfil.js"></script>
+</body>
+
+</html>

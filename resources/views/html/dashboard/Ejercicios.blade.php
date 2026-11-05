@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<link rel="stylesheet" href="../../css/ejercicios.css">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#DAE0F2">
+
+    <title>Shiftly | Ejercicios</title>
+
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  
+
+    <link rel="stylesheet" href="{{ asset('css/ejercicios.css') }}"></link>
+
+</head>
+
+ <script src="{{ asset('js/ejercicios.js') }}"></script>
+
+<body>
+
+    <!-- Encabezado -->
+    <header class="topbar">
+
+
+        <nav class="top-nav" aria-label="Navegación principal">
+            <a href="../index/index.html">Inicio</a>
+            <a href="../login/perfil.html">Mi perfil</a>
+            <span class="nav-avatar" id="profile">B</span>
+        </nav>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="content" id="practice">
+
+        <!-- Título -->
+        <section class="page-head">
+            <div>
+                <p class="eyebrow">UNIDAD 03 · EN LA VIDA DIARIA</p>
+
+                <h1>
+                    Practica a tu ritmo<span class="heading-accent">.</span>
+                </h1>
+
+                <p class="intro">
+                    Un ejercicio a la vez. Cada intento te acerca a tu meta.
+                </p>
+            </div>
+
+            <div class="unit">
+                <span>Lección 2 de 5</span>
+                <strong>Rutinas y planes</strong>
+            </div>
+        </section>
+
+        <!-- Barra de progreso -->
+        <section class="progress-wrap">
+            <div
+                class="progress"
+                role="progressbar"
+                aria-label="Progreso de los ejercicios"
+                aria-valuenow="0"
+                aria-valuemin="0"
+                aria-valuemax="100"
+            >
+                <div class="progress-bar"></div>
+            </div>
+
+            <span class="progress-copy">
+                0 de 4 ejercicios completados
+            </span>
+        </section>
+
+        <!-- Tarjeta de ejercicios -->
+        <section class="lesson-card" id="exercises">
+
+            <div class="lesson-top">
+                <div class="exercise-tag">
+                    <span id="typeIcon" class="tag-icon">✍️</span>
+                    <span id="typeName">Completa la frase</span>
+                </div>
+
+                <span class="counter" id="counter">
+                    Ejercicio 1 de 4
+                </span>
+            </div>
+
+            <!-- EJERCICIO 1 -->
+            <article
+                class="exercise active"
+                data-type="Completa la frase"
+                data-icon="✍️"
+            >
+                <h2 class="prompt">Elige la palabra que falta</h2>
+
+                <p class="hint">
+                    Lee la oración y escribe tu respuesta en inglés.
+                </p>
+
+                <p class="answer-line">
+                    I
+                    <input
+                        id="fillInput"
+                        class="input-answer"
+                        type="text"
+                        placeholder="..."
+                        aria-label="Palabra que falta"
+                    >
+                    coffee every morning.
+                </p>
+
+                <div class="actions">
+                    <button class="btn-check" id="checkFill" type="button">
+                        Comprobar respuesta
+                    </button>
+
+                    <button class="btn-skip" data-next type="button">
+                        Omitir
+                    </button>
+                </div>
+
+                <p class="feedback" id="fillFeedback" role="status"></p>
+            </article>
+
+            <!-- EJERCICIO 2 -->
+            <article
+                class="exercise"
+                data-type="Ordena las palabras"
+                data-icon="🧩"
+                hidden
+            >
+                <h2 class="prompt">Ordena las palabras</h2>
+
+                <p class="hint">
+                    Selecciona las palabras para completar la oración.
+                    Pulsa una palabra colocada para quitarla.
+                </p>
+
+                <p class="answer-line sentence-line">
+                    She
+                    <button class="blank" data-slot="0" type="button">_____</button>
+                    yoga
+                    <button class="blank" data-slot="1" type="button">_____</button>
+                    <button class="blank" data-slot="2" type="button">_____</button>.
+                </p>
+
+                <h3 class="section-title">BANCO DE PALABRAS</h3>
+
+                <div class="word-bank" id="wordBank">
+                    <button class="word" data-word="does" type="button">does</button>
+                    <button class="word" data-word="every" type="button">every</button>
+                    <button class="word" data-word="morning" type="button">morning</button>
+                    <button class="word" data-word="play" type="button">play</button>
+                </div>
+
+                <div class="actions">
+                    <button class="btn-check" id="checkDrag" type="button" disabled>
+                        Comprobar oración
+                    </button>
+
+                    <button class="btn-skip" id="resetDrag" type="button">
+                        Reiniciar
+                    </button>
+                </div>
+
+                <p class="feedback" id="dragFeedback" role="status"></p>
+            </article>
+
+            <!-- EJERCICIO 3 -->
+            <article
+                class="exercise"
+                data-type="Opción múltiple"
+                data-icon="🎯"
+                hidden
+            >
+                <h2 class="prompt">¿Cuál es la respuesta correcta?</h2>
+
+                <p class="hint">
+                    Selecciona la opción que completa mejor la frase.
+                </p>
+
+                <p class="answer-line">
+                    They <strong>_____</strong> to work by bus.
+                </p>
+
+                <div class="options">
+                    <button class="option" data-answer="walk" type="button">
+                        <span class="letter">A</span> walk
+                    </button>
+
+                    <button class="option" data-answer="go" type="button">
+                        <span class="letter">B</span> go
+                    </button>
+
+                    <button class="option" data-answer="goes" type="button">
+                        <span class="letter">C</span> goes
+                    </button>
+
+                    <button class="option" data-answer="going" type="button">
+                        <span class="letter">D</span> going
+                    </button>
+                </div>
+
+                <div class="actions">
+                    <button class="btn-check" id="checkChoice" type="button">
+                        Comprobar respuesta
+                    </button>
+
+                    <button class="btn-skip" data-next type="button">
+                        Omitir
+                    </button>
+                </div>
+
+                <p class="feedback" id="choiceFeedback" role="status"></p>
+            </article>
+
+            <!-- EJERCICIO 4 -->
+            <article
+                class="exercise"
+                data-type="Empareja los pares"
+                data-icon="🔗"
+                hidden
+            >
+                <h2 class="prompt">
+                    Conecta cada palabra con su significado
+                </h2>
+
+                <p class="hint">
+                    Selecciona una palabra en inglés y después su pareja en español.
+                </p>
+
+                <div class="match-grid">
+                    <button class="match-item" data-side="en" data-pair="early" type="button">
+                        <span class="mini">EN</span> early
+                    </button>
+
+                    <button class="match-item" data-side="es" data-pair="usually" type="button">
+                        <span class="mini">ES</span> normalmente
+                    </button>
+
+                    <button class="match-item" data-side="en" data-pair="usually" type="button">
+                        <span class="mini">EN</span> usually
+                    </button>
+
+                    <button class="match-item" data-side="es" data-pair="early" type="button">
+                        <span class="mini">ES</span> temprano
+                    </button>
+
+                    <button class="match-item" data-side="en" data-pair="weekend" type="button">
+                        <span class="mini">EN</span> weekend
+                    </button>
+
+                    <button class="match-item" data-side="es" data-pair="weekend" type="button">
+                        <span class="mini">ES</span> fin de semana
+                    </button>
+                </div>
+
+                <div class="actions">
+                    <button class="btn-check" id="finishMatch" type="button">
+                        Terminar práctica
+                    </button>
+
+                    <button class="btn-skip" data-next type="button">
+                        Continuar
+                    </button>
+                </div>
+
+                <p class="feedback" id="matchFeedback" role="status"></p>
+            </article>
+
+            <!-- Consejo -->
+            <aside class="tip-box">
+                <span class="tip-icon">💡</span>
+
+                <div>
+                    <strong>Consejo</strong>
+                    <p id="tip">
+                        Después de “I” usamos el verbo en su forma base.
+                    </p>
+                </div>
+            </aside>
+
+            <!-- Pie de la tarjeta -->
+            <div class="panel-footer">
+                <span class="footer-note">
+                    ¡Aprende practicando un poco cada día!
+                </span>
+
+                <button class="next" id="nextExercise" type="button">
+                    Siguiente ejercicio →
+                </button>
+            </div>
+
+        </section>
+
+        <footer class="page-footer">
+            SHIFTLY · Aprende algo nuevo cada día
+        </footer>
+
+    </main>
+
+</body>
+</html>
+
+
