@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shiftly - Iniciar Sesión</title>
+
+    <!-- Previene el error 404 del favicon -->
+    <link rel="icon" href="data:,">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Estilos propios -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url('/') }}">
+                <img src="{{ asset('img/logotipo interfaz.svg') }}" alt="Logo Shiftly" class="logo-shiftly">
+                <span>Shiftly</span>
+            </a>
+
+            <div class="navbar-links">
+                <a href="{{ url('/') }}">Inicio</a>
+                <a href="{{ url('/registro') }}">Registrarse</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Formulario de inicio de sesión -->
+    <main class="vista-autenticacion">
+        <div class="contenedor-autenticacion">
+
+            <div class="tarjeta-autenticacion">
+                <div class="encabezado-auth">
+                    <p class="etiqueta-resultado">¡BIENVENIDO DE NUEVO!</p>
+                    <h1>Iniciar Sesión</h1>
+                    <p class="subtitulo-resultado">
+                        Accede a tu cuenta para continuar aprendiendo.
+                    </p>
+                </div>
+
+                <form class="formulario-auth" id="formularioLogin" method="POST" action="{{ route('login.autenticar') }}">
+                    @csrf
+
+                    <div class="campo-auth">
+                        <label for="email" class="label-auth">
+                            Correo Electrónico
+                        </label>
+
+                        <div class="caja-input">
+                            <i class="bi bi-envelope icon-input"></i>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                value="{{ old('email') }}"
+                                class="input-auth @error('email') is-invalid @enderror"
+                                placeholder="ejemplo@correo.com"
+                                autocomplete="email"
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="campo-auth">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <label for="password" class="label-auth mb-0">
+                                Contraseña
+                            </label>
+
+                            <a href="{{ url('/recuperar-password') }}" class="enlace-secundario">
+                                ¿Olvidaste tu contraseña?
+                            </a>
+                        </div>
+
+                        <div class="caja-input">
+                            <i class="bi bi-lock icon-input"></i>
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                class="input-auth @error('password') is-invalid @enderror"
+                                placeholder="Ingresa tu contraseña"
+                                autocomplete="current-password"
+                                required>
+
+                            <button
+                                type="button"
+                                id="mostrarPassword"
+                                class="btn border-0"
+                                aria-label="Mostrar contraseña"
+                                aria-pressed="false">
+                                <i class="bi bi-eye" id="iconoPassword"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Mensajes de Error de Laravel -->
+                    @if ($errors->any())
+                        <div class="alert alert-danger mt-3" role="alert">
+                            <ul class="mb-0 small">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <button
+                        type="submit"
+                        id="btnSubmitLogin"
+                        class="btn-resultado btn-siguiente w-100 mt-2">
+                        Iniciar Sesión
+                    </button>
+
+                </form>
+
+                <div class="pie-auth">
+                    <p class="text-muted">
+                        ¿Aún no tienes una cuenta?
+                        <a href="{{ url('/registro') }}" class="enlace-primario">
+                            Regístrate aquí
+                        </a>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-simple">
+        <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between gap-2">
+            <p class="mb-0 text-muted small">
+                &copy; 2026 Shiftly. Todos los derechos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts con el helper asset() -->
+    <script src="{{ asset('js/login.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('js/loginmain.js') }}"></script>
+
+</body>
+</html>
