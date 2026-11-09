@@ -38,7 +38,7 @@
                 <a href="#areas" class="nav-link-custom">Áreas</a>
                 <a href="#about" class="nav-link-custom">Quiénes Somos</a>
                 <a href="{{ url('/servicios') }}" class="nav-link-custom">Servicios</a>
-                <a href="#purpose" class="nav-link-custom">Propósito</a>
+                <a href="{{ url('/perfil') }}" class="nav-link-custom">Perfil</a>
                 <a href="#team" class="nav-link-custom">Nuestro Equipo</a>
                 <a href="{{ url('/contacto') }}" class="nav-link-custom">Contacto</a>
                 <a href="{{ url('/dashboard') }}" class="btn btn-purple-filled ms-3"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a>
@@ -57,7 +57,7 @@
                 <a href="#areas" class="nav-link-custom mx-0">Áreas de Aprendizaje</a>
                 <a href="#about" class="nav-link-custom mx-0">Quiénes Somos</a>
                 <a href="{{ url('/servicios') }}" class="nav-link-custom mx-0">Servicios</a>
-                <a href="#purpose" class="nav-link-custom mx-0">Propósito</a>
+                <a href="{{ url('/perfil') }}" class="nav-link-custom mx-0">Perfil</a>
                 <a href="#team" class="nav-link-custom mx-0">Nuestro Equipo</a>
                 <a href="{{ url('/contacto') }}" class="nav-link-custom mx-0">Contacto</a>
                 <hr class="my-1">

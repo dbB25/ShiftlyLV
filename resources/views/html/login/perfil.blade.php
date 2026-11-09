@@ -9,34 +9,33 @@
     <!-- Previene error favicon -->
     <link rel="icon" href="data:,">
 
-    <!-- Bootstrap CSS CDN -->
+    <!-- Bootstrap CSS CDN & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
-    <!-- Estilos Propios -->
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/perfil.css">
+    <!-- Estilos Propios con helper asset() -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/perfil.css') }}">
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
 
     <!-- NAVBAR BLANCO CON SOMBRA -->
     <header class="bg-white shadow-sm sticky-top py-3">
         <div class="container-xl d-flex justify-content-between align-items-center">
-            <!-- Logo que direcciona al inicio -->
-            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-3 text-decoration-none" href="../index/index.html" style="color: #111344;">
-                <img src="../../img_log/logotipo interfaz.svg" alt="Logo Shiftly" width="40" height="40" onerror="this.src='../../img/logotipo interfaz.svg'">
+            <!-- Logo con dirección al inicio -->
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-3 text-decoration-none" href="{{ url('/') }}" style="color: #111344;">
+                <img src="{{ asset('img/logotipo interfaz.svg') }}" alt="Logo Shiftly" width="40" height="40" onerror="this.src='{{ asset('img/logotipo interfaz.svg') }}'">
                 <span>Shiftly</span>
             </a>
 
-            <!-- Enlaces de Navegación (Incluye opción Inicio) -->
+            <!-- Enlaces de Navegación -->
             <div class="d-flex gap-4 fw-semibold align-items-center">
-                <a href="../index/index.html" class="nav-link-custom">Inicio</a>
-                <a href="../dashboard/dashboard.html" class="nav-link-custom">Dashboard</a>
-                <a href="../dashboard/Ejercicios.html" class="nav-link-custom">Aprender</a>
-                <a href="../dashboard/glosario.html" class="nav-link-custom">Glosario</a>
-                <a href="perfil.html" class="nav-link-custom active fw-bold" style="color: #52154E;">Mi Perfil</a>
+                <a href="{{ url('/') }}" class="nav-link-custom">Inicio</a>
+                <a href="{{ url('/dashboard') }}" class="nav-link-custom">Dashboard</a>
+                <a href="{{ url('/ejercicios') }}" class="nav-link-custom">Aprender</a>
+                <a href="{{ url('/glosario') }}" class="nav-link-custom">Glosario</a>
+                <a href="{{ url('/perfil') }}" class="nav-link-custom active fw-bold" style="color: #52154E;">Mi Perfil</a>
             </div>
         </div>
     </header>
@@ -64,8 +63,8 @@
                             USUARIO ACTIVO
                         </span>
                         <h1 class="h3 fw-bold mb-1" id="encabezadoNombre" style="color: #111344;">
-                            {{ Auth::user()->name }}
-                           </h1>
+                            Usuario Demo
+                        </h1>
                         <p class="text-muted mb-2 small" id="encabezadoSubtitulo">Desarrollador de Software & Estudiante</p>
                         <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-1">
                             <i class="bi bi-patch-check-fill me-1"></i>Cuenta Verificada
@@ -86,14 +85,14 @@
                 <!-- Alerta Dinámica de Estado -->
                 <div id="alertaPerfil" class="alert d-none" role="alert"></div>
 
-                 <form id="formularioPerfil" method="POST" action="{{ route('perfil.actualizar') }}" novalidate>
-                 @csrf
+                <form id="formularioPerfil" method="POST" action="{{ route('perfil.actualizar') }}" novalidate>
+                    @csrf
                     <div class="row g-3">
                         <div class="col-md-6 text-start">
                             <label for="nombre-perfil" class="form-label small fw-bold" style="color: #111344;">Nombre</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-person text-muted"></i></span>
-                              <input type="text" id="nombre-perfil" name="nombre" class="form-control" value="{{ Auth::user()->name }}" required>
+                                <input type="text" id="nombre-perfil" name="nombre" class="form-control" value="Usuario" required>
                             </div>
                         </div>
 
@@ -101,15 +100,16 @@
                             <label for="apellido-perfil" class="form-label small fw-bold" style="color: #111344;">Apellidos</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-person-v text-muted"></i></span>
-                                <input type="text" id="apellido-perfil" name="apellido" class="form-control" value="{{ Auth::user()->apellido }}" required>
+                                <input type="text" id="apellido-perfil" name="apellido" class="form-control" value="Demo" required>
                             </div>
                         </div>
 
+                        <!-- CAMPO CORREO HABILITADO PARA EDICIÓN -->
                         <div class="col-md-12 text-start">
                             <label for="email-perfil" class="form-label small fw-bold" style="color: #111344;">Correo Electrónico</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-envelope text-muted"></i></span>
-                              <input type="email" id="email-perfil" class="form-control bg-light" value="{{ Auth::user()->email }}" readonly title="El correo no se puede modificar">
+                                <input type="email" id="email-perfil" name="email" class="form-control" value="usuario@shiftly.com" required>
                             </div>
                         </div>
 
@@ -158,11 +158,11 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
+    <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     
     <!-- Script Interactivo Propio -->
-    <script src="../../js/perfil.js"></script>
+    <script src="{{ asset('js/perfil.js') }}"></script>
 </body>
 
 </html>

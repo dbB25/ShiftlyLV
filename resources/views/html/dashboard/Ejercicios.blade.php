@@ -72,8 +72,8 @@
 
 
         <nav class="top-nav" aria-label="Navegación principal">
-            <a href="../index/index.html">Inicio</a>
-            <a href="../login/perfil.html">Mi perfil</a>
+            <a href="{{ url('/') }}">Inicio</a>
+            <a href="{{ url('/perfil') }}">Mi perfil</a>
             <span class="nav-avatar" id="profile">B</span>
         </nav>
     </header>

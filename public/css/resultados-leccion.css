@@ -1,0 +1,144 @@
+:root {
+    /* Paleta de Morados */
+    --purple-dark: #1A0B2E;      /* Navbar y Footer */
+    --purple-main: #52154E;      /* Morado corporativo */
+    --purple-medium: #7B1FA2;    /* Morado vibrante */
+    --purple-soft: #F3E5F5;      /* Morado pastel para fondos */
+    
+    /* Acentos Naranja */
+    --orange-bright: #FF6B35;    /* Naranja brillante */
+    --orange-hover: #E85A24;     /* Hover naranja */
+    --orange-light: #FFF3E0;     /* Fondos suaves */
+
+    /* Neutros */
+    --bg-light: #F4F0FA;         /* Fondo de la app */
+    --white: #FFFFFF;
+    --text-navy: #111344;
+    --text-muted: #6C757D;
+}
+
+body {
+    background-color: var(--bg-light);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: var(--text-navy);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar Corporativo */
+.navbar-custom {
+    background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple-main) 100%);
+    box-shadow: 0 4px 15px rgba(26, 11, 46, 0.2);
+}
+
+.navbar-custom .navbar-brand {
+    color: var(--white);
+}
+
+.navbar-custom .nav-link {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.navbar-custom .nav-link:hover,
+.navbar-custom .nav-link.active {
+    color: var(--orange-bright);
+}
+
+/* Tarjeta Principal de Puntuación */
+.card-puntuacion {
+    background-color: var(--white);
+    border: 1px solid rgba(82, 21, 78, 0.08);
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 30px rgba(26, 11, 46, 0.08);
+}
+
+/* Círculo / Score Display */
+.score-display {
+    background: linear-gradient(135deg, var(--purple-soft) 0%, #E1BEE7 100%);
+    color: var(--purple-main);
+    border-radius: 1.25rem;
+    padding: 1.25rem 2rem;
+    display: inline-block;
+    border: 2px solid rgba(123, 31, 162, 0.15);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.score-number {
+    font-size: 3.25rem;
+    font-weight: 800;
+    color: var(--purple-main);
+}
+
+/* Botones de Módulos */
+.btn-modulo-detalle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1.25rem;
+    border-radius: 50rem;
+    border: 2px solid var(--purple-soft);
+    background-color: var(--white);
+    color: var(--purple-main);
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.btn-modulo-detalle:hover {
+    background-color: var(--purple-main);
+    color: var(--white);
+    border-color: var(--purple-main);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(82, 21, 78, 0.2);
+}
+
+.btn-modulo-detalle:hover .icon-area {
+    background-color: var(--orange-bright) !important;
+    color: var(--white) !important;
+}
+
+.btn-modulo-detalle.destacado {
+    background: linear-gradient(135deg, var(--orange-bright) 0%, #FF8C42 100%);
+    color: var(--white);
+    border-color: transparent;
+    box-shadow: 0 4px 14px rgba(255, 107, 53, 0.3);
+}
+
+.btn-modulo-detalle.destacado:hover {
+    background: linear-gradient(135deg, var(--orange-hover) 0%, var(--orange-bright) 100%);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(255, 107, 53, 0.4);
+}
+
+.btn-modulo-detalle.destacado .icon-area {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    color: var(--white) !important;
+}
+
+/* Modal Estilizado */
+.modal-content-custom {
+    border-radius: 1.25rem;
+    border: none;
+}
+
+.modal-header-custom {
+    background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple-main) 100%);
+    color: var(--white);
+    border-top-left-radius: 1.25rem;
+    border-top-right-radius: 1.25rem;
+}
+
+.modal-info-box {
+    background-color: var(--purple-soft);
+    border-radius: 0.75rem;
+    padding: 1rem;
+}
+
+/* Footer */
+.footer-custom {
+    background-color: var(--purple-dark);
+    color: var(--white);
+}

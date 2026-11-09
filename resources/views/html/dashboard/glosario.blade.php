@@ -28,13 +28,11 @@
 
             <!-- Navegación -->
             <nav class="d-none d-lg-flex align-items-center">
-                <a href="../index/index.html" class="nav-link-custom">Inicio</a>
-                <a href="../index/index.html#about" class="nav-link-custom">Nosotros</a>
-                <a href="rutaDeAprendizaje.html" class="nav-link-custom">Aprender</a>
-                <a href="glosario.html" class="nav-link-custom active">Glosario</a>
-                <a href="../index/contacto.html" class="nav-link-custom">Contacto</a>
-                <a href="dashboard.html" class="btn btn-purple-filled ms-3"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a>
-                <a href="../login/login.html" class="btn btn-purple-outline ms-2">Login</a>
+                <a href="{{ url('/') }}" class="nav-link-custom">Inicio</a>
+                <a href="{{ url('/ejercicios') }}" class="nav-link-custom">Aprender</a>
+                <a href="{{ url('/contacto') }}" class="nav-link-custom">Contacto</a>
+                <a href="{{ url('/dashboard') }}" class="btn btn-purple-filled ms-3"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a>
+                <a href="{{ url('/login') }}" class="btn btn-purple-outline ms-2">Login</a>
             </nav>
 
             <!-- Menú hamburguesa para móvil -->

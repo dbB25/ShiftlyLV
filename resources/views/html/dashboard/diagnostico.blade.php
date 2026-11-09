@@ -36,9 +36,9 @@
                 </a>
 
                 <div class="navbar-links">
-                    <a href="../index/index.html">Inicio</a>
-                    <a href="../login/perfil.html">Mi perfil</a>
-                    <a href="../index/contacto.html">Ayuda</a>
+                    <a href="{{ url('/') }}">Inicio</a>
+                    <a href="{{ url('/perfil') }}">Mi perfil</a>
+                    <a href="{{ url('/contacto') }}">Ayuda</a>
                 </div>
 
             </div>

@@ -1,0 +1,147 @@
+:root {
+    /* Paleta de Morados */
+    --purple-dark: #1A0B2E;      /* Navbar y Footer */
+    --purple-main: #52154E;      /* Morado corporativo */
+    --purple-medium: #7B1FA2;    /* Morado vibrante */
+    --purple-soft: #F3E5F5;      /* Morado pastel para fondos suaves */
+    
+    /* Acentos Naranja */
+    --orange-bright: #FF6B35;    /* Naranja brillante */
+    --orange-hover: #E85A24;     /* Hover naranja */
+    --orange-light: #FFF3E0;     /* Fondos de acento */
+
+    /* Neutros */
+    --bg-light: #F4F0FA;         /* Fondo suave */
+    --white: #FFFFFF;
+    --text-navy: #111344;
+    --text-muted: #6C757D;
+}
+
+body {
+    background-color: var(--bg-light);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: var(--text-navy);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar */
+.navbar-custom {
+    background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple-main) 100%);
+    box-shadow: 0 4px 15px rgba(26, 11, 46, 0.2);
+}
+
+.navbar-custom .navbar-brand {
+    color: var(--white);
+}
+
+.navbar-custom .nav-link {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.navbar-custom .nav-link:hover,
+.navbar-custom .nav-link.active {
+    color: var(--orange-bright);
+}
+
+/* Tarjeta Principal de Resultado */
+.card-resultado {
+    background-color: var(--white);
+    border: 1px solid rgba(82, 21, 78, 0.08);
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 30px rgba(26, 11, 46, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Círculo de Nivel con Gradiente y Resplandor */
+.circle-nivel {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--purple-main) 0%, var(--purple-medium) 100%);
+    color: var(--white);
+    font-size: 2.5rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem auto;
+    box-shadow: 0 6px 20px rgba(123, 31, 162, 0.35);
+    border: 4px solid var(--purple-soft);
+}
+
+/* Tarjeta de Recomendación */
+.card-recomendacion {
+    background-color: var(--white);
+    border-left: 5px solid var(--orange-bright);
+    border-radius: 1rem;
+    box-shadow: 0 4px 15px rgba(26, 11, 46, 0.05);
+}
+
+/* Botones de Acción */
+.btn-outline-custom {
+    border: 2px solid var(--purple-medium);
+    color: var(--purple-main);
+    border-radius: 50rem;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.btn-outline-custom:hover {
+    background-color: var(--purple-soft);
+    color: var(--purple-dark);
+    border-color: var(--purple-main);
+}
+
+.btn-repetir {
+    border: 2px solid var(--purple-soft);
+    color: var(--text-navy);
+    border-radius: 50rem;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.btn-repetir:hover {
+    background-color: var(--purple-soft);
+    color: var(--purple-main);
+}
+
+.btn-continuar {
+    background: linear-gradient(135deg, var(--orange-bright) 0%, #FF8C42 100%);
+    border: none;
+    color: var(--white);
+    font-weight: 700;
+    border-radius: 50rem;
+    box-shadow: 0 4px 14px rgba(255, 107, 53, 0.3);
+    transition: all 0.25s ease;
+}
+
+.btn-continuar:hover {
+    background: linear-gradient(135deg, var(--orange-hover) 0%, var(--orange-bright) 100%);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(255, 107, 53, 0.4);
+}
+
+/* Modal */
+.modal-content-custom {
+    border-radius: 1.25rem;
+    border: none;
+}
+
+.modal-header-custom {
+    background-color: var(--purple-dark);
+    color: var(--white);
+    border-top-left-radius: 1.25rem;
+    border-top-right-radius: 1.25rem;
+}
+
+/* Footer */
+.footer-custom {
+    background-color: var(--purple-dark);
+    color: var(--white);
+}

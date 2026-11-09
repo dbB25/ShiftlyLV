@@ -26,8 +26,8 @@
 
             <div class="d-flex gap-4 fw-semibold">
                 <a href="{{ url('/') }}" class="text-decoration-none" style="color: #111344;">Inicio</a>
-                <a href="../dashboard/Ejercicios.html" class="text-decoration-none" style="color: #111344;">Aprender</a>
-                <a href="../dashboard/glosario.html" class="text-decoration-none" style="color: #111344;">Glosario</a>
+                <a href="{{ url('/ejercicios') }}" class="text-decoration-none" style="color: #111344;">Aprender</a>
+                <a href="{{ url('/glosario') }}" class="text-decoration-none" style="color: #111344;">Glosario</a>
                
             </div>
         </div>

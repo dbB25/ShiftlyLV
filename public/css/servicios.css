@@ -1,0 +1,190 @@
+:root {
+    /* Paleta de Morados */
+    --purple-dark: #1A0B2E;      /* Navbar y Footer */
+    --purple-main: #52154E;      /* Morado corporativo */
+    --purple-medium: #7B1FA2;    /* Morado vibrante para acentos */
+    --purple-soft: #F3E5F5;      /* Morado pastel para fondos y tarjetas */
+    --purple-light: #FAF4FB;     /* Fondo suave para campos secundarios */
+    
+    /* Acentos Naranja */
+    --orange-bright: #FF6B35;    /* Naranja brillante para llamadas a la acción */
+    --orange-hover: #E85A24;     /* Hover naranja */
+    --orange-light: #FFF3E0;     /* Fondos de iconos y botones de audio */
+
+    /* Neutros */
+    --bg-light: #F4F0FA;         /* Fondo general de la app */
+    --white: #FFFFFF;
+    --text-navy: #111344;
+    --text-muted: #6C757D;
+}
+
+body {
+    background-color: var(--bg-light);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: var(--text-navy);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==========================================
+   NAVBAR CORPORATIVO CON EFECTO VIDRIO (GLASS)
+   ========================================== */
+.navbar-custom {
+    background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple-main) 100%);
+    box-shadow: 0 4px 20px rgba(26, 11, 46, 0.25);
+    backdrop-filter: blur(8px);
+}
+
+.navbar-custom .navbar-brand {
+    color: var(--white);
+    letter-spacing: -0.5px;
+}
+
+.navbar-custom .nav-link {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    transition: all 0.25s ease;
+    border-radius: 50rem;
+    padding: 0.5rem 1rem !important;
+}
+
+.navbar-custom .nav-link:hover,
+.navbar-custom .nav-link.active {
+    color: var(--white);
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ==========================================
+   FILTROS DE CATEGORÍA
+   ========================================== */
+.btn-filter-category {
+    border: 2px solid var(--purple-soft);
+    background-color: var(--white);
+    color: var(--purple-main);
+    font-weight: 600;
+    padding: 0.45rem 1.25rem;
+    transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 2px 8px rgba(26, 11, 46, 0.04);
+}
+
+.btn-filter-category:hover {
+    border-color: var(--orange-bright);
+    color: var(--orange-bright);
+    transform: translateY(-2px);
+}
+
+.btn-filter-category.active {
+    background: linear-gradient(135deg, var(--orange-bright) 0%, #FF8C42 100%);
+    color: var(--white);
+    border-color: transparent;
+    box-shadow: 0 6px 16px rgba(255, 107, 53, 0.35);
+}
+
+/* ==========================================
+   TARJETAS DE VOCABULARIO (FLASHCARDS)
+   ========================================== */
+.card-vocabulario {
+    border: 1px solid rgba(123, 31, 162, 0.1);
+    border-radius: 1.5rem;
+    background: var(--white);
+    box-shadow: 0 8px 24px rgba(26, 11, 46, 0.05);
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Barra lateral decorativa en hover */
+.card-vocabulario::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--orange-bright), var(--purple-medium));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card-vocabulario:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 36px rgba(82, 21, 78, 0.12);
+    border-color: rgba(123, 31, 162, 0.25);
+}
+
+.card-vocabulario:hover::before {
+    opacity: 1;
+}
+
+/* Badges de Categorías */
+.badge-shift {
+    background-color: var(--purple-soft);
+    color: var(--purple-main);
+    font-weight: 700;
+    font-size: 0.825rem;
+    padding: 0.5rem 1rem;
+    border-radius: 50rem;
+    border: 1px solid rgba(123, 31, 162, 0.15);
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Botón de Pronunciación de Audio */
+.btn-audio {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 107, 53, 0.2);
+    background-color: var(--orange-light);
+    color: var(--orange-bright);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+}
+
+.btn-audio:hover {
+    background-color: var(--orange-bright);
+    color: var(--white);
+    border-color: var(--orange-bright);
+    transform: scale(1.12) rotate(-5deg);
+    box-shadow: 0 4px 14px rgba(255, 107, 53, 0.35);
+}
+
+.btn-audio:active {
+    transform: scale(0.95);
+}
+
+/* ==========================================
+   CONTENEDOR DE EJEMPLOS DE USO
+   ========================================== */
+.caja-ejemplo {
+    background-color: var(--purple-light);
+    border-left: 4px solid var(--orange-bright);
+    border-radius: 0.85rem;
+    padding: 1.15rem 1.35rem;
+    border-top: 1px solid rgba(123, 31, 162, 0.05);
+    border-right: 1px solid rgba(123, 31, 162, 0.05);
+    border-bottom: 1px solid rgba(123, 31, 162, 0.05);
+}
+
+.caja-ejemplo ul li {
+    position: relative;
+    margin-bottom: 0.35rem;
+}
+
+.caja-ejemplo ul li:last-child {
+    margin-bottom: 0;
+}
+
+/* ==========================================
+   FOOTER CORPORATIVO
+   ========================================== */
+.footer-custom {
+    background-color: var(--purple-dark);
+    color: var(--white);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+}

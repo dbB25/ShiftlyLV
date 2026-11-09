@@ -1,0 +1,123 @@
+:root {
+    /* Paleta de Morados */
+    --purple-dark: #1A0B2E;      /* Morado muy oscuro para Navbar/Footer */
+    --purple-main: #52154E;      /* Morado institucional */
+    --purple-medium: #7B1FA2;    /* Morado vibrante para acentos */
+    --purple-soft: #F3E5F5;      /* Morado pastel para fondos suaves */
+    
+    /* Acentos de Naranja */
+    --orange-bright: #FF6B35;    /* Naranja brillante para llamadas a la acción */
+    --orange-hover: #E85A24;     /* Naranja hover */
+    --orange-light: #FFF3E0;     /* Naranja pastel para íconos */
+
+    /* Colores Neutros */
+    --bg-light: #F4F0FA;         /* Fondo general con ligero matiz morado */
+    --white: #FFFFFF;
+    --text-navy: #111344;
+    --text-muted: #6C757D;
+    --success-green: #198754;
+}
+
+body {
+    background-color: var(--bg-light);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: var(--text-navy);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar Personalizado */
+.navbar-custom {
+    background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple-main) 100%);
+    box-shadow: 0 4px 15px rgba(26, 11, 46, 0.2);
+}
+
+.navbar-custom .navbar-brand {
+    color: var(--white);
+}
+
+.navbar-custom .nav-link {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.navbar-custom .nav-link:hover,
+.navbar-custom .nav-link.active {
+    color: var(--orange-bright);
+}
+
+/* Badge de la Sección */
+.badge-modulo {
+    background: linear-gradient(135deg, var(--orange-bright), #FF8C42);
+    color: var(--white);
+    box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+}
+
+/* Tarjeta de Progreso General */
+.card-progreso {
+    background-color: var(--white);
+    border: 1px solid rgba(123, 31, 162, 0.1);
+    border-radius: 1.25rem;
+    box-shadow: 0 4px 20px rgba(82, 21, 78, 0.08);
+}
+
+.progress-custom {
+    height: 16px;
+    background-color: var(--purple-soft);
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.progress-bar-custom {
+    background: linear-gradient(90deg, var(--purple-main) 0%, var(--purple-medium) 50%, var(--orange-bright) 100%);
+    transition: width 0.4s ease;
+}
+
+/* Buscador */
+.search-input-custom {
+    border: 2px solid transparent;
+    border-radius: 50rem;
+    padding: 0.75rem 1.5rem;
+    box-shadow: 0 4px 15px rgba(82, 21, 78, 0.08);
+    transition: all 0.2s ease;
+}
+
+.search-input-custom:focus {
+    border-color: var(--orange-bright);
+    box-shadow: 0 4px 18px rgba(255, 107, 53, 0.2);
+    outline: none;
+}
+
+/* Tarjetas de Módulos */
+.tarjeta-modulo .card {
+    border: 1px solid rgba(82, 21, 78, 0.08);
+    border-radius: 1.25rem;
+    background-color: var(--white);
+    box-shadow: 0 4px 15px rgba(26, 11, 46, 0.05);
+    transition: transform 0.25s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.tarjeta-modulo:hover .card {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(82, 21, 78, 0.15);
+    border-color: var(--purple-medium);
+}
+
+/* Íconos con Contraste Naranja / Morado */
+.icon-box-modulo {
+    width: 52px;
+    height: 52px;
+    border-radius: 1rem;
+    background-color: var(--orange-light);
+    color: var(--orange-bright);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    transition: all 0.25s ease;
+}
+
+.tarjeta-modulo:hover   
