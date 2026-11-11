@@ -12,9 +12,14 @@ Route::get('/', function () {
     return view('html.index.index');
 })->name('index');
 
+// Carga directa de la vista contacto.blade.php (sin controlador)
 Route::get('/contacto', function () {
     return view('html.index.contacto');
 })->name('contacto');
+
+Route::post('/contacto', function () {
+    return redirect('/contacto')->with('exito', 'Mensaje enviado correctamente');
+})->name('contacto.enviar');
 
 Route::get('/servicios', function () {
     return view('html.index.servicios');
@@ -115,7 +120,3 @@ Route::get('/resultado', function () {
 Route::get('/resultados-leccion', function () {
     return view('html.dashboard.resultados-leccion');
 })->name('resultados-leccion');
-use App\Http\Controllers\ContactoController;
-
-Route::get('/contacto', [ContactoController::class, 'index'])->name('contacto.index');
-Route::post('/contacto', [ContactoController::class, 'enviar'])->name('contacto.enviar');

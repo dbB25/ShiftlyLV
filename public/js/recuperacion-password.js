@@ -1,4 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+    // ==========================================
+    // CLASE DE SERVICIO CRUD EN LOCALSTORAGE
+    // ==========================================
     class RecuperacionService {
         constructor() {
             this.storageKey = "recuperaciones";
@@ -11,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
+        // CREATE: Guarda una nueva solicitud de recuperación
         crear(correo) {
             const registros = this.obtenerTodos();
             const nuevoRegistro = {
@@ -24,20 +29,18 @@ document.addEventListener("DOMContentLoaded", () => {
             return nuevoRegistro;
         }
 
+        // READ: Obtiene todos los registros
         obtenerTodos() {
             return JSON.parse(localStorage.getItem(this.storageKey)) || [];
         }
 
+        // READ: Buscar por ID
         obtenerPorId(id) {
             const registros = this.obtenerTodos();
             return registros.find(item => item.id === id) || null;
         }
 
-        obtenerPorCorreo(correo) {
-            const registros = this.obtenerTodos();
-            return registros.find(item => item.correo === correo) || null;
-        }
-
+        // UPDATE: Actualiza el estado de una recuperación
         actualizar(id, datosActualizados) {
             const registros = this.obtenerTodos();
             const indice = registros.findIndex(item => item.id === id);
@@ -49,6 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return null;
         }
 
+        // DELETE: Elimina un registro por ID
         eliminar(id) {
             const registros = this.obtenerTodos();
             const registrosFiltrados = registros.filter(item => item.id !== id);
@@ -59,9 +63,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const recuperacionService = new RecuperacionService();
 
+    // Selectores del DOM
     const formRecuperar = document.getElementById("formRecuperar");
-    const correoInput = document.getElementById("correoRecuperacion");
+    const correoInput = document.getElementById("email");
     const mensajeRecuperacion = document.getElementById("mensajeRecuperacion");
+    const btnEnviarEnlace = document.getElementById("btnEnviarEnlace");
+
+    // Elementos de la Ventana Emergente (Modal)
+    const modalElement = document.getElementById("modalConfirmacionCorreo");
+    const textoCorreoEnviado = document.getElementById("textoCorreoEnviado");
+    const btnAceptarModal = document.getElementById("btnAceptarModal");
 
     if (formRecuperar) {
         formRecuperar.addEventListener("submit", (evento) => {
@@ -69,48 +80,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const correo = correoInput ? correoInput.value.trim() : "";
 
+            // Validación del formato del correo
             if (!correo || !/\S+@\S+\.\S+/.test(correo)) {
                 if (mensajeRecuperacion) {
                     mensajeRecuperacion.textContent = "Por favor, ingresa un correo electrónico válido.";
                     mensajeRecuperacion.className = "alert alert-warning text-start d-block";
                 }
+                if (correoInput) correoInput.focus();
                 return;
             }
+
+            // Ocultar alertas previas de error
+            if (mensajeRecuperacion) {
+                mensajeRecuperacion.classList.add("d-none");
+            }
+
+            // 1. CREATE: Guardar registro en localStorage y sessionStorage
             const nuevoRegistro = recuperacionService.crear(correo);
             sessionStorage.setItem("recuperacionActualId", nuevoRegistro.id);
-            if (mensajeRecuperacion) {
-                mensajeRecuperacion.textContent = "¡Enlace enviado! Redirigiendo a la verificación de correo...";
-                mensajeRecuperacion.className = "alert alert-success text-start d-block";
+            sessionStorage.setItem("recuperacionCorreo", correo);
+
+            // 2. Colocar el correo ingresado dentro del texto del Modal
+            if (textoCorreoEnviado) {
+                textoCorreoEnviado.textContent = correo;
             }
-            setTimeout(() => {
-                window.location.href = "verificacion-correo.html";
-            }, 800);
+
+            // 3. Desplegar Modal Emergente de Bootstrap
+            if (modalElement) {
+                const modal = new bootstrap.Modal(modalElement);
+                modal.show();
+            }
         });
     }
-    const formVerificacion = document.getElementById("formularioVerificacion");
-    const camposCodigo = document.querySelectorAll(".codigo");
-    const mensajeVerificacion = document.getElementById("mensajeVerificacion");
-    if (formVerificacion) {
-        formVerificacion.addEventListener("submit", (evento) => {
-            evento.preventDefault();
-            let codigoCompleto = "";
-            camposCodigo.forEach(campo => {
-                codigoCompleto += campo.value.trim();
-            });
-            const idActual = sessionStorage.getItem("recuperacionActualId");
-            if (idActual) {
-                recuperacionService.actualizar(idActual, {
-                    codigoVerificado: true,
-                    codigoIngresado: codigoCompleto
-                });
-            }
-            if (mensajeVerificacion) {
-                mensajeVerificacion.textContent = "¡Código verificado con éxito! Redirigiendo...";
-                mensajeVerificacion.className = "alert alert-success text-start d-block";
-            }
-            setTimeout(() => {
-                window.location.href = "recuperar-password.html";
-            }, 600);
+
+    // Evento del botón Aceptar del Modal para redirigir
+    if (btnAceptarModal) {
+        btnAceptarModal.addEventListener("click", () => {
+            window.location.href = "/verificacion-correo";
         });
     }
+
 });

@@ -1,0 +1,138 @@
+:root {
+    /* Paleta de Morados */
+    --purple-dark: #1A0B2E;      /* Navbar y Footer */
+    --purple-main: #52154E;      /* Morado corporativo */
+    --purple-medium: #7B1FA2;    /* Morado de acento */
+    --purple-soft: #F3E5F5;      /* Fondo suave de iconos y cajas */
+    --purple-light: #FAF4FB;     /* Fondo de entradas de texto */
+    
+    /* Acentos de Naranja */
+    --orange-bright: #FF6B35;    /* Botón principal y badges */
+    --orange-hover: #E85A24;     /* Hover de botón enviar */
+    --orange-light: #FFF3E0;     /* Fondos de acento suave */
+
+    /* Neutros */
+    --bg-light: #F4F0FA;         /* Fondo general del sitio */
+    --white: #FFFFFF;
+    --text-navy: #111344;
+    --text-muted: #6C757D;
+}
+
+body {
+    background-color: var(--bg-light);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: var(--text-navy);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar Corporativo */
+.navbar-custom {
+    background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple-main) 100%);
+    box-shadow: 0 4px 15px rgba(26, 11, 46, 0.2);
+}
+
+.navbar-custom .navbar-brand {
+    color: var(--white);
+}
+
+.navbar-custom .nav-link {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    transition: color 0.2s ease;
+    border-radius: 50rem;
+    padding: 0.5rem 1rem !important;
+}
+
+.navbar-custom .nav-link:hover,
+.navbar-custom .nav-link.active {
+    color: var(--white);
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Tarjetas Elevadas */
+.card-contacto {
+    border: 1px solid rgba(123, 31, 162, 0.08);
+    border-radius: 1.5rem;
+    background-color: var(--white);
+    box-shadow: 0 8px 24px rgba(26, 11, 46, 0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-contacto:hover {
+    box-shadow: 0 12px 32px rgba(82, 21, 78, 0.1);
+}
+
+/* Cajas de Información Directa */
+.info-item-box {
+    background-color: var(--purple-light);
+    border: 1px solid rgba(123, 31, 162, 0.08);
+    border-radius: 1rem;
+    padding: 1rem 1.25rem;
+    transition: all 0.2s ease;
+}
+
+.info-item-box:hover {
+    background-color: var(--purple-soft);
+    border-color: rgba(123, 31, 162, 0.2);
+}
+
+.icon-wrapper-purple {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background-color: var(--purple-soft);
+    color: var(--purple-main);
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Formulario e Inputs */
+.form-control-custom {
+    border: 2px solid var(--purple-soft);
+    border-radius: 0.85rem;
+    padding: 0.75rem 1rem;
+    background-color: var(--white);
+    transition: all 0.2s ease;
+}
+
+.form-control-custom:focus {
+    border-color: var(--orange-bright);
+    box-shadow: 0 0 0 0.25rem rgba(255, 107, 53, 0.15);
+    outline: none;
+    background-color: var(--white);
+}
+
+.btn-enviar-contacto {
+    background: linear-gradient(135deg, var(--orange-bright) 0%, #FF8C42 100%);
+    border: none;
+    color: var(--white);
+    font-weight: 700;
+    padding: 0.85rem 1.5rem;
+    border-radius: 50rem;
+    box-shadow: 0 4px 14px rgba(255, 107, 53, 0.3);
+    transition: all 0.25s ease;
+}
+
+.btn-enviar-contacto:hover {
+    background: linear-gradient(135deg, var(--orange-hover) 0%, var(--orange-bright) 100%);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(255, 107, 53, 0.4);
+}
+
+/* Modal Emergente */
+.modal-content-custom {
+    border-radius: 1.5rem;
+    border: none;
+}
+
+/* Footer Corporativo */
+.footer-custom {
+    background-color: var(--purple-dark);
+    color: var(--white);
+}

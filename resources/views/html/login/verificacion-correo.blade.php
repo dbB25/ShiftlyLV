@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shiftly - Verificación de Correo</title>
 
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- Estilos Propios -->
-    <link rel="stylesheet" href="../../css/style.css">
+    
+    <!-- Estilos Propios de Shiftly -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 
 <body style="background-color: #DAE0F2; font-family: sans-serif; margin: 0; min-height: 100vh; display: flex; flex-direction: column;">
@@ -19,8 +20,8 @@
     <!-- NAVBAR BLANCO CON SOMBRA -->
     <header class="bg-white shadow-sm sticky-top py-3">
         <div class="container d-flex justify-content-between align-items-center">
-            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-3 text-decoration-none" href="../index/index.html" style="color: #111344;">
-                <img src="../../img/logotipo interfaz.svg" alt="Logo Shiftly" width="40" height="40">
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-3 text-decoration-none" href="{{ url('/') }}" style="color: #111344;">
+                <img src="{{ asset('img/logotipo interfaz.svg') }}" alt="Logo Shiftly" width="40" height="40" onerror="this.src='{{ asset('img/logotipo interfaz.svg') }}'">
                 <span>Shiftly</span>
             </a>
         </div>
@@ -68,7 +69,7 @@
                         <input type="text" maxlength="1" class="form-control codigo text-center fw-bold fs-3 rounded-3" style="width: 55px; height: 60px; border: 2px solid #CBD5E1;">
                     </div>
 
-                    <button type="submit" class="btn text-white rounded-pill w-100 py-2 fw-semibold" style="background-color: #52154E; border-color: #52154E;">
+                    <button type="submit" id="btnVerificar" class="btn text-white rounded-pill w-100 py-2 fw-semibold" style="background-color: #52154E; border-color: #52154E;">
                         Verificar Cuenta
                     </button>
                 </form>
@@ -87,10 +88,14 @@
     <footer class="bg-white border-top py-3 mt-auto text-center">
         <p class="mb-0 text-muted small">&copy; 2026 Shiftly. Todos los derechos reservados.</p>
     </footer>
-    <!-- Bootstrap JS -->
+
+    <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Script de redirección directa -->
+    <!-- Script Lógico de Autenticación Propio -->
+    <script src="{{ asset('js/verificacion-correo.js') }}"></script>
+
+    <!-- Script de Redirección Inmediata al Login -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const formulario = document.getElementById("formularioVerificacion");
@@ -98,19 +103,21 @@
             if (formulario) {
                 formulario.addEventListener("submit", (evento) => {
                     evento.preventDefault();
-                    window.location.href = "new-password.html";
+                    
+                    // Muestra feedback antes de redirigir al Login
+                    const mensaje = document.getElementById("mensajeVerificacion");
+                    if (mensaje) {
+                        mensaje.textContent = "¡Cuenta verificada con éxito! Redirigiendo al inicio de sesión...";
+                        mensaje.className = "alert alert-success text-start mb-3 d-block";
+                    }
+
+                    setTimeout(() => {
+                        window.location.href = "{{ url('/login') }}";
+                    }, 600);
                 });
             }
         });
     </script>
-</body>
-</html>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Script Lógico de Autenticación -->
-    <script src="../../js/verificacion-correo.js"></script>
 </body>
 
 </html>
