@@ -115,3 +115,7 @@ Route::get('/resultado', function () {
 Route::get('/resultados-leccion', function () {
     return view('html.dashboard.resultados-leccion');
 })->name('resultados-leccion');
+use App\Http\Controllers\ContactoController;
+
+Route::get('/contacto', [ContactoController::class, 'index'])->name('contacto.index');
+Route::post('/contacto', [ContactoController::class, 'enviar'])->name('contacto.enviar');
