@@ -6,118 +6,191 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shiftly - Mi Perfil</title>
 
-    <!-- Previene error favicon -->
     <link rel="icon" href="data:,">
 
     <!-- Bootstrap CSS CDN & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
-    <!-- Estilos Propios con helper asset() -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/perfil.css') }}">
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Estilos Exclusivos de Perfil -->
+    <link rel="stylesheet" href="{{ asset('css/perfil.css') }}?v=1">
 </head>
 
 <body class="d-flex flex-column min-vh-100">
 
-    <!-- NAVBAR BLANCO CON SOMBRA -->
-    <header class="bg-white shadow-sm sticky-top py-3">
-        <div class="container-xl d-flex justify-content-between align-items-center">
-            <!-- Logo con dirección al inicio -->
-            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-3 text-decoration-none" href="{{ url('/') }}" style="color: #111344;">
-                <img src="{{ asset('img/logotipo interfaz.svg') }}" alt="Logo Shiftly" width="40" height="40" onerror="this.src='{{ asset('img/logotipo interfaz.svg') }}'">
-                <span>Shiftly</span>
+    <!-- ==========================================
+         NAVBAR MORADO CORPORATIVO
+         ========================================== -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-shiftly sticky-top py-3">
+        <div class="container-xl">
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-extrabold fs-3 text-decoration-none text-white" href="{{ url('/') }}" style="color: #FFFFFF !important;">
+                <img src="{{ asset('img/logotipo interfaz.svg') }}" alt="Logo Shiftly" width="40" height="40">
+                <span style="color: #FFFFFF !important;">Shiftly</span>
             </a>
 
-            <!-- Enlaces de Navegación -->
-            <div class="d-flex gap-4 fw-semibold align-items-center">
-                <a href="{{ url('/') }}" class="nav-link-custom">Inicio</a>
-                <a href="{{ url('/dashboard') }}" class="nav-link-custom">Dashboard</a>
-                <a href="{{ url('/ejercicios') }}" class="nav-link-custom">Aprender</a>
-                <a href="{{ url('/glosario') }}" class="nav-link-custom">Glosario</a>
-                <a href="{{ url('/perfil') }}" class="nav-link-custom active fw-bold" style="color: #52154E;">Mi Perfil</a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarPerfil">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarPerfil">
+                <div class="navbar-nav ms-auto gap-1 my-2 my-lg-0">
+                    <a href="{{ url('/') }}" class="nav-link nav-link-app">Inicio</a>
+                    <a href="{{ url('/dashboard') }}" class="nav-link nav-link-app">Dashboard</a>
+                    <a href="{{ url('/ejercicios') }}" class="nav-link nav-link-app">Aprender</a>
+                    <a href="{{ url('/glosario') }}" class="nav-link nav-link-app">Glosario</a>
+                    <a href="{{ url('/perfil') }}" class="nav-link nav-link-app active">Mi Perfil</a>
+                </div>
             </div>
         </div>
-    </header>
+    </nav>
 
-    <!-- CONTENIDO PRINCIPAL -->
-    <main class="py-5 flex-grow-1 d-flex align-items-center">
-        <div class="container-xl" style="max-width: 850px;">
+    <!-- ==========================================
+         CONTENIDO PRINCIPAL: MI PERFIL 3D
+         ========================================== -->
+    <main class="profile-wrapper py-5 px-3 flex-grow-1">
+        <div class="container-xl" style="max-width: 880px;">
 
-            <!-- Fila Superior: Datos de Usuario Header -->
-            <div class="card border-0 shadow-sm p-4 rounded-4 bg-white mb-4">
-                <div class="d-flex flex-column flex-md-row align-items-center gap-4">
-                    
-                    <!-- Avatar del Perfil -->
-                    <div class="position-relative">
-                        <div class="avatar-perfil-contenedor" id="avatarContenedor">
-                            <i class="bi bi-person-fill" id="avatarIcono"></i>
+            <!-- TARJETA SUPERIOR: ENCABEZADO DEL USUARIO -->
+            <div class="profile-card-3d mb-4">
+                <div class="profile-banner-top"></div>
+
+                <div class="px-4 px-md-5 pb-4">
+                    <div class="d-flex flex-column flex-md-row align-items-center align-items-md-end gap-3 gap-md-4" style="margin-top: -52px;">
+                        <!-- Avatar Circular con Iniciales Dinámicas -->
+                        <div class="position-relative flex-shrink-0">
+                            <div class="avatar-perfil-contenedor" id="avatarContenedor" title="Avatar de usuario">
+                                <span id="avatarIniciales">UD</span>
+                            </div>
+                            <span class="online-dot" title="En línea">
+                                <span class="visually-hidden">En línea</span>
+                            </span>
                         </div>
-                        <span class="position-absolute bottom-0 end-0 p-1 bg-success border border-light rounded-circle" title="En línea">
-                            <span class="visually-hidden">En línea</span>
-                        </span>
+
+                        <!-- Nombre y Badges -->
+                        <div class="text-center text-md-start flex-grow-1 pt-2">
+                            <div class="d-flex flex-wrap justify-content-center justify-content-md-start align-items-center gap-2 mb-1">
+                                <span class="badge rounded-pill px-3 py-1 fw-extrabold text-uppercase"
+                                      style="background-color: var(--purple-soft); color: var(--purple-main); font-size: 0.72rem;">
+                                    USUARIO ACTIVO
+                                </span>
+                                <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-1 fw-bold" style="font-size: 0.75rem;">
+                                    <i class="bi bi-patch-check-fill me-1"></i>Cuenta Verificada
+                                </span>
+                            </div>
+
+                            <h1 class="h3 fw-extrabold mb-1" id="encabezadoNombre" style="color: var(--purple-dark);">
+                                Usuario Demo
+                            </h1>
+                            <p class="text-muted mb-0 small fw-semibold" id="encabezadoSubtitulo">
+                                Sistemas y Desarrollo · Estudiante Shiftly
+                            </p>
+                        </div>
+
+                        <!-- Botón Restablecer Perfil (DELETE en localStorage) -->
+                        <div class="mt-2 mt-md-0">
+                            <button type="button" id="btnRestablecerPerfil" class="btn btn-3d-danger-outline" title="Restaurar valores por defecto">
+                                <i class="bi bi-arrow-counterclockwise me-1"></i> Restablecer
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="text-center text-md-start flex-grow-1">
-                        <span class="badge etiqueta-resultado text-uppercase px-3 py-1 rounded-pill mb-1">
-                            USUARIO ACTIVO
-                        </span>
-                        <h1 class="h3 fw-bold mb-1" id="encabezadoNombre" style="color: #111344;">
-                            Usuario Demo
-                        </h1>
-                        <p class="text-muted mb-2 small" id="encabezadoSubtitulo">Desarrollador de Software & Estudiante</p>
-                        <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-1">
-                            <i class="bi bi-patch-check-fill me-1"></i>Cuenta Verificada
-                        </span>
+                    <!-- Mini Resumen Gamificado -->
+                    <div class="row g-3 mt-3 pt-3 border-top" style="border-color: var(--border-purple) !important;">
+                        <div class="col-4">
+                            <div class="stat-mini-card">
+                                <div class="fw-extrabold fs-5" style="color: var(--orange-bright);">
+                                    <i class="bi bi-fire"></i> 5 días
+                                </div>
+                                <div class="small text-muted fw-bold">Racha Actual</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat-mini-card">
+                                <div class="fw-extrabold fs-5" style="color: var(--purple-main);">
+                                    <i class="bi bi-lightning-charge-fill text-warning"></i> 420 XP
+                                </div>
+                                <div class="small text-muted fw-bold">Experiencia</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat-mini-card">
+                                <div class="fw-extrabold fs-5" id="statNivelBadge" style="color: var(--purple-dark);">
+                                    B1
+                                </div>
+                                <div class="small text-muted fw-bold">Nivel CEFR</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Fila Inferior: Formulario de Configuración -->
-            <div class="card border-0 shadow-sm p-4 p-md-5 rounded-4 bg-white">
-                <div class="d-flex align-items-center justify-content-between mb-4 pb-2 border-bottom">
-                    <h2 class="h5 fw-bold mb-0 d-flex align-items-center gap-2" style="color: #111344;">
-                        <i class="bi bi-sliders" style="color: #52154E;"></i> Información Personal
+            <!-- TARJETA INFERIOR: FORMULARIO DE CONFIGURACIÓN -->
+            <div class="profile-card-3d p-4 p-md-5">
+                <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between mb-4 pb-3 border-bottom gap-2" style="border-color: var(--border-purple) !important;">
+                    <h2 class="h5 fw-extrabold mb-0 d-flex align-items-center gap-2" style="color: var(--purple-dark);">
+                        <span class="rounded-3 d-inline-flex align-items-center justify-content-center"
+                              style="width: 36px; height: 36px; background-color: var(--purple-soft); color: var(--purple-main);">
+                            <i class="bi bi-sliders"></i>
+                        </span>
+                        Información Personal
                     </h2>
-                    <span class="text-muted extra-small" style="font-size: 0.8rem;">Edita los datos de tu cuenta</span>
+                    <span class="small fw-bold" id="ultimaActualizacionTexto" style="color: var(--text-muted); font-size: 0.78rem;">
+                        Edita los datos de tu cuenta
+                    </span>
                 </div>
 
                 <!-- Alerta Dinámica de Estado -->
-                <div id="alertaPerfil" class="alert d-none" role="alert"></div>
+                <div id="alertaPerfil" class="alert d-none rounded-4 py-2 px-3 small fw-bold" role="alert"></div>
 
                 <form id="formularioPerfil" method="POST" action="{{ route('perfil.actualizar') }}" novalidate>
                     @csrf
                     <div class="row g-3">
+                        <!-- Nombre -->
                         <div class="col-md-6 text-start">
-                            <label for="nombre-perfil" class="form-label small fw-bold" style="color: #111344;">Nombre</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-person text-muted"></i></span>
-                                <input type="text" id="nombre-perfil" name="nombre" class="form-control" value="Usuario" required>
+                            <label for="nombre-perfil" class="form-label small fw-extrabold" style="color: var(--purple-dark);">
+                                Nombre
+                            </label>
+                            <div class="input-group-shiftly">
+                                <i class="bi bi-person-fill icon-input"></i>
+                                <input type="text" id="nombre-perfil" name="nombre" class="input-auth" value="Usuario" placeholder="Tu nombre" required>
                             </div>
                         </div>
 
+                        <!-- Apellidos -->
                         <div class="col-md-6 text-start">
-                            <label for="apellido-perfil" class="form-label small fw-bold" style="color: #111344;">Apellidos</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-person-v text-muted"></i></span>
-                                <input type="text" id="apellido-perfil" name="apellido" class="form-control" value="Demo" required>
+                            <label for="apellido-perfil" class="form-label small fw-extrabold" style="color: var(--purple-dark);">
+                                Apellidos
+                            </label>
+                            <div class="input-group-shiftly">
+                                <i class="bi bi-person-vcard-fill icon-input"></i>
+                                <input type="text" id="apellido-perfil" name="apellido" class="input-auth" value="Demo" placeholder="Tus apellidos" required>
                             </div>
                         </div>
 
-                        <!-- CAMPO CORREO HABILITADO PARA EDICIÓN -->
+                        <!-- Correo Electrónico -->
                         <div class="col-md-12 text-start">
-                            <label for="email-perfil" class="form-label small fw-bold" style="color: #111344;">Correo Electrónico</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-envelope text-muted"></i></span>
-                                <input type="email" id="email-perfil" name="email" class="form-control" value="usuario@shiftly.com" required>
+                            <label for="email-perfil" class="form-label small fw-extrabold" style="color: var(--purple-dark);">
+                                Correo Electrónico
+                            </label>
+                            <div class="input-group-shiftly">
+                                <i class="bi bi-envelope-fill icon-input"></i>
+                                <input type="email" id="email-perfil" name="email" class="input-auth" value="usuario@shiftly.com" placeholder="ejemplo@correo.com" required>
                             </div>
                         </div>
 
+                        <!-- Área Profesional Principal -->
                         <div class="col-md-6 text-start">
-                            <label for="area-perfil" class="form-label small fw-bold" style="color: #111344;">Área Profesional Principal</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-briefcase text-muted"></i></span>
-                                <select id="area-perfil" class="form-select">
+                            <label for="area-perfil" class="form-label small fw-extrabold" style="color: var(--purple-dark);">
+                                Área Profesional Principal
+                            </label>
+                            <div class="input-group-shiftly">
+                                <i class="bi bi-briefcase-fill icon-input"></i>
+                                <select id="area-perfil" name="area" class="select-auth">
                                     <option value="Sistemas y Desarrollo" selected>Sistemas y Desarrollo</option>
                                     <option value="Medicina">Medicina</option>
                                     <option value="Gastronomía">Gastronomía</option>
@@ -127,22 +200,28 @@
                             </div>
                         </div>
 
+                        <!-- Nivel de Inglés Estimado -->
                         <div class="col-md-6 text-start">
-                            <label for="nivel-perfil" class="form-label small fw-bold" style="color: #111344;">Nivel de Inglés Estimado</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-translate text-muted"></i></span>
-                                <input type="text" id="nivel-perfil" class="form-control bg-light" value="B1 Intermedio" readonly title="Nivel asignado por diagnóstico">
+                            <label for="nivel-perfil" class="form-label small fw-extrabold" style="color: var(--purple-dark);">
+                                Nivel de Inglés Estimado
+                            </label>
+                            <div class="input-group-shiftly readonly-box">
+                                <i class="bi bi-translate icon-input"></i>
+                                <input type="text" id="nivel-perfil" name="nivel" class="input-auth" value="B1 Intermedio" readonly title="Nivel asignado por diagnóstico">
+                                <span class="badge rounded-pill" style="background-color: var(--purple-soft); color: var(--purple-main); font-size: 0.7rem;">
+                                    Diagnóstico
+                                </span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Botones de Acción -->
-                    <div class="d-flex justify-content-end gap-3 mt-4 pt-3 border-top">
-                        <button type="button" id="btnCancelarPerfil" class="btn btn-descartar-perfil rounded-pill px-4 fw-semibold">
-                            Descartar
+                    <!-- Botones de Acción 3D -->
+                    <div class="d-flex flex-column flex-sm-row justify-content-end gap-3 mt-4 pt-4 border-top" style="border-color: var(--border-purple) !important;">
+                        <button type="button" id="btnCancelarPerfil" class="btn btn-3d-secondary">
+                            <i class="bi bi-x-circle"></i> Descartar
                         </button>
-                        <button type="submit" id="btnGuardarPerfil" class="btn btn-guardar-perfil rounded-pill px-4 fw-semibold">
-                            <i class="bi bi-check-lg me-1"></i> Guardar Cambios
+                        <button type="submit" id="btnGuardarPerfil" class="btn btn-3d-orange">
+                            <i class="bi bi-check-lg"></i> Guardar Cambios
                         </button>
                     </div>
                 </form>
@@ -151,16 +230,22 @@
         </div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-white border-top py-3 mt-auto text-center">
-        <div class="container-xl">
-            <p class="mb-0 text-muted small">&copy; 2026 Shiftly. Todos los derechos reservados.</p>
+    <!-- ==========================================
+         FOOTER MORADO CORPORATIVO
+         ========================================== -->
+    <footer class="footer-shiftly py-4 mt-auto">
+        <div class="container-xl d-flex flex-column flex-md-row align-items-center justify-content-between gap-2">
+            <div class="d-flex align-items-center gap-2">
+                <img src="{{ asset('img/logotipo interfaz.svg') }}" alt="Logo Shiftly" width="26" height="26">
+                <span class="fw-bold small">Shiftly</span>
+            </div>
+            <p class="mb-0 text-white-50 small">&copy; 2026 Shiftly. Todos los derechos reservados.</p>
         </div>
     </footer>
 
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Script Interactivo Propio -->
     <script src="{{ asset('js/perfil.js') }}"></script>
 </body>

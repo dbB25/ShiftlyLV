@@ -1,108 +1,274 @@
-/* ==========================================
-   VARIABLES DE COLOR Y TEMA - SHIFTLY
-   ========================================== */
 :root {
-    --color-principal: #52154E;
-    --color-secundario: #111344;
-    --color-fondo: #DAE0F2;
-    --color-blanco: #FFFFFF;
-    --color-texto: #2D3748;
-    --color-borde: #CBD5E1;
+    --purple-dark: #1A0B2E;
+    --purple-main: #52154E;
+    --purple-medium: #7B1FA2;
+    --purple-soft: #F3E5F5;
+    --purple-light: #FAF4FB;
+    --purple-tint: #EFE6FA;
+    --purple-btn-shadow: #350B32;
+
+    --orange-bright: #FF6B35;
+    --orange-shadow: #CC4918;
+    --orange-hover: #FF7F50;
+    --orange-light: #FFF3E0;
+
+    --border-purple: #DECFF0;
+    --bg-app: #F6F1FC;
+    --white: #FFFFFF;
+    --text-navy: #111344;
+    --text-muted: #5B5675;
+    --success-green: #22C55E;
 }
 
-/* Base de la vista del perfil */
+* {
+    box-sizing: border-box;
+}
+
 body {
-    background-color: var(--color-fondo);
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    color: var(--color-texto);
+    background-color: var(--bg-app);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: var(--text-navy);
+    overflow-x: hidden;
+    margin: 0;
 }
 
-/* Navbar personalizado */
-.navbar-brand {
-    color: var(--color-secundario) !important;
+/* ==========================================
+   NAVBAR MORADO CORPORATIVO
+   ========================================== */
+.navbar-shiftly {
+    background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple-main) 100%);
+    border-bottom: 3px solid var(--purple-btn-shadow);
+    box-shadow: 0 4px 20px rgba(26, 11, 46, 0.25);
 }
 
-.nav-link-custom {
-    color: var(--color-secundario);
+.nav-link-app {
+    color: rgba(255, 255, 255, 0.88) !important;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem !important;
+    border-radius: 1rem;
+    transition: all 0.2s ease;
     text-decoration: none;
-    font-weight: 600;
-    transition: color 0.2s ease-in-out;
 }
 
-.nav-link-custom:hover,
-.nav-link-custom.active {
-    color: var(--color-principal);
+.nav-link-app:hover,
+.nav-link-app.active {
+    background-color: rgba(255, 255, 255, 0.16);
+    color: var(--white) !important;
 }
 
-/* Avatar del Usuario */
+/* ==========================================
+   BOTONES 3D ESTILO SHIFTLY
+   ========================================== */
+.btn-3d-orange {
+    background-color: var(--orange-bright);
+    color: var(--white) !important;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    border: none;
+    border-radius: 1.15rem;
+    padding: 0.85rem 1.75rem;
+    box-shadow: 0 5px 0 var(--orange-shadow);
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    cursor: pointer;
+}
+
+.btn-3d-orange:hover {
+    background-color: var(--orange-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 var(--orange-shadow);
+}
+
+.btn-3d-orange:active {
+    transform: translateY(4px);
+    box-shadow: 0 1px 0 var(--orange-shadow);
+}
+
+.btn-3d-orange:disabled {
+    opacity: 0.75;
+    transform: none;
+    cursor: not-allowed;
+}
+
+.btn-3d-secondary {
+    background-color: var(--purple-soft);
+    color: var(--purple-main) !important;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    border: 2px solid var(--border-purple);
+    border-radius: 1.15rem;
+    padding: 0.8rem 1.5rem;
+    box-shadow: 0 4px 0 var(--border-purple);
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    cursor: pointer;
+}
+
+.btn-3d-secondary:hover {
+    background-color: #E7D0EE;
+    transform: translateY(-1px);
+}
+
+.btn-3d-secondary:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--border-purple);
+}
+
+.btn-3d-danger-outline {
+    background-color: #FEF2F2;
+    color: #DC2626 !important;
+    font-weight: 800;
+    font-size: 0.82rem;
+    border: 2px solid #FECACA;
+    border-radius: 1rem;
+    padding: 0.55rem 1rem;
+    box-shadow: 0 3px 0 #FECACA;
+    transition: all 0.15s ease;
+}
+
+.btn-3d-danger-outline:hover {
+    background-color: #FEE2E2;
+    transform: translateY(-1px);
+}
+
+/* ==========================================
+   FONDO Y TARJETAS 3D DE PERFIL
+   ========================================== */
+.profile-wrapper {
+    background:
+        radial-gradient(circle at 12% 15%, rgba(123, 31, 162, 0.11) 0%, transparent 45%),
+        radial-gradient(circle at 88% 85%, rgba(255, 107, 53, 0.11) 0%, transparent 45%),
+        var(--bg-app);
+}
+
+.profile-card-3d {
+    background-color: var(--white);
+    border: 3px solid var(--border-purple);
+    border-radius: 2rem;
+    box-shadow: 0 9px 0 var(--border-purple), 0 20px 40px rgba(26, 11, 46, 0.09);
+    overflow: hidden;
+}
+
+.profile-banner-top {
+    background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple-main) 60%, var(--purple-medium) 100%);
+    height: 115px;
+    position: relative;
+}
+
+/* Avatar Circular 3D */
 .avatar-perfil-contenedor {
-    width: 90px;
-    height: 90px;
-    background-color: var(--color-principal);
+    width: 104px;
+    height: 104px;
     border-radius: 50%;
+    background: linear-gradient(135deg, var(--orange-bright) 0%, #FF9642 100%);
+    color: var(--white);
+    font-size: 2.35rem;
+    font-weight: 800;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-blanco);
-    font-size: 2.5rem;
-    box-shadow: 0 4px 10px rgba(82, 21, 78, 0.15);
+    border: 5px solid var(--white);
+    box-shadow: 0 8px 20px rgba(26, 11, 46, 0.25);
+    user-select: none;
+    transition: transform 0.2s ease;
 }
 
-/* Badges y Etiquetas */
-.etiqueta-resultado {
-    background-color: rgba(82, 21, 78, 0.1);
-    color: var(--color-principal);
-    letter-spacing: 1px;
-    font-size: 0.75rem;
-    font-weight: 700;
+.avatar-perfil-contenedor:hover {
+    transform: scale(1.04);
 }
 
-/* Personalización de Inputs y Selects */
-.form-control,
-.form-select {
-    border-color: var(--color-borde);
-    padding: 0.6rem 0.75rem;
+.online-dot {
+    width: 18px;
+    height: 18px;
+    background-color: var(--success-green);
+    border: 3px solid var(--white);
+    border-radius: 50%;
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+}
+
+/* Mini tarjetas de estadísticas */
+.stat-mini-card {
+    background-color: var(--purple-light);
+    border: 2px solid var(--border-purple);
+    border-radius: 1.25rem;
+    padding: 0.85rem 1rem;
+    text-align: center;
+    transition: transform 0.18s ease, border-color 0.18s ease;
+}
+
+.stat-mini-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--purple-medium);
+}
+
+/* ==========================================
+   INPUTS Y SELECTORES GAMIFICADOS
+   ========================================== */
+.input-group-shiftly {
+    display: flex;
+    align-items: center;
+    background-color: var(--purple-light);
+    border: 2px solid var(--border-purple);
+    border-radius: 1.1rem;
+    padding: 0.2rem 0.85rem;
+    transition: all 0.18s ease;
+}
+
+.input-group-shiftly:hover:not(.readonly-box) {
+    border-color: #C5AEE6;
+}
+
+.input-group-shiftly:focus-within:not(.readonly-box) {
+    background-color: var(--white);
+    border-color: var(--purple-medium);
+    box-shadow: 0 0 0 4px rgba(123, 31, 162, 0.14);
+}
+
+.input-group-shiftly.readonly-box {
+    background-color: #F3EFFA;
+    border-style: dashed;
+}
+
+.input-group-shiftly .icon-input {
+    color: var(--purple-main);
+    font-size: 1.15rem;
+    margin-right: 0.7rem;
+    flex-shrink: 0;
+}
+
+.input-group-shiftly .input-auth,
+.input-group-shiftly .select-auth {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    width: 100%;
+    padding: 0.65rem 0;
+    font-weight: 600;
     font-size: 0.95rem;
-    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    color: var(--text-navy);
+    outline: none;
 }
 
-.form-control:focus,
-.form-select:focus {
-    border-color: var(--color-principal);
-    box-shadow: 0 0 0 0.25rem rgba(82, 21, 78, 0.15);
+.input-group-shiftly .select-auth {
+    cursor: pointer;
 }
 
-.input-group-text {
-    border-color: var(--color-borde);
-    background-color: #F8F9FA;
-}
-
-/* Estilos de Botones */
-.btn-guardar-perfil {
-    background-color: var(--color-principal);
-    border: none;
-    color: var(--color-blanco);
-    transition: background-color 0.2s ease, transform 0.1s ease;
-}
-
-.btn-guardar-perfil:hover {
-    background-color: #3b0e38;
-    color: var(--color-blanco);
-}
-
-.btn-guardar-perfil:active {
-    transform: scale(0.98);
-}
-
-.btn-descartar-perfil {
-    border-color: var(--color-borde);
-    color: var(--color-texto);
-}
-
-.btn-descartar-perfil:hover {
-    background-color: #E2E8F0;
-    color: var(--color-secundario);
+/* ==========================================
+   FOOTER MORADO CORPORATIVO
+   ========================================== */
+.footer-shiftly {
+    background-color: var(--purple-dark);
+    color: var(--white);
+    border-top: 3px solid var(--purple-main);
 }

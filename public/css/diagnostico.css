@@ -1,0 +1,273 @@
+:root {
+    --purple-dark: #1A0B2E;
+    --purple-main: #52154E;
+    --purple-medium: #7B1FA2;
+    --purple-soft: #F3E5F5;
+    --purple-light: #FAF4FB;
+    --purple-tint: #EFE6FA;
+
+    --orange-bright: #FF6B35;
+    --orange-shadow: #CC4918;
+    --orange-hover: #FF7F50;
+    --orange-light: #FFF3E0;
+
+    --purple-btn-shadow: #350B32;
+    --border-purple: #DECFF0;
+    --bg-app: #F6F1FC;
+    --white: #FFFFFF;
+    --text-navy: #111344;
+    --text-muted: #5B5675;
+
+    --green-ok: #22C55E;
+    --green-shadow: #15803D;
+    --green-soft: #DCFCE7;
+    --red-err: #EF4444;
+    --red-shadow: #B91C1C;
+    --red-soft: #FEE2E2;
+}
+
+body {
+    background-color: var(--bg-app);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: var(--text-navy);
+    overflow-x: hidden;
+}
+
+/* ==========================================
+   NAVBAR (Se oculta en Modo Examen Activo)
+   ========================================== */
+.navbar-shiftly {
+    background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple-main) 100%);
+    border-bottom: 3px solid var(--purple-btn-shadow);
+    box-shadow: 0 4px 20px rgba(26, 11, 46, 0.25);
+}
+
+.navbar-shiftly .navbar-brand,
+.navbar-shiftly .navbar-brand span {
+    color: var(--white) !important;
+}
+
+.nav-link-app {
+    color: rgba(255, 255, 255, 0.88) !important;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem !important;
+    border-radius: 1rem;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.nav-link-app:hover {
+    background-color: rgba(255, 255, 255, 0.16);
+    color: var(--white) !important;
+}
+
+/* Barra superior fija exclusiva durante el examen */
+.exam-lock-bar {
+    background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple-main) 100%);
+    color: var(--white);
+    border-bottom: 3px solid var(--orange-bright);
+    box-shadow: 0 4px 16px rgba(26, 11, 46, 0.3);
+}
+
+/* ==========================================
+   BOTONES 3D ESTILO SHIFTLY
+   ========================================== */
+.btn-3d-orange {
+    background-color: var(--orange-bright);
+    color: var(--white) !important;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    border: none;
+    border-radius: 1.15rem;
+    padding: 0.85rem 1.85rem;
+    box-shadow: 0 5px 0 var(--orange-shadow);
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.btn-3d-orange:hover:not(:disabled) {
+    background-color: var(--orange-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 0 var(--orange-shadow);
+}
+
+.btn-3d-orange:active:not(:disabled) {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 var(--orange-shadow);
+}
+
+.btn-3d-purple {
+    background-color: var(--purple-main);
+    color: var(--white) !important;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    border: none;
+    border-radius: 1.15rem;
+    padding: 0.85rem 1.85rem;
+    box-shadow: 0 5px 0 var(--purple-dark);
+    transition: all 0.15s ease;
+    text-decoration: none;
+}
+
+.btn-3d-purple:hover:not(:disabled) {
+    background-color: var(--purple-medium);
+}
+
+.btn-3d-ghost {
+    background-color: var(--white);
+    color: var(--purple-main);
+    font-weight: 800;
+    border: 2px solid var(--border-purple);
+    border-radius: 1.15rem;
+    padding: 0.8rem 1.4rem;
+    box-shadow: 0 4px 0 var(--border-purple);
+    transition: all 0.15s ease;
+}
+
+.btn-3d-ghost:hover:not(:disabled) {
+    background-color: var(--purple-soft);
+}
+
+.btn-3d-ghost:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* ==========================================
+   TARJETAS 3D (INICIO, EXAMEN Y RESULTADOS)
+   ========================================== */
+.exam-card-3d {
+    background-color: var(--white);
+    border: 2px solid var(--border-purple);
+    border-radius: 2rem;
+    padding: 2.25rem;
+    box-shadow: 0 8px 0 var(--border-purple);
+}
+
+.career-select-pill {
+    border: 2px solid var(--border-purple);
+    border-radius: 1.1rem;
+    padding: 0.85rem 1rem;
+    background-color: var(--purple-light);
+    color: var(--purple-dark);
+    font-weight: 800;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 4px 0 var(--border-purple);
+    transition: all 0.15s ease;
+    text-align: center;
+}
+
+.career-select-pill:hover {
+    border-color: var(--purple-medium);
+    background-color: var(--purple-soft);
+}
+
+.career-select-pill.active {
+    background-color: var(--purple-main);
+    border-color: var(--purple-main);
+    color: var(--white);
+    box-shadow: 0 4px 0 var(--purple-dark);
+}
+
+/* Barra de progreso */
+.progress-track {
+    height: 15px;
+    background-color: var(--purple-tint);
+    border-radius: 50rem;
+    overflow: hidden;
+    border: 1.5px solid var(--border-purple);
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--orange-bright) 0%, #FF9642 100%);
+    border-radius: 50rem;
+    transition: width 0.35s ease;
+}
+
+/* Opciones de Respuesta */
+.opcion-respuesta {
+    background-color: var(--white);
+    border: 2px solid var(--border-purple) !important;
+    border-radius: 1.2rem !important;
+    padding: 1rem 1.25rem !important;
+    font-weight: 700;
+    color: var(--purple-dark) !important;
+    box-shadow: 0 4px 0 var(--border-purple);
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.opcion-respuesta:hover {
+    background-color: var(--purple-light);
+    border-color: var(--purple-medium) !important;
+    transform: translateY(-1px);
+}
+
+.opcion-respuesta.seleccionada {
+    background-color: var(--purple-soft) !important;
+    border-color: var(--purple-main) !important;
+    color: var(--purple-dark) !important;
+    box-shadow: 0 4px 0 var(--purple-main);
+}
+
+.option-key-badge {
+    width: 34px;
+    height: 34px;
+    border-radius: 0.7rem;
+    background-color: var(--purple-tint);
+    color: var(--purple-main);
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.opcion-respuesta.seleccionada .option-key-badge {
+    background-color: var(--purple-main);
+    color: var(--white);
+}
+
+/* Botón Audio */
+.btn-audio-q {
+    width: 46px;
+    height: 46px;
+    border-radius: 1rem;
+    background-color: var(--orange-light);
+    color: var(--orange-bright);
+    border: 2px solid rgba(255, 107, 53, 0.35);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+}
+
+.btn-audio-q:hover {
+    background-color: var(--orange-bright);
+    color: var(--white);
+    transform: scale(1.06);
+}
+
+/* Bloqueo visual cuando intenta salir */
+body.exam-locked {
+    user-select: none;
+}
+
+.footer-shiftly {
+    background-color: var(--purple-dark);
+    color: var(--white);
+    border-top: 3px solid var(--purple-main);
+}

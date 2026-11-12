@@ -1,0 +1,195 @@
+:root {
+    --purple-dark: #1A0B2E;
+    --purple-main: #52154E;
+    --purple-medium: #7B1FA2;
+    --purple-soft: #F3E5F5;
+    --purple-light: #FAF4FB;
+    --purple-tint: #EFE6FA;
+    --purple-btn-shadow: #350B32;
+
+    --orange-bright: #FF6B35;
+    --orange-shadow: #CC4918;
+    --orange-hover: #FF7F50;
+    --orange-light: #FFF3E0;
+
+    --border-purple: #DECFF0;
+    --bg-app: #F6F1FC;
+    --white: #FFFFFF;
+    --text-navy: #111344;
+    --text-muted: #5B5675;
+}
+
+body {
+    background-color: var(--bg-app);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: var(--text-navy);
+    overflow-x: hidden;
+}
+
+/* ==========================================
+   NAVBAR MORADO CORPORATIVO
+   ========================================== */
+.navbar-shiftly {
+    background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple-main) 100%);
+    border-bottom: 3px solid var(--purple-btn-shadow);
+    box-shadow: 0 4px 20px rgba(26, 11, 46, 0.25);
+}
+
+.nav-link-app {
+    color: rgba(255, 255, 255, 0.88) !important;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem !important;
+    border-radius: 1rem;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.nav-link-app:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+    color: var(--white) !important;
+}
+
+/* ==========================================
+   BOTONES 3D ESTILO SHIFTLY
+   ========================================== */
+.btn-3d-orange {
+    background-color: var(--orange-bright);
+    color: var(--white) !important;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border: none;
+    border-radius: 1.15rem;
+    padding: 0.9rem 1.8rem;
+    box-shadow: 0 5px 0 var(--orange-shadow);
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.btn-3d-orange:hover {
+    background-color: var(--orange-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 0 var(--orange-shadow);
+}
+
+.btn-3d-orange:active {
+    transform: translateY(4px);
+    box-shadow: 0 1px 0 var(--orange-shadow);
+}
+
+.btn-3d-glass {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: var(--white) !important;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border: 2px solid rgba(255, 255, 255, 0.28);
+    border-radius: 1.15rem;
+    padding: 0.65rem 1.35rem;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.25);
+    transition: all 0.15s ease;
+    text-decoration: none;
+}
+
+.btn-3d-glass:hover {
+    background-color: rgba(255, 255, 255, 0.22);
+}
+
+/* ==========================================
+   CONTENEDOR Y TARJETA 3D DE LOGIN
+   ========================================== */
+.auth-wrapper {
+    background: radial-gradient(circle at top right, #EAE0F8 0%, var(--bg-app) 55%);
+}
+
+.login-card-3d {
+    background-color: var(--white);
+    border: 3px solid var(--border-purple);
+    border-radius: 2rem;
+    box-shadow: 0 10px 0 var(--border-purple), 0 24px 48px rgba(26, 11, 46, 0.12);
+    overflow: hidden;
+    max-width: 960px;
+    width: 100%;
+}
+
+.login-side-panel {
+    background: linear-gradient(155deg, var(--purple-dark) 0%, var(--purple-main) 60%, var(--purple-medium) 100%);
+    color: var(--white);
+    position: relative;
+}
+
+.login-stat-pill {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1.5px solid rgba(255, 255, 255, 0.18);
+    border-radius: 1.15rem;
+    padding: 0.85rem 1rem;
+}
+
+/* ==========================================
+   INPUTS GAMIFICADOS
+   ========================================== */
+.input-group-shiftly {
+    display: flex;
+    align-items: center;
+    background-color: var(--purple-light);
+    border: 2px solid var(--border-purple);
+    border-radius: 1.1rem;
+    padding: 0.2rem 0.75rem;
+    transition: all 0.18s ease;
+}
+
+.input-group-shiftly:focus-within {
+    background-color: var(--white);
+    border-color: var(--purple-medium);
+    box-shadow: 0 0 0 4px rgba(123, 31, 162, 0.14);
+}
+
+.input-group-shiftly .icon-input {
+    color: var(--purple-main);
+    font-size: 1.15rem;
+    margin-right: 0.65rem;
+}
+
+.input-group-shiftly .input-auth {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    width: 100%;
+    padding: 0.65rem 0;
+    font-weight: 600;
+    color: var(--text-navy);
+    outline: none;
+}
+
+.input-group-shiftly .input-auth::placeholder {
+    color: #9A93B5;
+    font-weight: 500;
+}
+
+.btn-eye-toggle {
+    color: var(--purple-main);
+    background: transparent;
+    border: none;
+    padding: 0.35rem 0.5rem;
+    border-radius: 0.75rem;
+    transition: background-color 0.15s ease;
+}
+
+.btn-eye-toggle:hover {
+    background-color: var(--purple-soft);
+    color: var(--purple-dark);
+}
+
+/* ==========================================
+   FOOTER CORPORATIVO
+   ========================================== */
+.footer-shiftly {
+    background-color: var(--purple-dark);
+    color: var(--white);
+    border-top: 3px solid var(--purple-main);
+}

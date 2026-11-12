@@ -1,0 +1,263 @@
+:root {
+    --purple-dark: #1A0B2E;
+    --purple-main: #52154E;
+    --purple-medium: #7B1FA2;
+    --purple-soft: #F3E5F5;
+    --purple-light: #FAF4FB;
+    --purple-tint: #EFE6FA;
+    --purple-btn-shadow: #350B32;
+
+    --orange-bright: #FF6B35;
+    --orange-shadow: #CC4918;
+    --orange-hover: #FF7F50;
+    --orange-light: #FFF3E0;
+
+    --border-purple: #DECFF0;
+    --bg-app: #F6F1FC;
+    --white: #FFFFFF;
+    --text-navy: #111344;
+    --text-muted: #5B5675;
+    --success-green: #22C55E;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-app);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: var(--text-navy);
+    overflow-x: hidden;
+    margin: 0;
+}
+
+/* ==========================================
+   NAVBAR MORADO CORPORATIVO
+   ========================================== */
+.navbar-shiftly {
+    background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple-main) 100%);
+    border-bottom: 3px solid var(--purple-btn-shadow);
+    box-shadow: 0 4px 20px rgba(26, 11, 46, 0.25);
+}
+
+.nav-link-app {
+    color: rgba(255, 255, 255, 0.88) !important;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem !important;
+    border-radius: 1rem;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.nav-link-app:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+    color: var(--white) !important;
+}
+
+/* ==========================================
+   BOTONES 3D ESTILO SHIFTLY
+   ========================================== */
+.btn-3d-orange {
+    background-color: var(--orange-bright);
+    color: var(--white) !important;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border: none;
+    border-radius: 1.15rem;
+    padding: 0.95rem 1.8rem;
+    box-shadow: 0 5px 0 var(--orange-shadow);
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-3d-orange:hover {
+    background-color: var(--orange-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 var(--orange-shadow);
+}
+
+.btn-3d-orange:active {
+    transform: translateY(4px);
+    box-shadow: 0 1px 0 var(--orange-shadow);
+}
+
+.btn-3d-orange:disabled {
+    opacity: 0.75;
+    transform: none;
+    cursor: not-allowed;
+}
+
+.btn-3d-glass {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: var(--white) !important;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border: 2px solid rgba(255, 255, 255, 0.28);
+    border-radius: 1.15rem;
+    padding: 0.65rem 1.35rem;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.25);
+    transition: all 0.15s ease;
+    text-decoration: none;
+}
+
+.btn-3d-glass:hover {
+    background-color: rgba(255, 255, 255, 0.22);
+}
+
+/* ==========================================
+   FONDO Y TARJETA 3D DE VERIFICACIÓN
+   ========================================== */
+.auth-wrapper {
+    background:
+        radial-gradient(circle at 18% 20%, rgba(123, 31, 162, 0.13) 0%, transparent 45%),
+        radial-gradient(circle at 82% 80%, rgba(255, 107, 53, 0.13) 0%, transparent 45%),
+        var(--bg-app);
+}
+
+.verify-card-3d {
+    background-color: var(--white);
+    border: 3px solid var(--border-purple);
+    border-radius: 2rem;
+    box-shadow: 0 10px 0 var(--border-purple), 0 24px 48px rgba(26, 11, 46, 0.12);
+    max-width: 530px;
+    width: 100%;
+    animation: cardEntrance 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes cardEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.mail-badge-3d {
+    width: 78px;
+    height: 78px;
+    border-radius: 1.5rem;
+    background: linear-gradient(135deg, var(--purple-main) 0%, var(--purple-medium) 100%);
+    color: var(--white);
+    font-size: 2.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem auto;
+    box-shadow: 0 6px 0 var(--purple-btn-shadow), 0 12px 24px rgba(82, 21, 78, 0.28);
+    border: 3px solid var(--purple-soft);
+}
+
+/* ==========================================
+   BARRA DE PROGRESO GAMIFICADA
+   ========================================== */
+.progress-shiftly {
+    height: 11px;
+    border-radius: 50rem;
+    background-color: var(--purple-tint);
+    border: 1.5px solid var(--border-purple);
+    overflow: hidden;
+}
+
+.progress-bar-shiftly {
+    background: linear-gradient(90deg, var(--purple-medium) 0%, var(--orange-bright) 100%);
+    border-radius: 50rem;
+    transition: width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ==========================================
+   CAJAS OTP DE 4 DÍGITOS ESTILO 3D
+   ========================================== */
+.otp-input-3d {
+    width: 64px;
+    height: 70px;
+    border: 2.5px solid var(--border-purple) !important;
+    border-radius: 1.2rem !important;
+    background-color: var(--purple-light) !important;
+    color: var(--purple-dark) !important;
+    font-weight: 800;
+    font-size: 1.75rem;
+    text-align: center;
+    box-shadow: 0 5px 0 var(--border-purple);
+    transition: all 0.16s ease;
+    caret-color: var(--orange-bright);
+}
+
+.otp-input-3d:hover {
+    border-color: #C5AEE6 !important;
+}
+
+.otp-input-3d:focus {
+    background-color: var(--white) !important;
+    border-color: var(--purple-medium) !important;
+    box-shadow: 0 5px 0 var(--purple-medium), 0 0 0 4px rgba(123, 31, 162, 0.14) !important;
+    transform: translateY(-2px);
+    outline: none;
+}
+
+.otp-input-3d.filled {
+    background-color: var(--white) !important;
+    border-color: var(--orange-bright) !important;
+    box-shadow: 0 5px 0 var(--orange-bright);
+    color: var(--purple-main) !important;
+}
+
+.otp-input-3d.verified-ok {
+    background-color: #DCFCE7 !important;
+    border-color: var(--success-green) !important;
+    box-shadow: 0 5px 0 #16A34A;
+    color: #15803D !important;
+}
+
+/* Animación de sacudida si falta un dígito */
+@keyframes shakeOtp {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    50% { transform: translateX(6px); }
+    75% { transform: translateX(-4px); }
+}
+
+.shake-error {
+    animation: shakeOtp 0.35s ease;
+}
+
+/* ==========================================
+   PILL DE CORREO DESTINO Y FOOTER
+   ========================================== */
+.target-email-badge {
+    background-color: var(--purple-light);
+    border: 1.5px dashed var(--purple-medium);
+    color: var(--purple-main);
+    border-radius: 50rem;
+    padding: 0.35rem 0.95rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.footer-shiftly {
+    background-color: var(--purple-dark);
+    color: var(--white);
+    border-top: 3px solid var(--purple-main);
+}
+
+@media (max-width: 400px) {
+    .otp-input-3d {
+        width: 54px;
+        height: 62px;
+        font-size: 1.5rem;
+    }
+}

@@ -56,8 +56,13 @@ Route::get('/recuperar-password', function () {
 })->name('recuperar-password');
 
 Route::post('/recuperar-password', function () {
-    return redirect('/login');
+    return redirect('/verificacion-correo');
 })->name('password.email');
+
+// Verificación de Correo Electrónico
+Route::get('/verificacion-correo', function () {
+    return view('html.login.verificacion-correo');
+})->name('verificacion-correo');
 
 // Restablecimiento de Contraseña
 Route::get('/new-password/{token?}', function () {
@@ -68,18 +73,13 @@ Route::post('/new-password', function () {
     return redirect('/login');
 })->name('password.update');
 
-// Verificación de Correo Electrónico
-Route::get('/verificacion-correo', function () {
-    return view('html.login.verificacion-correo');
-})->name('verificacion-correo');
-
 // Perfil de Usuario (Simulado en cliente / Sin BD)
 Route::get('/perfil', function () {
     return view('html.login.perfil');
 })->name('perfil');
 
 Route::post('/perfil', function () {
-    return redirect('/dashboard');
+    return redirect('/perfil');
 })->name('perfil.actualizar');
 
 

@@ -1,606 +1,456 @@
-
-/* ==========================================
-   SHIFTLY - ESTILOS DE LA INTERFAZ DE EJERCICIOS
-   Paleta original: azul marino, lavanda,
-   crema y morado ciruela
-========================================== */
-
-/* ===== 1. CONFIGURACIÓN GENERAL ===== */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 :root {
-    --primary: #50164F;
-    --primary-dark: #391039;
-    --primary-light: #E9D7E7;
+    --purple-dark: #1A0B2E;
+    --purple-main: #52154E;
+    --purple-medium: #7B1FA2;
+    --purple-soft: #F3E5F5;
+    --purple-light: #FAF4FB;
+    --purple-tint: #EFE6FA;
 
-    --navy: #121440;
-    --background: #DCE1F5;
-    --card: #F0EAE7;
+    --orange-bright: #FF6B35;
+    --orange-shadow: #CC4918;
+    --orange-hover: #FF7F50;
+    --orange-light: #FFF3E0;
+
+    --purple-btn-shadow: #350B32;
+    --border-purple: #DECFF0;
+    --bg-app: #F6F1FC;
     --white: #FFFFFF;
+    --text-navy: #111344;
+    --text-muted: #5B5675;
 
-    --text: #292B35;
-    --text-light: #77798A;
-    --border: #D8D1D2;
-
-    --success: #247A55;
-    --success-light: #E4F4E9;
-
-    --error: #C43E50;
-    --error-light: #FBE8EB;
-
-    --radius: 18px;
+    --green-ok: #22C55E;
+    --green-shadow: #15803D;
+    --green-soft: #DCFCE7;
+    --red-err: #EF4444;
+    --red-shadow: #B91C1C;
+    --red-soft: #FEE2E2;
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: var(--background);
-    color: var(--text);
-    line-height: 1.6;
-    min-height: 100vh;
+    background-color: var(--bg-app);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: var(--text-navy);
+    overflow-x: hidden;
 }
 
-button,
-input,
-select,
-textarea {
-    font: inherit;
+/* ==========================================
+   NAVBAR CORPORATIVO SHIFTLY
+   ========================================== */
+.navbar-shiftly {
+    background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple-main) 100%);
+    border-bottom: 3px solid var(--purple-btn-shadow);
+    box-shadow: 0 4px 20px rgba(26, 11, 46, 0.25);
 }
 
-button {
-    cursor: pointer;
-    border: none;
+.navbar-shiftly .navbar-brand,
+.navbar-shiftly .navbar-brand span {
+    color: var(--white) !important;
 }
 
-/* ===== 2. BARRA DE NAVEGACIÓN ===== */
-
-.topbar {
-    width: 100%;
-    min-height: 76px;
-    background: var(--navy);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 18px 6%;
-    gap: 25px;
-    flex-wrap: wrap;
-    border-bottom: none;
+.nav-link-app {
+    color: rgba(255, 255, 255, 0.88) !important;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem !important;
+    border-radius: 1rem;
+    transition: all 0.2s ease;
+    text-decoration: none;
 }
 
-.logo {
+.nav-link-app:hover,
+.nav-link-app.active {
+    background-color: rgba(255, 255, 255, 0.16);
+    color: var(--white) !important;
+}
+
+.nav-avatar-badge {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--orange-bright) 0%, #FF8C42 100%);
     color: var(--white);
-    font-size: 28px;
     font-weight: 800;
-    text-decoration: none;
-    letter-spacing: -1px;
-}
-
-.topbar nav {
-    display: flex;
-    align-items: center;
-    gap: 26px;
-    flex-wrap: wrap;
-}
-
-.topbar nav a {
-    color: #A8A9C1;
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 600;
-    transition: color 0.25s ease;
-}
-
-.topbar nav a:hover,
-.topbar nav a.active {
-    color: var(--white);
-}
-
-/* ===== 3. CONTENEDOR PRINCIPAL ===== */
-
-.container,
-main {
-    width: min(100% - 40px, 1000px);
-    margin: 0 auto;
-}
-
-.page-head {
-    padding: 42px 0 26px;
-}
-
-.eyebrow {
-    display: inline-block;
-    color: var(--primary);
-    background: var(--primary-light);
-    padding: 6px 14px;
-    border-radius: 30px;
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 14px;
-}
-
-.page-head h1 {
-    color: #171940;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(30px, 4vw, 42px);
-    line-height: 1.25;
-    font-weight: 700;
-    margin-bottom: 12px;
-}
-
-.page-head p {
-    max-width: 700px;
-    color: var(--text-light);
-    font-size: 16px;
-}
-
-/* ===== 4. BARRA DE PROGRESO ===== */
-
-.progress {
-    background: var(--card);
-    padding: 22px 24px;
-    border: 1px solid #DED5D5;
-    border-radius: var(--radius);
-    margin-bottom: 25px;
-    box-shadow: 0 3px 8px rgba(18, 20, 64, 0.10);
-}
-
-.progress-copy {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-    font-size: 14px;
-    font-weight: 700;
-}
-
-.progress-copy span:last-child {
-    color: var(--primary);
-}
-
-.progress-track {
-    height: 10px;
-    background: #DCD5DB;
-    border-radius: 20px;
-    overflow: hidden;
-}
-
-.progress-bar {
-    width: 0%;
-    height: 100%;
-    background: var(--primary);
-    border-radius: inherit;
-    transition: width 0.4s ease;
-}
-
-/* ===== 5. TARJETA DE LA LECCIÓN ===== */
-
-.lesson-card {
-    background: var(--card);
-    border: 1px solid #DED5D5;
-    border-radius: 24px;
-    padding: 30px;
-    margin-bottom: 45px;
-    box-shadow: 0 3px 8px rgba(18, 20, 64, 0.10);
-}
-
-.lesson-heading {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 26px;
-}
-
-.lesson-icon,
-#typeIcon {
-    width: 54px;
-    height: 54px;
-    display: grid;
-    place-items: center;
-    background: #E5D4E3;
-    color: var(--primary);
-    border-radius: 15px;
-    font-size: 25px;
-    flex-shrink: 0;
-}
-
-.lesson-heading h2 {
-    font-size: 23px;
-    line-height: 1.3;
-    color: var(--text);
-}
-
-.lesson-heading p {
-    color: var(--text-light);
-    font-size: 14px;
-}
-
-/* ===== 6. EJERCICIOS ===== */
-
-.exercise {
-    padding-top: 10px;
-    animation: appear 0.3s ease;
-}
-
-.exercise[hidden] {
-    display: none !important;
-}
-
-.exercise h3 {
-    color: var(--text);
-    font-size: 23px;
-    margin-bottom: 10px;
-}
-
-.exercise > p {
-    color: var(--text-light);
-    margin-bottom: 22px;
-}
-
-.question {
-    background: #F8F4F2;
-    border: 1px solid #DED0DD;
-    border-radius: 15px;
-    padding: 22px;
-    margin-bottom: 20px;
-}
-
-.question p {
-    color: var(--text);
-    font-weight: 600;
-    margin-bottom: 15px;
-}
-
-/* ===== 7. CAMPOS DE RESPUESTA ===== */
-
-input[type="text"],
-input[type="number"],
-select,
-textarea {
-    width: 100%;
-    padding: 13px 15px;
-    border: 1px solid #D9D9E0;
-    border-radius: 12px;
-    background: var(--white);
-    color: var(--text);
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-input[type="text"]:focus,
-input[type="number"]:focus,
-select:focus,
-textarea:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(80, 22, 79, 0.12);
-}
-
-input::placeholder,
-textarea::placeholder {
-    color: #92919D;
-}
-
-/* ===== 8. BANCO DE PALABRAS ===== */
-
-.word-bank {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 18px 0;
-}
-
-.word-bank button,
-.word-bank .word,
-.word-chip {
-    background: var(--primary-light);
-    color: var(--primary);
-    padding: 10px 16px;
-    border: 1px solid #D6BBD4;
-    border-radius: 12px;
-    font-weight: 700;
-    transition: background 0.2s, transform 0.2s;
-}
-
-.word-bank button:hover,
-.word-bank .word:hover,
-.word-chip:hover {
-    background: #DDC4DB;
-    transform: translateY(-2px);
-}
-
-.answer-area {
-    min-height: 58px;
-    padding: 12px;
-    border: 2px dashed #C9B6C8;
-    border-radius: 12px;
-    background: #F8F4F2;
-    margin: 15px 0;
-}
-
-/* ===== 9. OPCIONES DE RESPUESTA ===== */
-
-.options {
-    display: grid;
-    gap: 12px;
-}
-
-.option,
-.answer-option,
-.choice {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 16px;
-    background: #F8F4F2;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    text-align: left;
-    transition: border-color 0.2s, background 0.2s;
-}
-
-.option:hover,
-.answer-option:hover,
-.choice:hover {
-    border-color: var(--primary);
-    background: #F3E9F1;
-}
-
-.option input,
-.answer-option input,
-.choice input {
-    accent-color: var(--primary);
-}
-
-/* ===== 10. EJERCICIO DE RELACIONAR ===== */
-
-.match-container,
-.matching {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-
-.match-column {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.match-item {
-    padding: 14px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: #F8F4F2;
-}
-
-.match-item select {
-    margin-top: 8px;
-}
-
-/* ===== 11. BOTONES PRINCIPALES ===== */
-
-.actions,
-.exercise-actions {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 22px;
-}
-
-.btn,
-button.primary,
-button.secondary,
-#checkFill,
-#checkDrag,
-#resetDrag,
-#checkChoice,
-#finishMatch,
-#nextExercise {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 12px 20px;
-    border-radius: 30px;
-    font-weight: 700;
-    transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    text-decoration: none;
 }
 
-/* Botones morados */
-#checkFill,
-#checkDrag,
-#checkChoice,
-#finishMatch,
-#nextExercise,
-button.primary {
+/* ==========================================
+   ENCABEZADO DE UNIDAD Y ESTADÍSTICAS
+   ========================================== */
+.unit-banner {
+    background: linear-gradient(145deg, var(--purple-dark) 0%, var(--purple-main) 65%, #6A1B78 100%);
     color: var(--white);
-    background: var(--primary);
-    box-shadow: none;
+    border-bottom: 3px solid var(--purple-btn-shadow);
 }
 
-#checkFill:hover,
-#checkDrag:hover,
-#checkChoice:hover,
-#finishMatch:hover,
-#nextExercise:hover,
-button.primary:hover {
-    background: var(--primary-dark);
+.stat-pill {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1.5px solid rgba(255, 255, 255, 0.22);
+    border-radius: 1rem;
+    padding: 0.45rem 0.95rem;
+    font-weight: 800;
+    font-size: 0.88rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+/* ==========================================
+   BARRA DE PROGRESO GAMIFICADA
+   ========================================== */
+.progress-container-card {
+    background-color: var(--white);
+    border: 2px solid var(--border-purple);
+    border-radius: 1.35rem;
+    padding: 1rem 1.35rem;
+    box-shadow: 0 5px 0 var(--border-purple);
+}
+
+.progress-track {
+    height: 16px;
+    background-color: var(--purple-tint);
+    border-radius: 50rem;
+    overflow: hidden;
+    border: 1.5px solid var(--border-purple);
+}
+
+.progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--orange-bright) 0%, #FF9642 100%);
+    border-radius: 50rem;
+    transition: width 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ==========================================
+   TARJETA PRINCIPAL DE EJERCICIOS
+   ========================================== */
+.lesson-card-3d {
+    background-color: var(--white);
+    border: 2px solid var(--border-purple);
+    border-radius: 2rem;
+    padding: 2rem;
+    box-shadow: 0 8px 0 var(--border-purple);
+}
+
+.exercise-badge {
+    background-color: var(--purple-soft);
+    color: var(--purple-main);
+    font-weight: 800;
+    font-size: 0.82rem;
+    padding: 0.45rem 1rem;
+    border-radius: 50rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.btn-audio-sentence {
+    width: 44px;
+    height: 44px;
+    border-radius: 1rem;
+    background-color: var(--purple-soft);
+    color: var(--purple-main);
+    border: 2px solid var(--border-purple);
+    box-shadow: 0 3px 0 var(--border-purple);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+}
+
+.btn-audio-sentence:hover {
+    background-color: var(--purple-main);
+    color: var(--white);
+    border-color: var(--purple-main);
+    transform: translateY(-1px);
+}
+
+.sentence-box {
+    background-color: var(--purple-light);
+    border: 2px solid var(--border-purple);
+    border-radius: 1.35rem;
+    padding: 1.35rem 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--purple-dark);
+    line-height: 1.8;
+}
+
+/* Input de completar frase */
+.input-answer-3d {
+    border: none;
+    border-bottom: 3px solid var(--purple-medium);
+    background-color: var(--white);
+    border-radius: 0.65rem 0.65rem 0 0;
+    padding: 0.2rem 0.75rem;
+    width: 155px;
+    text-align: center;
+    font-weight: 800;
+    color: var(--purple-main);
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.input-answer-3d:focus {
+    border-bottom-color: var(--orange-bright);
+    background-color: var(--orange-light);
+}
+
+/* ==========================================
+   ORDENAR PALABRAS (WORD BANK & SLOTS)
+   ========================================== */
+.blank-slot {
+    min-width: 105px;
+    height: 42px;
+    padding: 0 0.85rem;
+    margin: 0.2rem;
+    border-radius: 0.85rem;
+    border: 2px dashed var(--purple-medium);
+    background-color: var(--white);
+    color: var(--text-muted);
+    font-weight: 800;
+    font-size: 1rem;
+    vertical-align: middle;
+    transition: all 0.15s ease;
+}
+
+.blank-slot.filled {
+    border-style: solid;
+    border-color: var(--purple-main);
+    background-color: var(--purple-soft);
+    color: var(--purple-dark);
+    box-shadow: 0 3px 0 var(--purple-main);
+}
+
+.word-chip {
+    background-color: var(--white);
+    color: var(--purple-dark);
+    border: 2px solid var(--border-purple);
+    border-radius: 0.95rem;
+    padding: 0.55rem 1.15rem;
+    font-weight: 800;
+    font-size: 1rem;
+    box-shadow: 0 4px 0 var(--border-purple);
+    transition: all 0.15s ease;
+}
+
+.word-chip:hover:not(:disabled) {
+    background-color: var(--purple-soft);
+    border-color: var(--purple-medium);
     transform: translateY(-2px);
 }
 
-/* Botones secundarios */
-#resetDrag,
-button.secondary {
-    background: transparent;
-    color: var(--primary);
-    border: 1px solid var(--primary);
-}
-
-#resetDrag:hover,
-button.secondary:hover {
-    background: var(--primary-light);
-}
-
-button:disabled {
-    opacity: 0.55;
+.word-chip:disabled {
+    opacity: 0.35;
+    box-shadow: none;
     cursor: not-allowed;
-    transform: none;
 }
 
-/* ===== 12. MENSAJES DE RESULTADOS ===== */
-
-.feedback {
-    padding: 13px 16px;
-    border-radius: 12px;
-    margin-top: 15px;
-    font-size: 14px;
-    font-weight: 600;
+/* ==========================================
+   OPCIÓN MÚLTIPLE & EMPAREJAMIENTO
+   ========================================== */
+.option-card-3d {
+    width: 100%;
+    text-align: left;
+    background-color: var(--white);
+    border: 2px solid var(--border-purple);
+    border-radius: 1.15rem;
+    padding: 0.9rem 1.15rem;
+    font-weight: 700;
+    color: var(--purple-dark);
+    box-shadow: 0 4px 0 var(--border-purple);
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    transition: all 0.15s ease;
 }
 
-.feedback:empty {
-    display: none;
+.option-card-3d:hover {
+    background-color: var(--purple-light);
+    border-color: var(--purple-medium);
 }
 
-.feedback.success,
-.feedback.correct {
-    color: var(--success);
-    background: var(--success-light);
-    border: 1px solid #C7EEDB;
+.option-card-3d.selected {
+    background-color: var(--purple-soft);
+    border-color: var(--purple-main);
+    box-shadow: 0 4px 0 var(--purple-main);
 }
 
-.feedback.error,
-.feedback.incorrect {
-    color: var(--error);
-    background: var(--error-light);
-    border: 1px solid #FFD5DC;
+.option-card-3d.correct {
+    background-color: var(--green-soft);
+    border-color: var(--green-ok);
+    color: var(--green-shadow);
+    box-shadow: 0 4px 0 var(--green-shadow);
 }
 
-#fillFeedback,
-#dragFeedback,
-#choiceFeedback,
-#matchFeedback {
-    margin-top: 15px;
+.option-card-3d.wrong {
+    background-color: var(--red-soft);
+    border-color: var(--red-err);
+    color: var(--red-shadow);
+    box-shadow: 0 4px 0 var(--red-shadow);
 }
 
-/* ===== 13. CONSEJOS ===== */
-
-.tip {
-    padding: 18px 20px;
-    margin-top: 25px;
-    background: #F8F0D9;
-    border: 1px solid #E9D9A8;
-    border-radius: 14px;
-    color: #725B20;
-    font-size: 14px;
+.option-letter {
+    width: 32px;
+    height: 32px;
+    border-radius: 0.65rem;
+    background-color: var(--purple-tint);
+    color: var(--purple-main);
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
-.tip strong {
-    display: block;
-    margin-bottom: 4px;
+.match-btn-3d {
+    width: 100%;
+    background-color: var(--white);
+    border: 2px solid var(--border-purple);
+    border-radius: 1.1rem;
+    padding: 0.85rem 1rem;
+    font-weight: 800;
+    color: var(--purple-dark);
+    box-shadow: 0 4px 0 var(--border-purple);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.15s ease;
 }
 
-/* ===== 14. ANIMACIONES ===== */
-
-@keyframes appear {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.match-btn-3d:hover:not(:disabled) {
+    border-color: var(--purple-medium);
+    background-color: var(--purple-light);
 }
 
-/* ===== 15. DISEÑO RESPONSIVO ===== */
-
-@media (max-width: 700px) {
-    .topbar {
-        padding: 16px 5%;
-        align-items: flex-start;
-    }
-
-    .topbar nav {
-        gap: 12px 18px;
-    }
-
-    .topbar nav a {
-        font-size: 13px;
-    }
-
-    .container,
-    main {
-        width: min(100% - 24px, 1000px);
-    }
-
-    .page-head {
-        padding-top: 28px;
-    }
-
-    .lesson-card {
-        padding: 20px;
-        border-radius: 18px;
-    }
-
-    .lesson-heading h2 {
-        font-size: 19px;
-    }
-
-    .exercise h3 {
-        font-size: 20px;
-    }
-
-    .match-container,
-    .matching {
-        grid-template-columns: 1fr;
-    }
-
-    .actions,
-    .exercise-actions {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .actions button,
-    .exercise-actions button {
-        width: 100%;
-    }
-
-    .progress {
-        padding: 17px;
-    }
+.match-btn-3d.active-pair {
+    background-color: var(--orange-light);
+    border-color: var(--orange-bright);
+    box-shadow: 0 4px 0 var(--orange-shadow);
 }
 
-@media (max-width: 420px) {
-    .topbar {
-        flex-direction: column;
-        gap: 12px;
-    }
+.match-btn-3d.matched {
+    background-color: var(--green-soft);
+    border-color: var(--green-ok);
+    color: var(--green-shadow);
+    box-shadow: 0 3px 0 var(--green-shadow);
+    opacity: 0.85;
+    cursor: default;
+}
 
-    .topbar nav {
-        width: 100%;
-    }
+.match-btn-3d.error-pair {
+    background-color: var(--red-soft);
+    border-color: var(--red-err);
+    animation: shake 0.35s ease;
+}
 
-    .page-head h1 {
-        font-size: 28px;
-    }
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+}
 
-    .lesson-card {
-        padding: 16px;
-    }
+/* ==========================================
+   BOTONES DE ACCIÓN 3D Y FEEDBACK
+   ========================================== */
+.btn-3d-orange {
+    background-color: var(--orange-bright);
+    color: var(--white) !important;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    border: none;
+    border-radius: 1.1rem;
+    padding: 0.8rem 1.65rem;
+    box-shadow: 0 5px 0 var(--orange-shadow);
+    transition: all 0.15s ease;
+}
 
-    .question {
-        padding: 16px;
-    }
+.btn-3d-orange:hover:not(:disabled) {
+    background-color: var(--orange-hover);
+    transform: translateY(-1px);
+}
 
-    .progress-copy {
-        font-size: 12px;
-    }
+.btn-3d-orange:active:not(:disabled) {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 var(--orange-shadow);
+}
+
+.btn-3d-orange:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-3d-purple {
+    background-color: var(--purple-main);
+    color: var(--white) !important;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    border: none;
+    border-radius: 1.1rem;
+    padding: 0.8rem 1.65rem;
+    box-shadow: 0 5px 0 var(--purple-dark);
+    transition: all 0.15s ease;
+}
+
+.btn-3d-purple:hover {
+    background-color: var(--purple-medium);
+}
+
+.btn-3d-ghost {
+    background-color: var(--purple-light);
+    color: var(--purple-main);
+    font-weight: 800;
+    border: 2px solid var(--border-purple);
+    border-radius: 1.1rem;
+    padding: 0.75rem 1.35rem;
+    box-shadow: 0 4px 0 var(--border-purple);
+    transition: all 0.15s ease;
+}
+
+.btn-3d-ghost:hover {
+    background-color: var(--purple-soft);
+}
+
+.feedback-banner {
+    border-radius: 1.15rem;
+    padding: 0.9rem 1.2rem;
+    font-weight: 700;
+    font-size: 0.92rem;
+}
+
+.feedback-banner.success {
+    background-color: var(--green-soft);
+    color: var(--green-shadow);
+    border: 2px solid var(--green-ok);
+}
+
+.feedback-banner.error {
+    background-color: var(--red-soft);
+    color: var(--red-shadow);
+    border: 2px solid var(--red-err);
+}
+
+/* ==========================================
+   TARJETA LATERAL DE CONSEJOS Y GLOSARIO
+   ========================================== */
+.side-helper-card {
+    background-color: var(--white);
+    border: 2px solid var(--border-purple);
+    border-radius: 1.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 6px 0 var(--border-purple);
+}
+
+.footer-shiftly {
+    background-color: var(--purple-dark);
+    color: var(--white);
+    border-top: 3px solid var(--purple-main);
 }

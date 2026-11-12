@@ -1,0 +1,344 @@
+:root {
+    /* Paleta Corporativa Shiftly */
+    --purple-dark: #1A0B2E;
+    --purple-main: #52154E;
+    --purple-medium: #7B1FA2;
+    --purple-soft: #F3E5F5;
+    --purple-light: #FAF4FB;
+    --purple-tint: #EFE6FA;
+    --purple-btn-shadow: #350B32;
+
+    /* Acentos Naranja */
+    --orange-bright: #FF6B35;
+    --orange-shadow: #CC4918;
+    --orange-hover: #FF7F50;
+    --orange-light: #FFF3E0;
+
+    /* Neutrales y Estados */
+    --border-purple: #DECFF0;
+    --bg-app: #F6F1FC;
+    --white: #FFFFFF;
+    --text-navy: #111344;
+    --text-muted: #5B5675;
+    --success-green: #22C55E;
+    --danger-red: #EF4444;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-app);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: var(--text-navy);
+    overflow-x: hidden;
+    margin: 0;
+}
+
+/* ==========================================
+   NAVBAR MORADO CORPORATIVO
+   ========================================== */
+.navbar-shiftly {
+    background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple-main) 100%);
+    border-bottom: 3px solid var(--purple-btn-shadow);
+    box-shadow: 0 4px 20px rgba(26, 11, 46, 0.25);
+}
+
+.navbar-shiftly .navbar-brand {
+    transition: transform 0.2s ease;
+}
+
+.navbar-shiftly .navbar-brand:hover {
+    transform: scale(1.02);
+}
+
+.nav-link-app {
+    color: rgba(255, 255, 255, 0.88) !important;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem !important;
+    border-radius: 1rem;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.nav-link-app:hover {
+    background-color: rgba(255, 255, 255, 0.14);
+    color: var(--white) !important;
+}
+
+/* ==========================================
+   BOTONES 3D ESTILO SHIFTLY
+   ========================================== */
+.btn-3d-orange {
+    background-color: var(--orange-bright);
+    color: var(--white) !important;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border: none;
+    border-radius: 1.15rem;
+    padding: 0.95rem 1.8rem;
+    box-shadow: 0 5px 0 var(--orange-shadow);
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-3d-orange:hover {
+    background-color: var(--orange-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 var(--orange-shadow);
+}
+
+.btn-3d-orange:active {
+    transform: translateY(4px);
+    box-shadow: 0 1px 0 var(--orange-shadow);
+}
+
+.btn-3d-orange:disabled {
+    opacity: 0.75;
+    transform: none;
+    cursor: not-allowed;
+}
+
+.btn-3d-glass {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: var(--white) !important;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border: 2px solid rgba(255, 255, 255, 0.28);
+    border-radius: 1.15rem;
+    padding: 0.65rem 1.35rem;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.25);
+    transition: all 0.15s ease;
+    text-decoration: none;
+}
+
+.btn-3d-glass:hover {
+    background-color: rgba(255, 255, 255, 0.22);
+    transform: translateY(-1px);
+}
+
+/* ==========================================
+   FONDO Y CONTENEDOR PRINCIPAL DE REGISTRO
+   ========================================== */
+.auth-wrapper {
+    background:
+        radial-gradient(circle at 12% 18%, rgba(123, 31, 162, 0.12) 0%, transparent 42%),
+        radial-gradient(circle at 88% 82%, rgba(255, 107, 53, 0.12) 0%, transparent 45%),
+        var(--bg-app);
+}
+
+.login-card-3d {
+    background-color: var(--white);
+    border: 3px solid var(--border-purple);
+    border-radius: 2rem;
+    box-shadow: 0 10px 0 var(--border-purple), 0 24px 48px rgba(26, 11, 46, 0.12);
+    overflow: hidden;
+    max-width: 1000px;
+    width: 100%;
+    animation: cardEntrance 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes cardEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================
+   PANEL LATERAL MORADO GAMIFICADO
+   ========================================== */
+.login-side-panel {
+    background: linear-gradient(155deg, var(--purple-dark) 0%, var(--purple-main) 58%, var(--purple-medium) 100%);
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+}
+
+.login-side-panel::before {
+    content: "";
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 210px;
+    height: 210px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 107, 53, 0.24) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.login-side-panel::after {
+    content: "";
+    position: absolute;
+    bottom: -70px;
+    left: -50px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.login-stat-pill {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(6px);
+    border: 1.5px solid rgba(255, 255, 255, 0.18);
+    border-radius: 1.15rem;
+    padding: 0.9rem 1.05rem;
+    transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.login-stat-pill:hover {
+    transform: translateX(5px);
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 107, 53, 0.55);
+}
+
+/* ==========================================
+   CAMPOS DE FORMULARIO Y SELECTOR DE CARRERA
+   ========================================== */
+.input-group-shiftly {
+    display: flex;
+    align-items: center;
+    background-color: var(--purple-light);
+    border: 2px solid var(--border-purple);
+    border-radius: 1.1rem;
+    padding: 0.2rem 0.85rem;
+    transition: all 0.18s ease;
+}
+
+.input-group-shiftly:hover {
+    border-color: #C5AEE6;
+}
+
+.input-group-shiftly:focus-within {
+    background-color: var(--white);
+    border-color: var(--purple-medium);
+    box-shadow: 0 0 0 4px rgba(123, 31, 162, 0.14);
+}
+
+.input-group-shiftly .icon-input {
+    color: var(--purple-main);
+    font-size: 1.15rem;
+    margin-right: 0.7rem;
+    flex-shrink: 0;
+}
+
+.input-group-shiftly .input-auth,
+.input-group-shiftly .select-auth {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    width: 100%;
+    padding: 0.68rem 0;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-navy);
+    outline: none;
+}
+
+.input-group-shiftly .select-auth {
+    cursor: pointer;
+}
+
+.input-group-shiftly .input-auth::placeholder {
+    color: #9A93B5;
+    font-weight: 500;
+}
+
+/* Autocompletado limpio en Chrome/Edge */
+.input-auth:-webkit-autofill,
+.input-auth:-webkit-autofill:hover,
+.input-auth:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--text-navy);
+    -webkit-box-shadow: 0 0 0px 1000px var(--purple-light) inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Botón ojito contraseña */
+.btn-eye-toggle {
+    color: var(--purple-main);
+    background: transparent;
+    border: none;
+    padding: 0.35rem 0.55rem;
+    border-radius: 0.75rem;
+    transition: all 0.15s ease;
+    cursor: pointer;
+}
+
+.btn-eye-toggle:hover {
+    background-color: var(--purple-soft);
+    color: var(--purple-dark);
+}
+
+/* ==========================================
+   MEDIDOR DE SEGURIDAD DE CONTRASEÑA
+   ========================================== */
+.strength-meter-bar {
+    height: 7px;
+    border-radius: 50rem;
+    background-color: var(--border-purple);
+    overflow: hidden;
+    margin-top: 0.5rem;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.strength-meter-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 50rem;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+/* ==========================================
+   ALERTAS Y FOOTER CORPORATIVO
+   ========================================== */
+#mensajeRegistro {
+    border-width: 2px;
+    animation: fadeAlert 0.25s ease;
+}
+
+@keyframes fadeAlert {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.footer-shiftly {
+    background-color: var(--purple-dark);
+    color: var(--white);
+    border-top: 3px solid var(--purple-main);
+}
+
+/* ==========================================
+   RESPONSIVE MÓVIL
+   ========================================== */
+@media (max-width: 575.98px) {
+    .login-card-3d {
+        border-radius: 1.5rem;
+        box-shadow: 0 6px 0 var(--border-purple);
+    }
+
+    .btn-3d-orange {
+        padding: 0.85rem 1.25rem;
+        font-size: 0.9rem;
+    }
+}
