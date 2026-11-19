@@ -9,6 +9,11 @@ class LoginController extends Controller
 {
     public function iniciarSesion(Request $request)
     {
+        // Normalizar el correo (PostgreSQL distingue mayúsculas)
+        $request->merge([
+            'email' => mb_strtolower(trim((string) $request->input('email'))),
+        ]);
+
         // Validar los datos
         $credenciales = $request->validate([
             'email' => ['required', 'email'],

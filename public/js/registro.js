@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const STORAGE_KEY = "shiftly_cuentas_crud";
-
     const formulario = document.getElementById("formularioRegistro") || document.querySelector("form");
     const nombre = document.getElementById("nombre");
     const carrera = document.getElementById("carrera");
@@ -109,17 +107,15 @@ document.addEventListener("DOMContentLoaded", function () {
         mensaje.className = "alert alert-" + tipo + " mt-3 d-block rounded-4 py-2 px-3 small fw-bold";
     }
 
-    // 3. Guardar cuenta en el CRUD de localStorage y redirigir a /login?registro=exitoso
+    // 3. Validar en el navegador y dejar que Laravel guarde la cuenta en la base de datos
     if (formulario) {
         formulario.addEventListener("submit", function (evento) {
-            evento.preventDefault();
-
             const nombreVal = nombre ? nombre.value.trim() : "";
-            const carreraVal = carrera ? carrera.value : "Sistemas y Software";
-            const correoVal = correo ? correo.value.trim().toLowerCase() : "";
+            const correoVal = correo ? correo.value.trim() : "";
             const passwordVal = password ? password.value : "";
 
             if (nombre && nombreVal.length < 3) {
+                evento.preventDefault();
                 mostrarMensaje("Escribe tu nombre completo con al menos 3 caracteres.", "warning");
                 marcarBorde(nombre, false);
                 nombre.focus();
@@ -127,6 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             if (correo && (!correo.checkValidity() || correoVal === "")) {
+                evento.preventDefault();
                 mostrarMensaje("Ingresa una dirección de correo electrónico válida.", "danger");
                 marcarBorde(correo, false);
                 correo.focus();
@@ -134,38 +131,17 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             if (password && passwordVal.length < 8) {
+                evento.preventDefault();
                 mostrarMensaje("La contraseña debe tener al menos 8 caracteres.", "warning");
                 marcarBorde(password, false);
                 password.focus();
                 return;
             }
 
-            // Sincronizar con el CRUD de cuentas usado en login.js
-            const cuentasGuardadas = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-            if (cuentasGuardadas.some(c => c.email === correoVal)) {
-                mostrarMensaje("Este correo ya está registrado. Inicia sesión o usa otro correo.", "danger");
-                marcarBorde(correo, false);
-                correo.focus();
-                return;
-            }
-
-            cuentasGuardadas.push({
-                id: Date.now(),
-                nombre: nombreVal,
-                carrera: carreraVal,
-                email: correoVal,
-                password: passwordVal
-            });
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(cuentasGuardadas));
-
             if (btnSubmit) {
                 btnSubmit.disabled = true;
                 btnSubmit.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> Creando cuenta...`;
             }
-
-            setTimeout(() => {
-                window.location.href = "/login?registro=exitoso";
-            }, 600);
         });
 
         formulario.addEventListener("input", function () {
