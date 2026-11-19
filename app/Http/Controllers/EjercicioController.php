@@ -2,32 +2,46 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\EjercicioRequest;
+use App\Http\Requests\StoreEjercicioRequest;
+use App\Http\Requests\UpdateEjercicioRequest;
 use App\Models\Ejercicio;
+use App\Models\Leccion;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 
 class EjercicioController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('html.dashboard.gestion-ejercicios', [
-            'ejercicios' => Ejercicio::latest()->get(),
-            'ejercicio' => null,
+        $buscar = trim((string) $request->query('buscar', ''));
+        $leccionId = $request->integer('leccion') ?: null;
+
+        $ejercicios = Ejercicio::with('leccion.area')
+            ->buscar($buscar)
+            ->when($leccionId, fn ($consulta) => $consulta->where('leccion_id', $leccionId))
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('gestion.ejercicios.index', [
+            'ejercicios' => $ejercicios,
+            'lecciones' => Leccion::orderBy('titulo')->get(),
+            'buscar' => $buscar,
+            'leccionId' => $leccionId,
         ]);
     }
 
     public function create()
     {
-        return view('html.dashboard.gestion-ejercicios', [
-            'ejercicios' => Ejercicio::latest()->get(),
+        return view('gestion.ejercicios.create', [
             'ejercicio' => new Ejercicio(['tipo' => 'completar']),
+            'lecciones' => Leccion::orderBy('titulo')->get(),
         ]);
     }
 
-    public function store(EjercicioRequest $request)
+    public function store(StoreEjercicioRequest $request)
     {
-        $datos = $this->prepararDatos($request);
-
-        Ejercicio::create($datos);
+        Ejercicio::create($request->datosEjercicio());
 
         return redirect()->route('gestion.ejercicios.index')
             ->with('success', 'El ejercicio se creó correctamente.');
@@ -35,19 +49,15 @@ class EjercicioController extends Controller
 
     public function edit(Ejercicio $ejercicio)
     {
-        return view('html.dashboard.gestion-ejercicios', [
-            'ejercicios' => Ejercicio::latest()->get(),
+        return view('gestion.ejercicios.edit', [
             'ejercicio' => $ejercicio,
+            'lecciones' => Leccion::orderBy('titulo')->get(),
         ]);
     }
 
-    public function update(
-        EjercicioRequest $request,
-        Ejercicio $ejercicio
-    ) {
-        $datos = $this->prepararDatos($request);
-
-        $ejercicio->update($datos);
+    public function update(UpdateEjercicioRequest $request, Ejercicio $ejercicio)
+    {
+        $ejercicio->update($request->datosEjercicio());
 
         return redirect()->route('gestion.ejercicios.index')
             ->with('success', 'El ejercicio se actualizó correctamente.');
@@ -55,32 +65,14 @@ class EjercicioController extends Controller
 
     public function destroy(Ejercicio $ejercicio)
     {
-        $ejercicio->delete();
+        try {
+            $ejercicio->delete();
+        } catch (QueryException) {
+            return redirect()->route('gestion.ejercicios.index')
+                ->with('error', 'No se pudo eliminar el ejercicio. Inténtalo de nuevo.');
+        }
 
         return redirect()->route('gestion.ejercicios.index')
             ->with('success', 'El ejercicio se eliminó correctamente.');
-    }
-
-    private function prepararDatos(EjercicioRequest $request): array
-    {
-        $datos = $request->validated();
-
-        $opciones = preg_split(
-            '/\R/u',
-            $datos['opciones'] ?? ''
-        ) ?: [];
-
-        $opciones = array_values(array_filter(
-            array_map('trim', $opciones),
-            fn ($opcion) => $opcion !== ''
-        ));
-
-        $datos['opciones'] = $opciones ?: null;
-        $datos['respuesta_correcta'] =
-            $datos['respuesta_correcta'] ?? null;
-        $datos['retroalimentacion'] =
-            $datos['retroalimentacion'] ?? null;
-
-        return $datos;
     }
 }

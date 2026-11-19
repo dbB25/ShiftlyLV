@@ -1,0 +1,80 @@
+/* Estilos del panel de contenido (layouts/app.blade.php) */
+
+:root {
+    --gestion-primario: #111344;
+    --gestion-secundario: #52154E;
+    --gestion-fondo: #F4F5FB;
+    --gestion-acento: #EDD0EC;
+}
+
+.gestion-body {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    background-color: var(--gestion-fondo);
+    color: var(--gestion-primario);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.gestion-body main {
+    flex: 1;
+}
+
+.gestion-navbar {
+    background-color: var(--gestion-secundario);
+}
+
+.gestion-navbar .nav-link.active {
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+}
+
+.gestion-footer {
+    background-color: #FFFFFF;
+    border-top: 1px solid #E3E5F0;
+    color: #6C6F86;
+}
+
+.gestion-body .card {
+    border: 0;
+    border-radius: 1rem;
+    box-shadow: 0 2px 10px rgba(17, 19, 68, 0.06);
+}
+
+.gestion-body .btn-primary {
+    background-color: var(--gestion-secundario);
+    border-color: var(--gestion-secundario);
+}
+
+.gestion-body .btn-primary:hover,
+.gestion-body .btn-primary:focus {
+    background-color: #3E0F3B;
+    border-color: #3E0F3B;
+}
+
+.gestion-body .page-link {
+    color: var(--gestion-secundario);
+}
+
+.gestion-body .page-item.active .page-link {
+    background-color: var(--gestion-secundario);
+    border-color: var(--gestion-secundario);
+    color: #FFFFFF;
+}
+
+.gestion-body .campo-obligatorio {
+    color: #B42318;
+}
+
+.gestion-body .table td {
+    vertical-align: middle;
+}
+
+/* En móvil la columna de acciones se apila para no desbordar */
+@media (max-width: 575.98px) {
+    .acciones-tabla {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}

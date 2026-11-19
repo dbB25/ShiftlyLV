@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class RegistroRequest extends FormRequest
@@ -19,6 +20,16 @@ class RegistroRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
+            ],
+            'carrera' => [
+                'required',
+                Rule::in([
+                    'Sistemas y Software',
+                    'Medicina y Salud',
+                    'Derecho Corporativo',
+                    'Gastronomía',
+                    'Arquitectura',
+                ]),
             ],
             'email' => [
                 'required',
@@ -38,10 +49,14 @@ class RegistroRequest extends FormRequest
     {
         return [
             'nombre.required' => 'El nombre es obligatorio.',
+            'nombre.max' => 'El nombre no puede tener más de :max caracteres.',
+            'carrera.required' => 'Selecciona tu carrera.',
+            'carrera.in' => 'Selecciona una carrera válida.',
             'email.required' => 'El correo es obligatorio.',
             'email.email' => 'Escribe un correo válido.',
             'email.unique' => 'Este correo ya está registrado.',
             'password.required' => 'La contraseña es obligatoria.',
+            'password.min' => 'La contraseña debe tener al menos :min caracteres.',
         ];
     }
 }

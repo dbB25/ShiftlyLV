@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\RecuperarPasswordController;
 use App\Http\Controllers\EjercicioController;
+use App\Http\Controllers\LeccionController;
 use App\Http\Controllers\ContactoController;
 
 /*
@@ -159,17 +160,14 @@ Route::middleware('auth')->group(function () {
         return view('html.dashboard.ruta-general');
     })->name('ruta-general');
 
-    // Administracion de ejercicios (CRUD)
-    Route::resource('gestion/ejercicios', EjercicioController::class)
-        ->except('show')
-        ->parameters(['gestion/ejercicios' => 'ejercicio'])
-        ->names([
-            'index' => 'gestion.ejercicios.index',
-            'create' => 'gestion.ejercicios.create',
-            'store' => 'gestion.ejercicios.store',
-            'edit' => 'gestion.ejercicios.edit',
-            'update' => 'gestion.ejercicios.update',
-            'destroy' => 'gestion.ejercicios.destroy',
-        ]);
+    // Panel de contenido: CRUD de lecciones y ejercicios
+    Route::prefix('gestion')->name('gestion.')->group(function () {
+        Route::resource('lecciones', LeccionController::class)
+            ->except('show')
+            ->parameters(['lecciones' => 'leccion']);
+
+        Route::resource('ejercicios', EjercicioController::class)
+            ->except('show');
+    });
 
 });

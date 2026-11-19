@@ -217,72 +217,43 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN: EDITAR PERFIL -->
+            <!-- SECCIÓN: MI CUENTA (datos reales del usuario) -->
             <div class="col-lg-8">
                 <div class="card card-custom p-4 h-100">
-                    
-                    <!-- Tarjeta de vista previa del perfil en tiempo real -->
+                    @include('partials.alertas')
+
                     <div class="d-flex align-items-center gap-3 p-3 mb-4 rounded-4" style="background-color: var(--purple-soft);">
                         <div class="rounded-circle bg-white d-flex align-items-center justify-content-center shadow-sm" style="width: 55px; height: 55px; color: var(--purple-main); font-size: 1.5rem;">
-                            <i class="bi bi-person-fill"></i>
+                            <i class="bi bi-person-fill" aria-hidden="true"></i>
                         </div>
                         <div>
-                            <h6 class="mb-1 fw-bold" id="displayUsername" style="color: var(--purple-dark);">Cargando usuario...</h6>
-                            <p class="mb-0 small text-muted" id="displayEmail">Cargando correo...</p>
+                            <h2 class="h6 mb-1 fw-bold" style="color: var(--purple-dark);">
+                                {{ trim(auth()->user()->name . ' ' . auth()->user()->apellido) }}
+                            </h2>
+                            <p class="mb-0 small text-muted">{{ auth()->user()->email }}</p>
                         </div>
                     </div>
 
                     <h5 class="card-title-custom d-flex align-items-center gap-2 fs-5">
                         <i class="bi bi-person-gear" style="color: var(--purple-medium);"></i>
-                        Editar Perfil de Usuario
+                        Mi cuenta
                     </h5>
-@include('partials.alertas')
-                    <!-- Formulario de perfil -->
-                    <form id="formPerfil" novalidate>
-                        @csrf
-                        <div class="mb-4">
-                            <label for="username" class="form-label fw-semibold small" style="color: var(--purple-dark);">Nombre de Usuario <span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-white border-2 border-end-0" style="border-color: var(--purple-soft); border-radius: 0.75rem 0 0 0.75rem;">
-                                    <i class="bi bi-person text-muted"></i>
-                                </span>
-                                <input type="text" id="username" name="username" value="{{ old('username', auth()->user()->nombre ?? '') }}" class="form-control form-control-custom border-start-0 @error('username') is-invalid @enderror" placeholder="Mínimo 3 caracteres" required style="border-radius: 0 0.75rem 0.75rem 0;">
-                                <div class="invalid-feedback">Escribe al menos 3 caracteres para tu nombre.</div>
-                            </div>
-                            @error('username')
-                                <div class="invalid-feedback d-block">{{ $message }}</div>
-                            @enderror
-                        </div>
 
-                        <div class="mb-4">
-                            <label for="email" class="form-label fw-semibold small" style="color: var(--purple-dark);">Correo Electrónico <span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-white border-2 border-end-0" style="border-color: var(--purple-soft); border-radius: 0.75rem 0 0 0.75rem;">
-                                    <i class="bi bi-envelope text-muted"></i>
-                                </span>
-                                <input type="email" id="email" name="email" value="{{ old('email', auth()->user()->email ?? '') }}" class="form-control form-control-custom border-start-0 @error('email') is-invalid @enderror" placeholder="ejemplo@correo.com" required style="border-radius: 0 0.75rem 0.75rem 0;">
-                                <div class="invalid-feedback">Ingresa un correo electrónico válido.</div>
-                            </div>
-                            @error('email')
-                                <div class="invalid-feedback d-block">{{ $message }}</div>
-                            @enderror
-                        </div>
+                    <dl class="row small mb-4">
+                        <dt class="col-sm-4 text-muted">Carrera</dt>
+                        <dd class="col-sm-8">{{ auth()->user()->carrera ?? 'Sin registrar' }}</dd>
+                        <dt class="col-sm-4 text-muted">Área profesional</dt>
+                        <dd class="col-sm-8">{{ auth()->user()->area_profesional ?? 'Sin registrar' }}</dd>
+                    </dl>
 
-                        <div class="d-flex flex-wrap gap-2 mt-4">
-                            <a href="{{ url('/') }}" class="btn btn-outline-secondary rounded-pill px-4 fw-bold d-flex align-items-center">
-                                Cancelar / Volver
-                            </a>
-
-                            <button type="submit" class="btn btn-guardar flex-grow-1">
-                                <i class="bi bi-floppy-fill me-2"></i>Guardar Cambios
-                            </button>
-                            
-                            <button type="button" id="btnEliminarPerfil" class="btn btn-outline-danger rounded-pill px-4" title="Borrar perfil local">
-                                <i class="bi bi-trash3-fill"></i>
-                            </button>
-                        </div>
-                    </form>
-
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="{{ route('perfil') }}" class="btn btn-guardar">
+                            <i class="bi bi-pencil-square me-2" aria-hidden="true"></i>Editar mi perfil
+                        </a>
+                        <a href="{{ route('gestion.lecciones.index') }}" class="btn btn-outline-secondary rounded-pill px-4 fw-bold">
+                            Panel de contenido
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -340,26 +311,6 @@
         </div>
     </main>
 
-    <!-- VENTANA EMERGENTE (MODAL DE ÉXITO) -->
-    <div class="modal fade" id="modalCambiosGuardados" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content text-center p-4 rounded-4 border-0 shadow">
-                <div class="modal-body">
-                    <div class="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" 
-                         style="width: 70px; height: 70px; background-color: #D1E7DD; color: #0F5132; font-size: 32px;">
-                        <i class="bi bi-check-circle-fill"></i>
-                    </div>
-                    <h3 class="h4 fw-bold mb-2" style="color: var(--purple-dark);">¡Actualización Exitosa!</h3>
-                    <p class="text-muted small mb-4">Los cambios se guardaron correctamente.</p>
-                    <button type="button" class="btn text-white rounded-pill px-4 py-2 fw-semibold w-100" 
-                            data-bs-dismiss="modal" style="background-color: var(--purple-main);">
-                        Entendido
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- FOOTER -->
     <footer class="footer-custom py-4 mt-auto border-top border-purple">
         <div class="container text-center">
@@ -369,9 +320,6 @@
 
     <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- JS del Dashboard (CRUD Simulado) -->
-    <script src="{{ asset('js/dashboard.js') }}"></script>
 
     <!-- Progreso global, racha, meta diaria, insignias y diagnóstico -->
     <script src="{{ asset('js/rutas-catalogo.js') }}"></script>

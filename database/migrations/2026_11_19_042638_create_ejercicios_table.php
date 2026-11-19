@@ -10,10 +10,14 @@ return new class extends Migration
     {
         Schema::create('ejercicios', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('leccion_id')
+                ->constrained('lecciones')
+                ->cascadeOnDelete();
+
             $table->string('titulo', 150);
             $table->string('tipo', 30);
             $table->text('pregunta');
-            $table->json('opciones')->nullable();
+            $table->jsonb('opciones')->nullable();
             $table->text('respuesta_correcta')->nullable();
             $table->text('retroalimentacion')->nullable();
             $table->timestamps();

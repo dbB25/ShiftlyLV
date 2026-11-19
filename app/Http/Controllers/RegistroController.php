@@ -13,6 +13,7 @@ class RegistroController extends Controller
 
         User::create([
             'name' => $datos['nombre'],
+            'carrera' => $datos['carrera'],
             'email' => $datos['email'],
             'password' => $datos['password'],
         ]);
