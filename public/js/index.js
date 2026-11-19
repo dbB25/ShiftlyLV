@@ -6,19 +6,11 @@ function selectArea(element, areaName) {
     document.querySelectorAll('.area-card').forEach(card => card.classList.remove('seleccionada'));
     element.classList.add('seleccionada');
     selectedAreaName = areaName;
- feature/crud-ejercicios-pr
-    document.getElementById('selected-area-label').innerText = areaName;
-
- main
 }
 
 // Función para redirigir al flujo de diagnóstico del dashboard
 function confirmAreaSelection() {
     localStorage.setItem('selectedArea', selectedAreaName);
- feature/crud-ejercicios-pr
-    // Navegación hacia la carpeta /dashboard/
-
- main
     window.location.href = '/diagnostico';
 }
 

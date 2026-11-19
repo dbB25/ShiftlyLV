@@ -1,16 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
- feature/crud-ejercicios-pr
-use App\Http\Controllers\EjercicioController;
-
 use App\Http\Controllers\RegistroController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\RecuperarPasswordController;
 use App\Http\Controllers\EjercicioController;
 use App\Http\Controllers\ContactoController;
- main
 
 /*
 |--------------------------------------------------------------------------
@@ -89,42 +85,6 @@ Route::get('/verificacion-correo', function () {
 | 3. PAGINAS PRIVADAS
 |--------------------------------------------------------------------------
 */
-
- feature/crud-ejercicios-pr
-Route::get('/ruta-sistemas', function () {
-    return view('html.dashboard.ruta-sistemas');
-})->name('ruta-sistemas');
-
-Route::get('/ruta-medicina', function () {
-    return view('html.dashboard.ruta-medicina');
-})->name('ruta-medicina');
-
-Route::get('/ruta-gastronomia', function () {
-    return view('html.dashboard.ruta-gastronomia');
-})->name('ruta-gastronomia');
-
-Route::get('/ruta-derecho', function () {
-    return view('html.dashboard.ruta-derecho');
-})->name('ruta-derecho');
-
-Route::get('/ruta-arquitectura', function () {
-    return view('html.dashboard.ruta-arquitectura');
-})->name('ruta-arquitectura');
-
-Route::get('/ruta-general', function () {
-    return view('html.dashboard.ruta-general');
-})->name('ruta-general');
-Route::resource('gestion/ejercicios', EjercicioController::class)
-    ->except('show')
-    ->parameters(['gestion/ejercicios' => 'ejercicio'])
-    ->names([
-        'index' => 'gestion.ejercicios.index',
-        'create' => 'gestion.ejercicios.create',
-        'store' => 'gestion.ejercicios.store',
-        'edit' => 'gestion.ejercicios.edit',
-        'update' => 'gestion.ejercicios.update',
-        'destroy' => 'gestion.ejercicios.destroy',
-    ]);
 
 Route::middleware('auth')->group(function () {
 
@@ -213,4 +173,3 @@ Route::middleware('auth')->group(function () {
         ]);
 
 });
- main

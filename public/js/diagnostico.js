@@ -922,11 +922,7 @@ function iniciarDiagnosticoCompleto() {
         } catch (_) {
 
         }
- feature/crud-ejercicios-pr
-        window.location.href = `resultado.html?aciertos=${aciertos}`;
-
         window.location.href = `/resultado?aciertos=${aciertos}`;
- main
     });
     renderizarPregunta();
 }
@@ -974,11 +970,7 @@ function iniciarRecomendaciones() {
         if (textoRazon) textoRazon.textContent = `Tu diagnóstico indica un nivel ${resultado.nivel} (${resultado.nombre}). Esta lección te ayudará a seguir avanzando desde tu nivel actual.`;
     }
     const botonComenzar = document.querySelector('#card-active-state a[href="#start-lesson"]');
- feature/crud-ejercicios-pr
-    if (botonComenzar) botonComenzar.href = 'rutaDeAprendizaje.html';
-
     if (botonComenzar) botonComenzar.href = '/ruta-aprendizaje';
- main
 
     ['active', 'completed', 'empty'].forEach((estado) => {
         const boton = document.getElementById(`btn-state-${estado}`);
@@ -999,30 +991,6 @@ function iniciarRecomendaciones() {
     });
 }
 
- feature/crud-ejercicios-pr
-/* resultados */
-function iniciarResultado() {
-    const nivelElemento = document.getElementById('nivel-resultado');
-    if (!nivelElemento) return;
-
-    let resultado = null;
-    try {
-        resultado = JSON.parse(localStorage.getItem('shiftlyDiagnosticoResultado') || 'null');
-    } catch (_) {
-
-    }
-    const parametroAciertos = new URLSearchParams(window.location.search).get('aciertos');
-    const aciertosUrl = parametroAciertos === null ? NaN : Number(parametroAciertos);
-    if (!resultado && Number.isInteger(aciertosUrl) && aciertosUrl >= 0 && aciertosUrl <= 5) {
-        resultado = { ...nivelesDiagnostico[Math.min(aciertosUrl, nivelesDiagnostico.length - 1)], aciertos: aciertosUrl, total: 5 };
-    }
-    if (resultado && nivelesDiagnostico.some((nivel) => nivel.nivel === resultado.nivel)) {
-        nivelElemento.textContent = resultado.nivel;
-        document.getElementById('nombre-nivel').textContent = resultado.nombre;
-        document.getElementById('descripcion-nivel').textContent = resultado.descripcion;
-        document.getElementById('texto-recomendacion').textContent = resultado.recomendacion;
-    }
-  main
 
 /* resultados */
 function iniciarResultado() {
@@ -1124,19 +1092,6 @@ function iniciarResultado() {
         });
     }
 
- feature/crud-ejercicios-pr
-    document.querySelector('.resultado-botones .btn-outline-secondary').addEventListener('click', () => {
-        try {
-            localStorage.removeItem('shiftlyDiagnosticoResultado');
-        } catch (_) {
-
-        }
-    });
-    const botonContinuar = document.querySelector('.resultado-botones .btn-primary');
-    botonContinuar.href = resultado && Number.isInteger(resultado.aciertos)
-        ? `recomendaciones.html?aciertos=${resultado.aciertos}`
-        : 'recomendaciones.html';
-
     const botonContinuar = document.querySelector(
         '.resultado-botones .btn-primary'
     );
@@ -1148,5 +1103,4 @@ function iniciarResultado() {
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
- main
 }

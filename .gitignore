@@ -22,3 +22,7 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Respaldos de editor y archivos temporales del servidor de lenguaje
+*.bak
+/storage/framework/lsp-*
