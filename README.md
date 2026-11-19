@@ -282,13 +282,126 @@ Las pruebas usan SQLite en memoria (ver `phpunit.xml`), así que no tocan tu bas
 
 ## Cumplimiento de la rúbrica
 
-| Criterio | Dónde se ve |
+Qué se hizo en cada criterio del examen parcial, dónde está en el código y cómo comprobarlo.
+
+| Criterio | Peso | Dónde se ve |
+| --- | --- | --- |
+| 1. Base de datos PostgreSQL y migraciones | 20 % | `.env.example`, `database/migrations`, `app/Models`, `DatabaseSeeder` |
+| 2. Funcionalidad CRUD desde formularios | 30 % | `/gestion/lecciones`, `/gestion/ejercicios`, `LeccionController`, `EjercicioController` |
+| 3. Validación de datos y seguridad | 20 % | `app/Http/Requests`, vistas de `resources/views/gestion` |
+| 4. Arquitectura MVC y enrutamiento | 15 % | `routes/web.php`, `layouts/app.blade.php`, parciales `_form.blade.php` |
+| 5. Interfaz de usuario y retroalimentación | 15 % | Formularios del panel, `partials/`, `public/css/gestion.css` |
+
+### 1. Base de datos PostgreSQL y migraciones (20 %)
+
+**Qué se hizo**
+
+- `.env.example` configurado para PostgreSQL (`DB_CONNECTION=pgsql`, host, puerto 5432, base `shiftly` y usuario), sin contraseña real; `.env` está en `.gitignore`.
+- 12 migraciones que crean todo desde cero: `users`, `areas`, `lecciones`, `ejercicios`, `terminos`, `progresos` y las tablas internas de Laravel (sesiones, caché y colas).
+- Tipos de dato adecuados: `string` con longitud (`titulo` 150, `nombre` 80), `text`, `boolean` con valor por defecto, `decimal(5,2)` y `jsonb`.
+- Restricciones `unique`, `nullable` y `default`, incluidos únicos compuestos: título por área, título por lección, término por área y progreso por usuario y lección.
+- Llaves foráneas con `constrained()` y política de borrado explícita: `restrictOnDelete` en `lecciones.area_id` y `cascadeOnDelete` en las demás.
+- Modelos `Area`, `Leccion`, `Ejercicio`, `Termino`, `Progreso` y `User` con `$fillable`, `casts` y relaciones `belongsTo` / `hasMany`.
+- Factories para todos los modelos y un seeder con datos de prueba en las 6 áreas.
+- Se corrigió una migración duplicada de `ejercicios` que hacía fallar `migrate:fresh`, y se dejó una sola tabla ligada a `lecciones`.
+
+**Cómo comprobarlo**
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+Debe terminar sin errores. En pgAdmin se ven las tablas, las llaves foráneas (*Constraints*) y los datos del seeder.
+
+### 2. Funcionalidad CRUD desde formularios (30 %)
+
+**Qué se hizo**
+
+- CRUD completo en **dos entidades**: Lecciones (`/gestion/lecciones`) y Ejercicios (`/gestion/ejercicios`). Las cuatro operaciones se hacen desde formularios y guardan en PostgreSQL.
+- Listados con **paginación** (10 por página), **búsqueda** sin distinguir mayúsculas y filtros por área o por lección; los filtros se conservan al cambiar de página.
+- Editar precarga los datos actuales del registro.
+- Eliminar pide confirmación en una ventana modal.
+- Manejo de registros con relaciones:
+  - una lección con progreso de estudiantes **no se elimina** y se muestra un mensaje controlado;
+  - una lección sin progreso se elimina junto con sus ejercicios, y la ventana lo avisa antes;
+  - si la base rechaza un borrado, el error se atrapa y se muestra un mensaje en lugar de un error 500.
+- Se quitaron funciones que aparentaban ser CRUD pero no guardaban en la base de datos (administrador de cuentas del login y perfil simulado del dashboard) y un CRUD de productos ajeno al proyecto.
+
+**Cómo comprobarlo**
+
+Inicia sesión con el usuario de prueba, entra a `/gestion/lecciones`, crea una lección, búscala, edítala y elimínala. Intenta eliminar «Introducción a Sistemas y Software»: como tiene progreso, la app lo impide con un mensaje.
+
+Capturas: [listado](public/img/capturas/11-lecciones-listado.jpg), [confirmar eliminación](public/img/capturas/15-lecciones-confirmar-eliminar.jpg), [eliminación bloqueada](public/img/capturas/16-lecciones-eliminar-bloqueado.jpg) y [búsqueda de ejercicios](public/img/capturas/17-ejercicios-busqueda.jpg).
+
+### 3. Validación de datos y seguridad (20 %)
+
+**Qué se hizo**
+
+- FormRequests **independientes** para crear y editar: `StoreLeccionRequest` / `UpdateLeccionRequest` y `StoreEjercicioRequest` / `UpdateEjercicioRequest`.
+- Reglas pertinentes: `required`, `max`, `integer`, `min`, `exists:areas,id`, `exists:lecciones,id`, `Rule::in` y `unique`.
+- Al editar, la regla `unique` **ignora el registro actual** (`Rule::unique(...)->ignore(...)`).
+- Mensajes de error personalizados en español para cada regla.
+- Validación que depende de varios campos (por ejemplo, que la respuesta correcta esté entre las opciones) en el método `after()` del FormRequest.
+- Registro, perfil y contacto también validan con FormRequests; el registro valida y guarda la carrera.
+- Asignación masiva protegida: `$fillable` en los modelos y `$request->validated()` en los controladores.
+- Todos los formularios que se envían al servidor llevan `@csrf`, y `@method('PUT')` / `@method('DELETE')` donde corresponde.
+- La salida se escapa con `{{ }}` y las consultas usan Eloquent con parámetros enlazados.
+
+**Cómo comprobarlo**
+
+Envía el formulario de nueva lección vacío: cada campo muestra su error en español. Crea dos lecciones con el mismo título en la misma área: la segunda se rechaza. Edita una lección sin cambiar su título: se guarda sin error.
+
+Capturas: [errores de validación](public/img/capturas/12-lecciones-validacion.jpg) y [registro](public/img/capturas/03-registro.jpg).
+
+### 4. Arquitectura MVC y enrutamiento (15 %)
+
+**Qué se hizo**
+
+- Rutas RESTful con `Route::resource()` agrupadas bajo `Route::prefix('gestion')->name('gestion.')`, con nombres convencionales (`gestion.lecciones.index`, `gestion.ejercicios.store`, etc.).
+- *Route model binding*: los métodos reciben el modelo directamente (`edit(Leccion $leccion)`).
+- Rutas privadas dentro del middleware `auth`; login, registro, perfil, contacto y recuperación de contraseña conectados a sus controladores.
+- Controladores delgados: la validación está en los FormRequests y la búsqueda en *scopes* de los modelos (`scopeBuscar`).
+- Vistas con layout base `layouts/app.blade.php` (`@extends`, `@section`, `@stack`) y un parcial `_form.blade.php` compartido por create y edit en cada módulo.
+- Parciales reutilizables para alertas y para la ventana de confirmación de eliminación.
+- Carpetas ordenadas por módulo (`resources/views/gestion/lecciones`, `resources/views/gestion/ejercicios`) y nombres en PascalCase y camelCase (PSR-12).
+- Se corrigieron conflictos de merge que dejaban la app con error de sintaxis y rutas duplicadas.
+
+**Cómo comprobarlo**
+
+```bash
+php artisan route:list --path=gestion
+```
+
+Muestra las 12 rutas del CRUD con sus nombres y controladores.
+
+Capturas: [panel con el layout común](public/img/capturas/11-lecciones-listado.jpg) y [formulario `_form` al editar](public/img/capturas/13-lecciones-editar.jpg).
+
+### 5. Interfaz de usuario y retroalimentación (15 %)
+
+**Qué se hizo**
+
+- Formularios claros: etiqueta asociada a cada campo, tipos de input adecuados (`select`, `number`, `textarea`, interruptor) y `*` en los obligatorios.
+- Botón **Cancelar** al crear y al editar, y enlace para volver al listado.
+- Errores de validación junto a cada campo con `@error` y la clase `is-invalid`; los datos escritos se conservan con `old()`.
+- Mensajes flash de éxito y de error tras crear, editar y eliminar, con `session()` y el parcial `alertas.blade.php`.
+- Diseño consistente en todo el panel gracias al layout común y a `public/css/gestion.css`.
+- Diseño responsivo: en móvil las tablas ocultan las columnas secundarias para no desbordarse.
+- El dashboard muestra los datos reales de la cuenta y enlaza a `/perfil` y al panel de contenido.
+
+**Cómo comprobarlo**
+
+Provoca un error de validación y revisa que el mensaje aparezca junto al campo con lo que habías escrito. Crea, edita y elimina un registro para ver los mensajes de éxito. Reduce la ventana al tamaño de un teléfono para ver el diseño responsivo.
+
+Capturas: [mensaje de éxito](public/img/capturas/14-lecciones-mensaje-exito.jpg), [errores junto al campo](public/img/capturas/12-lecciones-validacion.jpg) y [vista en móvil](public/img/capturas/19-ejercicios-movil.jpg).
+
+### Penalizaciones evitadas
+
+| Penalización | Cómo se evita |
 | --- | --- |
-| 1. Base de datos PostgreSQL y migraciones (20 %) | `.env.example`, `database/migrations`, modelos en `app/Models`, `DatabaseSeeder` |
-| 2. Funcionalidad CRUD desde formularios (30 %) | `/gestion/lecciones` y `/gestion/ejercicios`, `LeccionController`, `EjercicioController` |
-| 3. Validación de datos y seguridad (20 %) | `app/Http/Requests`, `@csrf` / `@method` en las vistas de `resources/views/gestion` |
-| 4. Arquitectura MVC y enrutamiento (15 %) | `routes/web.php`, `resources/views/layouts/app.blade.php`, parciales `_form.blade.php` |
-| 5. Interfaz de usuario y retroalimentación (15 %) | Formularios del panel, `partials/alertas.blade.php`, `partials/confirmar-eliminar.blade.php`, `public/css/gestion.css` |
+| Error crítico de conexión | `.env.example` para PostgreSQL y migraciones completas; se instala siguiendo este README |
+| Exposición de credenciales | `.env` en `.gitignore`; `.env.example` sin contraseña |
+| Repositorio sin historial | Commits de varios integrantes, organizados en ramas y pull requests |
+| Falta de documentación | Este README con requisitos, instalación, pruebas y solución de problemas |
 
 ---
 
@@ -378,9 +491,55 @@ tools/generar-rutas/        # Generador en Python de las vistas, CSS y JS de las
 
 ## Evidencias de interfaz
 
+Capturas tomadas de la aplicación funcionando con PostgreSQL y los datos del seeder. Están en `public/img/capturas`.
+
+### Páginas públicas y autenticación
+
+| Inicio | Iniciar sesión | Crear cuenta |
+| --- | --- | --- |
+| ![Inicio](public/img/capturas/01-inicio.jpg) | ![Iniciar sesión](public/img/capturas/02-login.jpg) | ![Crear cuenta](public/img/capturas/03-registro.jpg) |
+| Selección de área y acceso al test de nivel. | Formulario con `@csrf`, errores por campo y botón Cancelar / Volver. | Registro con carrera, validado por `RegistroRequest`. |
+
+### Cuenta del usuario
+
+| Dashboard | Dashboard: Mi cuenta | Perfil |
+| --- | --- | --- |
+| ![Dashboard](public/img/capturas/04-dashboard.jpg) | ![Mi cuenta](public/img/capturas/05-dashboard-mi-cuenta.jpg) | ![Perfil](public/img/capturas/06-perfil.jpg) |
+| Progreso global, racha y meta diaria. | Datos reales de la cuenta, con enlaces a editar el perfil y al panel de contenido. | Edición de nombre, apellido y área profesional guardada en la base de datos. |
+
+### Aprendizaje
+
+| Diagnóstico | Ruta por carrera | Práctica | Glosario |
+| --- | --- | --- | --- |
+| ![Diagnóstico](public/img/capturas/07-diagnostico.jpg) | ![Ruta de Sistemas](public/img/capturas/08-ruta-sistemas.jpg) | ![Práctica](public/img/capturas/09-practicar.jpg) | ![Glosario](public/img/capturas/10-glosario.jpg) |
+| Test de nivel por área profesional. | Árbol de lecciones con XP y lecciones personalizadas. | Ejercicios interactivos con pistas y audio. | Vocabulario por sector con buscador y filtros. |
+
+### Panel de contenido: Lecciones
+
+| Listado con búsqueda y filtro | Errores de validación | Editar con datos precargados |
+| --- | --- | --- |
+| ![Listado de lecciones](public/img/capturas/11-lecciones-listado.jpg) | ![Validación](public/img/capturas/12-lecciones-validacion.jpg) | ![Editar lección](public/img/capturas/13-lecciones-editar.jpg) |
+| Paginación, búsqueda por título, filtro por área, conteo de ejercicios y estado. | Mensajes en español junto a cada campo (`@error`) y `*` en obligatorios. | El formulario `_form` compartido carga los datos actuales; botón Cancelar. |
+
+| Mensaje de éxito | Confirmar eliminación | Eliminación bloqueada |
+| --- | --- | --- |
+| ![Mensaje de éxito](public/img/capturas/14-lecciones-mensaje-exito.jpg) | ![Confirmar eliminación](public/img/capturas/15-lecciones-confirmar-eliminar.jpg) | ![Eliminación bloqueada](public/img/capturas/16-lecciones-eliminar-bloqueado.jpg) |
+| Mensaje flash tras crear, editar o eliminar. | Ventana que avisa si se borrarán ejercicios o si hay progreso. | Una lección con progreso de estudiantes no se elimina: mensaje controlado. |
+
+### Panel de contenido: Ejercicios
+
+| Búsqueda | Editar ejercicio | Vista en móvil |
+| --- | --- | --- |
+| ![Búsqueda de ejercicios](public/img/capturas/17-ejercicios-busqueda.jpg) | ![Editar ejercicio](public/img/capturas/18-ejercicios-editar.jpg) | ![Ejercicios en móvil](public/img/capturas/19-ejercicios-movil.jpg) |
+| Búsqueda por título o pregunta sin distinguir mayúsculas y filtro por lección. | Cada ejercicio pertenece a una lección; opciones una por línea. | En móvil se ocultan columnas secundarias para no desbordar. |
+
+### Diseños del prototipo
+
+Capturas de las primeras versiones de la interfaz, conservadas como referencia.
+
 | Interfaz | Descripción |
 | --- | --- |
-| ![Panel del usuario](public/img/Panel-usuario.jpeg) | **Panel del usuario:** acceso rápido a los módulos de aprendizaje, resultados y datos de la cuenta. |
+| ![Panel del usuario](public/img/Panel-usuario.jpeg) | **Panel del usuario:** acceso rápido a los módulos de aprendizaje y resultados. |
 | ![Test de diagnóstico](public/img/Test-diagnostico.jpeg) | **Test de diagnóstico:** preguntas de opción múltiple para estimar el nivel de inglés. |
 | ![Biblioteca y repaso](public/img/Biblioteca-repaso.jpeg) | **Biblioteca y repaso técnico:** vocabulario por sector con buscador y filtros. |
 | ![Ruta de aprendizaje](public/img/Ruta-aprendisaje.jpeg) | **Ruta de aprendizaje y recomendaciones:** siguiente lección recomendada y progreso. |
