@@ -1,9 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
- feature/crud-ejercicios-pr
-use App\Http\Controllers\EjercicioController;
-
+use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\RegistroController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PerfilController;
@@ -20,7 +18,7 @@ use App\Http\Controllers\ContactoController;
 
 Route::get('/', function () {
     return view('html.index.index');
-})->name('index');
+});
 
 Route::get('/contacto', [ContactoController::class, 'index'])
     ->name('contacto');
@@ -49,7 +47,7 @@ Route::post('/login', [LoginController::class, 'iniciarSesion'])
 // Registro
 Route::get('/registro', function () {
     return view('html.login.registro');
-})->name('registro');
+});
 
 Route::post('/registro', [RegistroController::class, 'registrar'])
     ->name('registro.registrar');
@@ -83,6 +81,14 @@ Route::post('/new-password', [
 Route::get('/verificacion-correo', function () {
     return view('html.login.verificacion-correo');
 })->name('verificacion-correo');
+
+/*
+|--------------------------------------------------------------------------
+| CRUD de Productos
+|--------------------------------------------------------------------------
+*/
+
+Route::resource('productos', ProductoController::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -213,4 +219,3 @@ Route::middleware('auth')->group(function () {
         ]);
 
 });
- main
