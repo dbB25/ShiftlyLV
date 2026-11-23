@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Estilos Propios -->
-    <link rel="stylesheet" href="{{ asset('css/recuperar-password.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/recuperar-password.css') }}?v=2">
 </head>
 
 <body class="d-flex flex-column min-vh-100">

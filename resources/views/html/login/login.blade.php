@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Estilos Exclusivos de Login -->
-    <link rel="stylesheet" href="{{ asset('css/login.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}?v=4">
 </head>
 
 <body class="d-flex flex-column min-vh-100">
