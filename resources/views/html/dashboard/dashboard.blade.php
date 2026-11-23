@@ -321,9 +321,12 @@
     <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Progreso del alumno desde la base de datos (antes de los demás scripts) -->
+    @include('partials.progreso-servidor')
+
     <!-- Progreso global, racha, meta diaria, insignias y diagnóstico -->
     <script src="{{ asset('js/rutas-catalogo.js') }}"></script>
-    <script src="{{ asset('js/shiftly-progreso.js') }}"></script>
+    <script src="{{ asset('js/shiftly-progreso.js') }}?v=2"></script>
     <script src="{{ asset('js/dashboard-progreso.js') }}"></script>
     <script src="{{ asset('js/pwa.js') }}" defer></script>
 </body>

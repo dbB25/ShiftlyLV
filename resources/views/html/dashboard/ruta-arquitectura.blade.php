@@ -343,16 +343,19 @@
     <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Progreso del alumno desde la base de datos (antes de los demás scripts) -->
+    @include('partials.progreso-servidor')
+
     <!-- Voz femenina para la pronunciación (OpenAI TTS o voz del navegador) -->
     <script src="{{ asset('js/voz-femenina.js') }}"></script>
 
     <!-- Catálogo de rutas y progreso global (racha, meta diaria, insignias) -->
     <script src="{{ asset('js/rutas-catalogo.js') }}"></script>
-    <script src="{{ asset('js/shiftly-progreso.js') }}"></script>
+    <script src="{{ asset('js/shiftly-progreso.js') }}?v=2"></script>
     <script src="{{ asset('js/pwa.js') }}" defer></script>
 
     <!-- JS exclusivo de la ruta -->
-    <script src="{{ asset('js/ruta-arquitectura.js') }}"></script>
+    <script src="{{ asset('js/ruta-arquitectura.js') }}?v=2"></script>
 </body>
 
 </html>

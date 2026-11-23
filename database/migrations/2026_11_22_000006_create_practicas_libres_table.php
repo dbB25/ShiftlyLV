@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+/**
+ * Avance en la práctica libre de /ejercicios (fuera de una lección de ruta).
+ */
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('practicas_libres', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->string('unidad', 80);
+            $table->unsignedSmallInteger('completados')->default(0);
+            $table->unsignedSmallInteger('total')->default(0);
+            $table->unsignedTinyInteger('porcentaje')->default(0);
+            $table->boolean('completado')->default(false);
+            $table->timestamps();
+
+            $table->unique(['user_id', 'unidad']);
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('practicas_libres');
+    }
+};

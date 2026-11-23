@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 JS_BASE = r"""/* ==========================================================
    SHIFTLY · RUTA DE __NOMBRE_MAYUS__
-   Árbol de lecciones gamificado con CRUD en localStorage.
-   Clave: "__CLAVE__" → { [usuario]: { completadas, personalizadas, actualizado } }
+   Árbol de lecciones gamificado. El progreso y las lecciones
+   personalizadas se guardan en la base de datos (shiftly-servidor.js);
+   "__CLAVE__" en localStorage es solo la copia de la página:
+   { [usuario]: { completadas, personalizadas, actualizado } }
    ========================================================== */
 document.addEventListener("DOMContentLoaded", () => {
     "use strict";
@@ -146,7 +148,7 @@ __CONECTOR__
     }
 
     // ==========================================================
-    // 4. USUARIO ACTIVO Y PERSISTENCIA (localStorage)
+    // 4. USUARIO ACTIVO Y PERSISTENCIA (base de datos + copia en localStorage)
     // ==========================================================
     function obtenerUsuario() {
         const sesion = leerJSON(SESSION_KEY);
@@ -187,6 +189,8 @@ __CONECTOR__
         progreso.actualizado = new Date().toISOString();
         todos[usuario.id] = progreso;
         localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+        // Guardar también en la base de datos (PUT /progreso/rutas/{carrera})
+        if (window.ShiftlyServidor) window.ShiftlyServidor.sincronizarRuta(STORAGE_KEY);
     }
 
     let progreso = leerProgreso();
@@ -505,8 +509,11 @@ __CONECTOR__
         return esValido;
     }
 
-    function guardarLeccion(evento) {
+    let guardandoLeccion = false;
+
+    async function guardarLeccion(evento) {
         evento.preventDefault();
+        if (guardandoLeccion) return;
 
         const titulo = inputTitulo.value.trim();
         const descripcion = inputDescripcion.value.trim();
@@ -527,23 +534,36 @@ __CONECTOR__
         };
 
         const idEditar = inputId.value;
-        if (idEditar) {
-            progreso.personalizadas = progreso.personalizadas.map((l) =>
-                l.id === idEditar ? { ...l, ...datos, editado: new Date().toISOString() } : l
-            );
-            mostrarToast("Lección personalizada actualizada.", "success");
-        } else {
-            progreso.personalizadas.push({
-                id: `p-${Date.now()}`,
-                ...datos,
-                creado: new Date().toISOString()
-            });
-            mostrarToast("Lección agregada al final de tu árbol.", "success");
-        }
+        const textoBoton = btnGuardarLeccion.innerHTML;
+        guardandoLeccion = true;
+        btnGuardarLeccion.disabled = true;
+        btnGuardarLeccion.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Guardando...';
 
-        guardarProgreso();
-        modalForm.hide();
-        render();
+        try {
+            if (!window.ShiftlyServidor) throw new Error("Inicia sesión para guardar tus lecciones.");
+
+            if (idEditar) {
+                // UPDATE: PUT /lecciones-personalizadas/{id}
+                const guardada = await window.ShiftlyServidor.actualizarLeccion(idEditar, datos);
+                progreso.personalizadas = progreso.personalizadas.map((l) => (l.id === idEditar ? guardada : l));
+                mostrarToast("Lección personalizada actualizada.", "success");
+            } else {
+                // CREATE: POST /lecciones-personalizadas
+                const creada = await window.ShiftlyServidor.crearLeccion(AREA.slug, datos);
+                progreso.personalizadas.push(creada);
+                mostrarToast("Lección agregada al final de tu árbol.", "success");
+            }
+
+            guardarProgreso();
+            modalForm.hide();
+            render();
+        } catch (error) {
+            mostrarToast(error.message || "No se pudo guardar la lección. Inténtalo de nuevo.", "warning");
+        } finally {
+            guardandoLeccion = false;
+            btnGuardarLeccion.disabled = false;
+            btnGuardarLeccion.innerHTML = textoBoton;
+        }
     }
 
     function editarPersonalizada(id) {
@@ -574,7 +594,14 @@ __CONECTOR__
             titulo: "Eliminar lección",
             mensaje: `¿Seguro que deseas eliminar «${leccion.titulo}»? Se descontará su XP si ya estaba completada.`,
             textoBoton: '<i class="bi bi-trash3 me-1"></i> Eliminar',
-            accion: () => {
+            accion: async () => {
+                try {
+                    // DELETE: DELETE /lecciones-personalizadas/{id}
+                    if (window.ShiftlyServidor) await window.ShiftlyServidor.eliminarLeccion(id);
+                } catch (error) {
+                    mostrarToast(error.message || "No se pudo eliminar la lección. Inténtalo de nuevo.", "warning");
+                    return;
+                }
                 progreso.personalizadas = progreso.personalizadas.filter((l) => l.id !== id);
                 progreso.completadas = progreso.completadas.filter((c) => c !== id);
                 guardarProgreso();
@@ -590,10 +617,21 @@ __CONECTOR__
             mensaje: `Se borrarán tus lecciones completadas y el XP de ${AREA.nombre}. Esta acción no se puede deshacer.`,
             textoBoton: '<i class="bi bi-arrow-counterclockwise me-1"></i> Reiniciar',
             conOpcion: true,
-            accion: () => {
+            accion: async () => {
+                const borrarPersonalizadas = chkBorrarPersonalizadas.checked;
+                if (borrarPersonalizadas && window.ShiftlyServidor) {
+                    try {
+                        for (const leccion of progreso.personalizadas) {
+                            await window.ShiftlyServidor.eliminarLeccion(leccion.id);
+                        }
+                    } catch (error) {
+                        mostrarToast(error.message || "No se pudieron eliminar tus lecciones. Inténtalo de nuevo.", "warning");
+                        return;
+                    }
+                }
                 progreso = {
                     ...estadoInicial(),
-                    personalizadas: chkBorrarPersonalizadas.checked ? [] : progreso.personalizadas
+                    personalizadas: borrarPersonalizadas ? [] : progreso.personalizadas
                 };
                 guardarProgreso();
                 render();

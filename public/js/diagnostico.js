@@ -916,12 +916,20 @@ function iniciarDiagnosticoCompleto() {
             respuestaCorrecta: pregunta.opciones[pregunta.correcta],
             correcta: respuestas[posicion] === pregunta.correcta
         }));
-        const resultado = { ...nivelesDiagnostico[Math.min(aciertos, nivelesDiagnostico.length - 1)], aciertos, total: preguntas.length, revision };
+        const resultado = {
+            ...nivelesDiagnostico[Math.min(aciertos, nivelesDiagnostico.length - 1)],
+            aciertos,
+            total: preguntas.length,
+            revision,
+            fecha: new Date().toISOString()
+        };
         try {
             localStorage.setItem('shiftlyDiagnosticoResultado', JSON.stringify(resultado));
         } catch (_) {
 
         }
+        // Guardar el intento en la base de datos (POST /progreso/diagnostico)
+        if (window.ShiftlyServidor) window.ShiftlyServidor.guardarDiagnostico(resultado);
         window.location.href = `/resultado?aciertos=${aciertos}`;
     });
     renderizarPregunta();

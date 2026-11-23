@@ -6,8 +6,9 @@
    - Banco local: window.SHIFTLY_BANCOS[carrera] (ejercicios-<carrera>.js)
    - Modo híbrido con ChatGPT / OpenAI (openai-ejercicios.js → window.ServicioIA)
    - Audio con speechSynthesis y micrófono con SpeechRecognition
-   - Al terminar guarda la lección como completada en
-     localStorage[banco.claveProgreso][usuario] (misma clave que ruta-*.js)
+   - Al terminar guarda la lección como completada en la base de datos
+     (shiftly-servidor.js → PUT /progreso/rutas/{carrera}) y en la copia
+     del navegador localStorage[banco.claveProgreso][usuario]
 
    Sin parámetros, la vista conserva su práctica original (ejercicios.js).
    ========================================================== */
@@ -234,6 +235,8 @@
         progreso.actualizado = new Date().toISOString();
         todos[obtenerUsuarioId()] = progreso;
         localStorage.setItem(banco.claveProgreso, JSON.stringify(todos));
+        // Guardar también en la base de datos (shiftly-servidor.js)
+        if (window.ShiftlyServidor) window.ShiftlyServidor.sincronizarRuta(banco.claveProgreso);
 
         return {
             estado,
@@ -259,6 +262,8 @@
         progreso.actualizado = new Date().toISOString();
         todos[obtenerUsuarioId()] = progreso;
         localStorage.setItem(banco.claveProgreso, JSON.stringify(todos));
+        // Guardar también en la base de datos (shiftly-servidor.js)
+        if (window.ShiftlyServidor) window.ShiftlyServidor.sincronizarRuta(banco.claveProgreso);
         return progreso;
     }
 

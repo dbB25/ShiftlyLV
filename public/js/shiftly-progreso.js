@@ -7,6 +7,8 @@
    - diagnóstico → carrera y lección inicial recomendadas
    Requiere rutas-catalogo.js (window.SHIFTLY_CATALOGO).
    Todo es por usuario activo (shiftly_usuario_activo), igual que las rutas.
+   Los datos vienen de la base de datos y cada cambio se guarda allí
+   mediante shiftly-servidor.js (window.ShiftlyServidor).
    ========================================================== */
 (function (global) {
     "use strict";
@@ -102,6 +104,8 @@
         const datos = todos && typeof todos === "object" && !Array.isArray(todos) ? todos : {};
         datos[usuario().id] = { ...progreso, actualizado: new Date().toISOString() };
         escribirJSON(carrera.clave, datos);
+        // Guardar también en la base de datos (shiftly-servidor.js)
+        if (global.ShiftlyServidor) global.ShiftlyServidor.sincronizarRuta(carrera.clave);
     }
 
     function resumenCarrera(slug) {
@@ -202,6 +206,8 @@
         const datos = todos && typeof todos === "object" ? todos : {};
         datos[usuario().id] = actividad;
         escribirJSON(ACTIVIDAD_KEY, datos);
+        // Guardar también en la base de datos (shiftly-servidor.js)
+        if (global.ShiftlyServidor) global.ShiftlyServidor.sincronizarActividad();
     }
 
     // Llamar al completar una lección o una ronda de ejercicios

@@ -209,6 +209,12 @@ Después de iniciar sesión, el panel está en <http://127.0.0.1:8000/gestion/le
 | GET | `/ejercicios`, `/resultados-leccion`, `/glosario` | Práctica, resultados y glosario | Con sesión |
 | RESOURCE | `/gestion/lecciones` | CRUD de lecciones | Con sesión |
 | RESOURCE | `/gestion/ejercicios` | CRUD de ejercicios | Con sesión |
+| GET / POST / PUT / DELETE | `/lecciones-personalizadas` | CRUD del alumno: sus lecciones personalizadas (JSON) | Con sesión |
+| GET | `/progreso` | Todo el progreso del alumno (JSON) | Con sesión |
+| PUT | `/progreso/rutas/{carrera}` | Guardar lecciones completadas, XP, resultados de ejercicios y errores | Con sesión |
+| PUT | `/progreso/actividad` | Guardar racha, XP del día y meta diaria | Con sesión |
+| PUT | `/progreso/practica` | Guardar la práctica libre de `/ejercicios` | Con sesión |
+| POST | `/progreso/diagnostico` | Guardar un intento del examen diagnóstico | Con sesión |
 
 Lista completa: `php artisan route:list --except-vendor`.
 
@@ -218,12 +224,19 @@ Lista completa: `php artisan route:list --except-vendor`.
 
 | Tabla | Descripción | Relaciones |
 | --- | --- | --- |
-| `users` | Usuarios de la plataforma (nombre, apellido, carrera, área profesional) | tiene muchos `progresos` |
+| `users` | Usuarios de la plataforma (nombre, apellido, carrera, área profesional, meta diaria y mejor pronunciación) | tiene muchos `progresos`, `progreso_rutas`, `actividad_diaria`, `lecciones_personalizadas`, `practicas_libres` y `diagnosticos` |
 | `areas` | Áreas profesionales | tiene muchas `lecciones` y `terminos` |
 | `lecciones` | Lecciones de cada área, con nivel A1–C2, orden y estado publicada | pertenece a `areas`; tiene muchos `ejercicios` y `progresos` |
 | `ejercicios` | Ejercicios de cada lección (completar, opción múltiple, ordenar, emparejar) | pertenece a `lecciones` |
 | `terminos` | Glosario de términos por área | pertenece a `areas` |
 | `progresos` | Puntaje y avance de cada usuario por lección | pertenece a `users` y `lecciones` |
+| `progreso_rutas` | Ruta de una carrera que el alumno va avanzando (y su examen de ubicación) | pertenece a `users`; tiene muchas `progreso_lecciones` y `errores_ejercicios` |
+| `progreso_lecciones` | Lección completada, XP ganado y resultado de la última ronda de ejercicios (aciertos, vidas, duración) | pertenece a `progreso_rutas` |
+| `errores_ejercicios` | Ejercicios fallados que el alumno puede repasar | pertenece a `progreso_rutas` |
+| `actividad_diaria` | XP y número de prácticas por día (racha y meta diaria) | pertenece a `users` |
+| `lecciones_personalizadas` | Lecciones que crea cada alumno al final de su árbol (título, descripción, vocabulario, XP, forma e ícono) | pertenece a `users` |
+| `practicas_libres` | Avance en la práctica libre de `/ejercicios` | pertenece a `users` |
+| `diagnosticos` | Historial de intentos del examen diagnóstico | pertenece a `users` |
 
 ### Llaves foráneas y política de borrado
 
@@ -234,6 +247,8 @@ Lista completa: `php artisan route:list --except-vendor`.
 | `terminos.area_id → areas` | `CASCADE` | El glosario depende de su área |
 | `progresos.user_id → users` | `CASCADE` | El progreso es del usuario |
 | `progresos.leccion_id → lecciones` | `CASCADE` | El progreso es de la lección (el panel bloquea antes ese borrado) |
+| `user_id → users` en `progreso_rutas`, `actividad_diaria`, `lecciones_personalizadas`, `practicas_libres` y `diagnosticos` | `CASCADE` | El avance pertenece al alumno |
+| `progreso_ruta_id → progreso_rutas` en `progreso_lecciones` y `errores_ejercicios` | `CASCADE` | Borrar la ruta borra su avance |
 
 ### Restricciones principales
 
@@ -242,6 +257,9 @@ Lista completa: `php artisan route:list --except-vendor`.
 - `ejercicios`: título único por lección (`unique(leccion_id, titulo)`), `opciones` en `jsonb`.
 - `terminos`: término único por área (`unique(area_id, termino)`).
 - `progresos`: un registro por usuario y lección (`unique(user_id, leccion_id)`), `puntaje` `decimal(5,2)`.
+- `progreso_rutas`: una ruta por usuario y carrera (`unique(user_id, carrera)`); `progreso_lecciones`: una fila por lección de la ruta (`unique(progreso_ruta_id, leccion_clave)`).
+- `actividad_diaria`: un registro por usuario y día (`unique(user_id, fecha)`); `diagnosticos`: un intento por usuario y fecha (`unique(user_id, realizado_en)`), así un reenvío no se duplica.
+- `lecciones_personalizadas`: `titulo` 60, `descripcion` 240, `vocabulario` en `json`, índice por `(user_id, carrera)`.
 
 Las migraciones están en `database/migrations`, las factories en `database/factories` y los datos de prueba en `database/seeders/DatabaseSeeder.php`.
 
@@ -249,7 +267,9 @@ Las migraciones están en `database/migrations`, las factories en `database/fact
 
 ## Validación y seguridad
 
-- **FormRequests** separados para crear y editar: `StoreLeccionRequest` / `UpdateLeccionRequest` y `StoreEjercicioRequest` / `UpdateEjercicioRequest`. También `RegistroRequest`, `PerfilRequest` y `ContactoRequest`.
+- **FormRequests** separados para crear y editar: `StoreLeccionRequest` / `UpdateLeccionRequest` y `StoreEjercicioRequest` / `UpdateEjercicioRequest`. También `RegistroRequest`, `PerfilRequest`, `ContactoRequest` y, para el progreso, `LeccionPersonalizadaRequest`, `GuardarRutaRequest`, `GuardarActividadRequest`, `PracticaLibreRequest` y `DiagnosticoRequest`.
+- **Cada alumno solo ve y modifica lo suyo:** el progreso siempre se guarda con el usuario de la sesión, y editar o borrar una lección personalizada de otro alumno responde `403`.
+- **Peticiones JSON con CSRF:** `shiftly-servidor.js` envía el token en la cabecera `X-CSRF-TOKEN`.
 - **Reglas** `required`, `max`, `integer`, `exists`, `Rule::in` y `unique`; al editar, `unique` ignora el registro actual.
 - **Mensajes** de error personalizados en español, mostrados junto a cada campo con `@error`; los datos escritos se conservan con `old()`.
 - **Asignación masiva protegida:** los modelos declaran `$fillable` y los controladores guardan solo `$request->validated()`.
@@ -267,7 +287,7 @@ Las migraciones están en `database/migrations`, las factories en `database/fact
 php artisan test
 ```
 
-Hay **48 pruebas** (143 aserciones) en `tests/Feature`:
+Hay **59 pruebas** (191 aserciones) en `tests/Feature`:
 
 | Archivo | Qué comprueba |
 | --- | --- |
@@ -275,6 +295,7 @@ Hay **48 pruebas** (143 aserciones) en `tests/Feature`:
 | `GestionEjerciciosTest.php` | Paginación, búsqueda y filtro por lección, crear con opciones, validación, `old()`, editar y eliminar |
 | `RegistroTest.php` | Registro con carrera, correo repetido y carrera inválida |
 | `RutasTest.php` | Que todas las páginas cargan y traen sus scripts |
+| `ProgresoTest.php` | Guardar y leer el avance de una ruta, reiniciarla, actividad diaria, práctica libre, diagnóstico sin duplicados, CRUD de lecciones personalizadas, validación en español y que un alumno no toque lo de otro |
 
 Las pruebas usan SQLite en memoria (ver `phpunit.xml`), así que no tocan tu base de PostgreSQL. Necesitan la extensión `pdo_sqlite`.
 
@@ -287,7 +308,7 @@ Qué se hizo en cada criterio del examen parcial, dónde está en el código y c
 | Criterio | Peso | Dónde se ve |
 | --- | --- | --- |
 | 1. Base de datos PostgreSQL y migraciones | 20 % | `.env.example`, `database/migrations`, `app/Models`, `DatabaseSeeder` |
-| 2. Funcionalidad CRUD desde formularios | 30 % | `/gestion/lecciones`, `/gestion/ejercicios`, `LeccionController`, `EjercicioController` |
+| 2. Funcionalidad CRUD desde formularios | 30 % | `/gestion/lecciones`, `/gestion/ejercicios`, lecciones personalizadas en `/ruta-{carrera}`, `LeccionController`, `EjercicioController`, `LeccionPersonalizadaController` |
 | 3. Validación de datos y seguridad | 20 % | `app/Http/Requests`, vistas de `resources/views/gestion` |
 | 4. Arquitectura MVC y enrutamiento | 15 % | `routes/web.php`, `layouts/app.blade.php`, parciales `_form.blade.php` |
 | 5. Interfaz de usuario y retroalimentación | 15 % | Formularios del panel, `partials/`, `public/css/gestion.css` |
@@ -297,11 +318,12 @@ Qué se hizo en cada criterio del examen parcial, dónde está en el código y c
 **Qué se hizo**
 
 - `.env.example` configurado para PostgreSQL (`DB_CONNECTION=pgsql`, host, puerto 5432, base `shiftly` y usuario), sin contraseña real; `.env` está en `.gitignore`.
-- 12 migraciones que crean todo desde cero: `users`, `areas`, `lecciones`, `ejercicios`, `terminos`, `progresos` y las tablas internas de Laravel (sesiones, caché y colas).
+- 19 migraciones que crean todo desde cero: `users`, `areas`, `lecciones`, `ejercicios`, `terminos`, `progresos`, las tablas del avance del alumno (`progreso_rutas`, `progreso_lecciones`, `errores_ejercicios`, `actividad_diaria`, `lecciones_personalizadas`, `practicas_libres`, `diagnosticos`) y las tablas internas de Laravel (sesiones, caché y colas).
 - Tipos de dato adecuados: `string` con longitud (`titulo` 150, `nombre` 80), `text`, `boolean` con valor por defecto, `decimal(5,2)` y `jsonb`.
 - Restricciones `unique`, `nullable` y `default`, incluidos únicos compuestos: título por área, título por lección, término por área y progreso por usuario y lección.
 - Llaves foráneas con `constrained()` y política de borrado explícita: `restrictOnDelete` en `lecciones.area_id` y `cascadeOnDelete` en las demás.
-- Modelos `Area`, `Leccion`, `Ejercicio`, `Termino`, `Progreso` y `User` con `$fillable`, `casts` y relaciones `belongsTo` / `hasMany`.
+- Modelos `Area`, `Leccion`, `Ejercicio`, `Termino`, `Progreso`, `ProgresoRuta`, `ProgresoLeccion`, `ErrorEjercicio`, `ActividadDiaria`, `LeccionPersonalizada`, `PracticaLibre`, `Diagnostico` y `User` con `$fillable`, `casts` y relaciones `belongsTo` / `hasMany`.
+- **El avance del alumno se guarda en PostgreSQL**, no en el navegador: lecciones completadas, XP, resultados de cada ronda de ejercicios, errores para repaso, racha y meta diaria, práctica libre y diagnóstico. `App\Services\ProgresoUsuario` lee y guarda esas tablas; cada página recibe el progreso desde ahí (`partials/progreso-servidor.blade.php`) y `public/js/shiftly-servidor.js` envía cada cambio a la API.
 - Factories para todos los modelos y un seeder con datos de prueba en las 6 áreas.
 - Se corrigió una migración duplicada de `ejercicios` que hacía fallar `migrate:fresh`, y se dejó una sola tabla ligada a `lecciones`.
 
@@ -317,7 +339,8 @@ Debe terminar sin errores. En pgAdmin se ven las tablas, las llaves foráneas (*
 
 **Qué se hizo**
 
-- CRUD completo en **dos entidades**: Lecciones (`/gestion/lecciones`) y Ejercicios (`/gestion/ejercicios`). Las cuatro operaciones se hacen desde formularios y guardan en PostgreSQL.
+- CRUD completo en **tres entidades**: Lecciones (`/gestion/lecciones`), Ejercicios (`/gestion/ejercicios`) y **Lecciones personalizadas** del alumno. Las cuatro operaciones se hacen desde formularios y guardan en PostgreSQL.
+- **CRUD del alumno (lecciones personalizadas):** en cualquier ruta (`/ruta-sistemas`, `/ruta-medicina`, …) el botón **Agregar lección** abre un formulario con título, descripción, vocabulario (`inglés = español`), XP, forma e ícono. La lección aparece al final del árbol, se puede abrir, practicar en `/ejercicios`, **editar** (lápiz) y **eliminar** (papelera). Cada acción llama a `LeccionPersonalizadaController` (`POST`, `PUT`, `DELETE /lecciones-personalizadas`) y queda en la tabla `lecciones_personalizadas`. Si el servidor rechaza los datos, el mensaje de validación aparece en la página.
 - Listados con **paginación** (10 por página), **búsqueda** sin distinguir mayúsculas y filtros por área o por lección; los filtros se conservan al cambiar de página.
 - Editar precarga los datos actuales del registro.
 - Eliminar pide confirmación en una ventana modal.
@@ -330,6 +353,8 @@ Debe terminar sin errores. En pgAdmin se ven las tablas, las llaves foráneas (*
 **Cómo comprobarlo**
 
 Inicia sesión con el usuario de prueba, entra a `/gestion/lecciones`, crea una lección, búscala, edítala y elimínala. Intenta eliminar «Introducción a Sistemas y Software»: como tiene progreso, la app lo impide con un mensaje.
+
+Para el CRUD del alumno y el progreso: entra a `/ruta-sistemas`, completa la primera lección y crea una lección con **Agregar lección**. En pgAdmin aparecen las filas en `progreso_lecciones`, `actividad_diaria` y `lecciones_personalizadas`. Después borra los datos del navegador (o entra desde otro navegador) con la misma cuenta: el XP, las lecciones y tu lección personalizada siguen ahí porque vienen de la base de datos.
 
 Capturas: [listado](public/img/capturas/11-lecciones-listado.jpg), [confirmar eliminación](public/img/capturas/15-lecciones-confirmar-eliminar.jpg), [eliminación bloqueada](public/img/capturas/16-lecciones-eliminar-bloqueado.jpg) y [búsqueda de ejercicios](public/img/capturas/17-ejercicios-busqueda.jpg).
 
@@ -568,5 +593,6 @@ Durante la integración se quitaron funciones que no guardaban en la base de dat
 
 - **`carrera` y `area_profesional`:** la tabla `users` tiene las dos columnas y guardan un dato parecido (el registro usa `carrera`; el perfil, `area_profesional`). Conviene unificarlas en una sola, idealmente como llave foránea a `areas`.
 - **Layout en las páginas anteriores:** el panel de contenido usa `layouts/app.blade.php`; las páginas públicas, de autenticación y del dashboard todavía tienen su propio HTML completo.
-- **Progreso del juego:** el avance de los árboles de lecciones, el diagnóstico y las lecciones personalizadas se guarda en `localStorage`; la tabla `progresos` ya existe para pasarlo a la base de datos.
+- **Tabla `progresos`:** la usa el panel de contenido (lecciones de la tabla `lecciones`). El avance del juego se guarda en las tablas nuevas (`progreso_rutas`, `progreso_lecciones`, …) porque los árboles usan el catálogo de `public/js/rutas-catalogo.js`. Unir ambos catálogos en la base de datos permitiría usar una sola tabla.
+- **Progreso anterior a este cambio:** lo que un alumno hizo antes vive solo en el `localStorage` de su navegador y no se importa a la base de datos.
 - **Verificación de correo:** la pantalla funciona en el navegador, pero todavía no valida el código contra el servidor.

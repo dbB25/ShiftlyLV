@@ -330,41 +330,9 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Script de sincronización con LocalStorage de Laravel -->
-    <script>
-        (() => {
-            const userId = @json(auth()->id());
-            const originalSetItem = Storage.prototype.setItem;
+    <!-- Progreso del alumno desde la base de datos (antes de los demás scripts) -->
+    @include('partials.progreso-servidor')
 
-            Storage.prototype.setItem = function (key, value) {
-                originalSetItem.call(this, key, value);
-
-                if (key === 'shiftlyDiagnosticoResultado') {
-                    try {
-                        const resultado = JSON.parse(value);
-                        const progreso = {
-                            usuario: userId ?? 'visitante',
-                            tipo: 'diagnostico',
-                            puntuacion: resultado.aciertos,
-                            total: resultado.total,
-                            nivel: resultado.nivel,
-                            carrera: resultado.carrera,
-                            revision: resultado.revision,
-                            completado: true,
-                            actualizadoEn: new Date().toISOString()
-                        };
-                        originalSetItem.call(
-                            this,
-                            `shiftly:progreso:${progreso.usuario}:diagnostico`,
-                            JSON.stringify(progreso)
-                        );
-                    } catch (error) {
-                        console.error('No se pudo guardar el progreso del diagnóstico.', error);
-                    }
-                }
-            };
-        })();
-    </script>
 
     <!-- Script Principal del Diagnóstico -->
     <!-- Voz femenina para la pronunciación (OpenAI TTS o voz del navegador) -->
@@ -372,9 +340,9 @@
 
     <!-- Catálogo de rutas: conecta el nivel obtenido con la lección inicial recomendada -->
     <script src="{{ asset('js/rutas-catalogo.js') }}"></script>
-    <script src="{{ asset('js/shiftly-progreso.js') }}"></script>
+    <script src="{{ asset('js/shiftly-progreso.js') }}?v=2"></script>
 
-    <script src="{{ asset('js/diagnostico.js') }}?v=3"></script>
+    <script src="{{ asset('js/diagnostico.js') }}?v=4"></script>
 </body>
 
 </html>

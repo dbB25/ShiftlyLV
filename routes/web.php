@@ -8,6 +8,8 @@ use App\Http\Controllers\RecuperarPasswordController;
 use App\Http\Controllers\EjercicioController;
 use App\Http\Controllers\LeccionController;
 use App\Http\Controllers\ContactoController;
+use App\Http\Controllers\LeccionPersonalizadaController;
+use App\Http\Controllers\ProgresoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -159,6 +161,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/ruta-general', function () {
         return view('html.dashboard.ruta-general');
     })->name('ruta-general');
+
+    // Progreso del alumno guardado en la base de datos
+    Route::prefix('progreso')->name('progreso.')->group(function () {
+        Route::get('/', [ProgresoController::class, 'mostrar'])->name('mostrar');
+        Route::put('/rutas/{carrera}', [ProgresoController::class, 'guardarRuta'])->name('ruta');
+        Route::put('/actividad', [ProgresoController::class, 'guardarActividad'])->name('actividad');
+        Route::put('/practica', [ProgresoController::class, 'guardarPractica'])->name('practica');
+        Route::post('/diagnostico', [ProgresoController::class, 'guardarDiagnostico'])->name('diagnostico');
+    });
+
+    // CRUD del alumno: lecciones personalizadas de cada ruta
+    Route::apiResource('lecciones-personalizadas', LeccionPersonalizadaController::class)
+        ->except('show')
+        ->parameters(['lecciones-personalizadas' => 'leccion']);
 
     // Panel de contenido: CRUD de lecciones y ejercicios
     Route::prefix('gestion')->name('gestion.')->group(function () {

@@ -573,6 +573,9 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Progreso del alumno desde la base de datos (antes de los demás scripts) -->
+    @include('partials.progreso-servidor')
+
     <!-- Voz femenina para la pronunciación (OpenAI TTS o voz del navegador) -->
     <script src="{{ asset('js/voz-femenina.js') }}"></script>
 
@@ -589,14 +592,14 @@
 
     <!-- Progreso global: racha diaria, meta del día e insignias -->
     <script src="{{ asset('js/rutas-catalogo.js') }}"></script>
-    <script src="{{ asset('js/shiftly-progreso.js') }}"></script>
+    <script src="{{ asset('js/shiftly-progreso.js') }}?v=2"></script>
     <script src="{{ asset('js/pwa.js') }}" defer></script>
-    <script src="{{ asset('js/ejercicios-leccion.js') }}"></script>
+    <script src="{{ asset('js/ejercicios-leccion.js') }}?v=2"></script>
 
     <!-- Script de Ejercicios Interactivos (práctica general sin parámetros) -->
     <script src="{{ asset('js/ejercicios.js') }}?v=3"></script>
 
-    <!-- Sincronización con LocalStorage de Laravel -->
+    <!-- Práctica libre: el avance se guarda en la base de datos -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // En modo lección el progreso se guarda en la clave de la ruta (ejercicios-leccion.js)
@@ -624,13 +627,13 @@
                     actualizadoEn: new Date().toISOString()
                 };
 
-                try {
-                    localStorage.setItem(
-                        `shiftly:progreso:${progreso.usuario}:unidad-03-leccion-02`,
-                        JSON.stringify(progreso)
-                    );
-                } catch (error) {
-                    console.error('No se pudo guardar el progreso de los ejercicios.', error);
+                // Guardar en la base de datos (PUT /progreso/practica)
+                if (window.ShiftlyServidor) {
+                    window.ShiftlyServidor.guardarPractica({
+                        unidad: progreso.unidad,
+                        completados: progreso.completados,
+                        total: progreso.total
+                    });
                 }
             };
 

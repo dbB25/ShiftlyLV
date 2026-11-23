@@ -21,11 +21,38 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'meta_diaria' => 'integer',
+            'mejor_pronunciacion' => 'integer',
         ];
     }
 
     public function progresos(): HasMany
     {
         return $this->hasMany(Progreso::class);
+    }
+
+    public function progresoRutas(): HasMany
+    {
+        return $this->hasMany(ProgresoRuta::class);
+    }
+
+    public function actividadDiaria(): HasMany
+    {
+        return $this->hasMany(ActividadDiaria::class);
+    }
+
+    public function leccionesPersonalizadas(): HasMany
+    {
+        return $this->hasMany(LeccionPersonalizada::class);
+    }
+
+    public function diagnosticos(): HasMany
+    {
+        return $this->hasMany(Diagnostico::class);
+    }
+
+    public function practicasLibres(): HasMany
+    {
+        return $this->hasMany(PracticaLibre::class);
     }
 }

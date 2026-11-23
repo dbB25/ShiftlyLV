@@ -314,9 +314,12 @@
     <!-- Bootstrap 5.3 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Progreso del alumno desde la base de datos (antes de los demás scripts) -->
+    @include('partials.progreso-servidor')
+
     <!-- Progreso real del usuario y recomendaciones -->
     <script src="{{ asset('js/rutas-catalogo.js') }}"></script>
-    <script src="{{ asset('js/shiftly-progreso.js') }}"></script>
+    <script src="{{ asset('js/shiftly-progreso.js') }}?v=2"></script>
     <script src="{{ asset('js/recomendaciones.js') }}"></script>
 </body>
 </html>
