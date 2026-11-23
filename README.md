@@ -125,7 +125,7 @@ No se necesita Node.js: las vistas cargan Bootstrap desde CDN y no usan Vite.
 
 ### Usuario de prueba
 
-El seeder crea un usuario para entrar al dashboard y al panel de contenido:
+El seeder crea un alumno de prueba que ya tiene avance en la app (XP, racha, lecciones completadas, lecciones personalizadas y diagnóstico):
 
 | Correo | Contraseña |
 | --- | --- |
@@ -133,14 +133,30 @@ El seeder crea un usuario para entrar al dashboard y al panel de contenido:
 
 ### Datos que carga el seeder
 
-| Tabla | Registros |
-| --- | --- |
-| `users` | 1 (usuario de prueba) |
-| `areas` | 6 (Sistemas y Software, Medicina y Salud, Gastronomía, Derecho Corporativo, Arquitectura, General) |
-| `lecciones` | 6 (una «Introducción a…» por área) |
-| `ejercicios` | 6 (uno por lección) |
-| `terminos` | 6 (uno por área) |
-| `progresos` | 6 (progreso del usuario de prueba en cada lección) |
+Hay un seeder por tabla en `database/seeders`; `DatabaseSeeder` los llama en orden. Se pueden correr varias veces sin duplicar datos y sin borrar las cuentas que ya existen.
+
+```bash
+php artisan db:seed                              # todas las tablas
+php artisan db:seed --class=DiagnosticoSeeder    # solo una tabla
+```
+
+| Seeder | Tabla | Registros |
+| --- | --- | --- |
+| `UsuarioSeeder` | `users` | 1 (alumno de prueba, meta diaria de 30 XP y 82 % de pronunciación) |
+| `AreaSeeder` | `areas` | 6 (Sistemas y Software, Medicina y Salud, Gastronomía, Derecho Corporativo, Arquitectura, General) |
+| `LeccionSeeder` | `lecciones` | 6 (una «Introducción a…» por área) |
+| `TerminoSeeder` | `terminos` | 6 (uno por área) |
+| `EjercicioSeeder` | `ejercicios` | 6 (uno por lección) |
+| `ProgresoSeeder` | `progresos` | 6 (progreso del alumno en cada lección del panel) |
+| `ProgresoRutaSeeder` | `progreso_rutas` | 3 (rutas de Sistemas, Medicina y General) |
+| `ProgresoLeccionSeeder` | `progreso_lecciones` | 5 (3 lecciones de Sistemas y 1 de Medicina completadas = 55 XP; 1 práctica sin terminar en General) |
+| `ErrorEjercicioSeeder` | `errores_ejercicios` | 2 (retos fallados de Sistemas para el modo repaso) |
+| `ActividadDiariaSeeder` | `actividad_diaria` | 4 (racha de 4 días hasta hoy; las fechas se calculan con la hora de México) |
+| `LeccionPersonalizadaSeeder` | `lecciones_personalizadas` | 3 (2 en Sistemas y 1 en Medicina) |
+| `PracticaLibreSeeder` | `practicas_libres` | 1 (práctica libre al 50 %) |
+| `DiagnosticoSeeder` | `diagnosticos` | 2 (intentos A2 y B1; el último es el que se muestra) |
+
+Las fechas de la actividad y de los intentos son relativas al día en que corres el seeder, así que la racha siempre se ve activa. Si el alumno de prueba ya practicó en la app, vuelve a correr `php artisan db:seed` para regresar sus datos a este estado.
 
 ### Recuperación de contraseña
 
@@ -287,7 +303,7 @@ Las migraciones están en `database/migrations`, las factories en `database/fact
 php artisan test
 ```
 
-Hay **59 pruebas** (191 aserciones) en `tests/Feature`:
+Hay **61 pruebas** (213 aserciones) en `tests/Feature`:
 
 | Archivo | Qué comprueba |
 | --- | --- |
@@ -296,6 +312,7 @@ Hay **59 pruebas** (191 aserciones) en `tests/Feature`:
 | `RegistroTest.php` | Registro con carrera, correo repetido y carrera inválida |
 | `RutasTest.php` | Que todas las páginas cargan y traen sus scripts |
 | `ProgresoTest.php` | Guardar y leer el avance de una ruta, reiniciarla, actividad diaria, práctica libre, diagnóstico sin duplicados, CRUD de lecciones personalizadas, validación en español y que un alumno no toque lo de otro |
+| `SeederTest.php` | Que los seeders llenan cada tabla, no duplican al repetirse y que el alumno de prueba entra y ve su progreso |
 
 Las pruebas usan SQLite en memoria (ver `phpunit.xml`), así que no tocan tu base de PostgreSQL. Necesitan la extensión `pdo_sqlite`.
 

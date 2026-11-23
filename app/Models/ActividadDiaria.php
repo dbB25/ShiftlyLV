@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
@@ -22,10 +24,21 @@ class ActividadDiaria extends Model
     protected function casts(): array
     {
         return [
-            'fecha' => 'date',
             'xp' => 'integer',
             'practicas' => 'integer',
         ];
+    }
+
+    /**
+     * La fecha se guarda siempre como AAAA-MM-DD (sin hora), para que las
+     * búsquedas por día coincidan igual en PostgreSQL y en SQLite (pruebas).
+     */
+    protected function fecha(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($valor) => $valor ? Carbon::parse($valor)->startOfDay() : null,
+            set: fn ($valor) => $valor ? Carbon::parse($valor)->toDateString() : null,
+        );
     }
 
     public function usuario(): BelongsTo
